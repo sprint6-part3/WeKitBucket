@@ -1,8 +1,7 @@
-// import React from "react";
-// import { PropsWithChildren } from "react";
+import React, { PropsWithChildren } from "react";
 
-// function ErrorText({ children }: PropsWithChildren) {
-//   return <p className="text-xs leading-[1.5] text-primary-red-200">{children}</p>;
-// }
+function ErrorText({ children }: PropsWithChildren) {
+  return <p className="text-xs leading-[1.5] text-primary-red-200">{children}</p>;
+}
 
-// export default ErrorText;
+export default ErrorText;
