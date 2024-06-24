@@ -28,6 +28,9 @@ module.exports = {
           100: "#FDD181",
         },
       },
+      fontFamily: {
+        sans: ["Pretendard", "ui-sans-serif", "system-ui"],
+      },
     },
   },
   plugins: [],
