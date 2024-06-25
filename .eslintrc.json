@@ -11,15 +11,10 @@
     "react/react-in-jsx-scope": "off", // React 17 이상에서 필요 없음
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx", ".ts", ".tsx"] }], // .tsx 파일에서 JSX 허용
     "prefer-const": "off",
-    "react/jsx-props-no-spreading": [
-      "error",
-      {
-        "html": "enforce",
-        "custom": "enforce",
-        "explicitSpread": "enforce",
-        "exceptions": ["input", "textarea"]
-      }
-    ],
-    "react/button-has-type": "off"
+    "react/jsx-props-no-spreading": "off",
+    "react/prop-types": "off",
+    "react/button-has-type": "off",
+    "react/require-default-props": "off",
+    "prefer-arrow-callback": "off"
   }
 }
