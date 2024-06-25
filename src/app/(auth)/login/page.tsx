@@ -22,7 +22,7 @@ function Login() {
     formState: { errors },
   } = useForm<ISignInValue>({ mode: "onChange" });
 
-  const onSubmit: SubmitHandler<ISignInValue> = async data => {
+  const onSubmit: SubmitHandler<ISignInValue> = data => {
     console.log(data);
   };
 
