@@ -10,7 +10,7 @@ function NotFound() {
           <Empty width="100%" height="100%" />
         </div>
         <p className="break-keep text-center text-lg font-semibold text-primary-gray-500">
-          죄송합니다. 현재 찾을 수 없는 페이지를 요청 하셨습니다.
+          죄송합니다. 요청하신 페이지를 찾을 수 없습니다.
         </p>
         <Link
           href="/"
