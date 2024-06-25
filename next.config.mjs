@@ -1,18 +1,15 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  env: {
+    BASE_URL: process.env.BASE_URL,
+  },
   reactStrictMode: true,
   swcMinify: true,
   webpack(config) {
     config.module.rules.push({
-      test: /\.svg$/,
-      use: [
-        {
-          loader: "@svgr/webpack",
-          options: {
-            icon: true,
-          },
-        },
-      ],
+      test: /\.svg$/i,
+      // issuer: /\.[jt]sx?$/,
+      use: ["@svgr/webpack"],
     });
 
     return config;
