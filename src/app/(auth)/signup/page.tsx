@@ -3,6 +3,22 @@ import Link from "next/link";
 import SignUpForm from "./components/SignUpForm.tsx";
 
 function SignUp() {
+  const {
+    register,
+    watch,
+    formState: { errors },
+  } = useForm<IForm>({
+    mode: "onSubmit",
+    defaultValues: {
+      name: "",
+      email: "",
+      pwd: "",
+    },
+  });
+
+  const passwordRef = useRef<string | null>(null);
+  passwordRef.current = watch("pwd");
+
   return (
     <div className="mx-auto flex min-h-dvh w-full max-w-[400px] items-center justify-center px-5 py-5">
       <div className="flex-1">
