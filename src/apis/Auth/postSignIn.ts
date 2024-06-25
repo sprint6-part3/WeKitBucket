@@ -6,6 +6,7 @@ const postSignIn = async (userInput: UserInput) => {
     const data = await fetchInstance("auth/signIn", {
       method: "POST",
       body: JSON.stringify(userInput),
+      credentials: "include",
     });
 
     return data;
