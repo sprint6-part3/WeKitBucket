@@ -8,14 +8,14 @@ import ErrorText from "./components/ErrorText.tsx";
 import Input from "./components/Input.tsx";
 import Label from "./components/Label.tsx";
 
+const EMAIL_REGEX = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
+
 interface ISignInValue {
   email: string;
   password: string;
 }
 
 function Login() {
-  const EMAIL_REGEX = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
-
   const {
     register,
     handleSubmit,
