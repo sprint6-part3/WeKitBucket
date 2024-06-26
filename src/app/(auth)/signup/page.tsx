@@ -7,17 +7,7 @@ function SignUp() {
     register,
     watch,
     formState: { errors },
-  } = useForm<IForm>({
-    mode: "onSubmit",
-    defaultValues: {
-      name: "",
-      email: "",
-      pwd: "",
-    },
-  });
-
-  const passwordRef = useRef<string | null>(null);
-  passwordRef.current = watch("pwd");
+  } = useForm<UserInput>({ mode: "onChange" });
 
   return (
     <div className="mx-auto flex min-h-dvh w-full max-w-[400px] items-center justify-center px-5 py-5">
