@@ -11,6 +11,11 @@
     "react/react-in-jsx-scope": "off", // React 17 이상에서 필요 없음
     "react/jsx-filename-extension": [1, { "extensions": [".ts", ".tsx"] }], // .tsx 파일에서 JSX 허용
     "import/extensions": "off",
-    "prefer-const": "off"
+    "prefer-const": "off",
+    "react/jsx-props-no-spreading": "off", //  JSX에서 props spreading을 허용
+    "react/prop-types": "off", // TypeScript를 사용하기 때문에 prop-types 검사를 비활성화
+    "react/button-has-type": "off", // <button> 요소에 type 속성을 명시적으로 지정하지 않아도 되도록 함
+    "react/require-default-props": "off", // 기본 props를 요구하지 않도록 비활성화 (TypeScript를 사용하기 때문에 필요 없음)
+    "prefer-arrow-callback": "off" // 콜백 함수에서 화살표 함수를 강제하지 않음
   }
 }
