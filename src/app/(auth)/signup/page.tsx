@@ -1,94 +1,105 @@
-import React, { useRef } from "react";
+"use client";
+
+import React from "react";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
+import { UserInput } from "@/types/auth";
+import Button from "./components/Button.tsx";
+import ErrorText from "./components/ErrorText.tsx";
+import Input from "./components/Input.tsx";
+import Label from "./components/Label.tsx";
 
-interface IForm {
-  name: string;
-  email: string;
-  pwd: string;
-  pwd_confirm: string;
-}
+const EMAIL_REGEX = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
 
 function SignUp() {
   const {
     register,
     watch,
     formState: { errors },
-  } = useForm<IForm>({
-    mode: "onSubmit",
-    defaultValues: {
-      name: "",
-      email: "",
-      pwd: "",
-    },
-  });
-
-  const passwordRef = useRef<string | null>(null);
-  passwordRef.current = watch("pwd");
+  } = useForm<UserInput>({ mode: "onChange" });
 
   return (
-    <form>
-      <div>회원가입</div>
-      <div>
-        <label htmlFor="name">이름</label>
-        <input
-          id="name"
-          placeholder="이름을 입력해주세요"
-          {...register("pwd", {
-            maxLength: {
-              value: 10,
-              message: "열 자 이하로 작성해주세요.",
-            },
-          })}
-        />
+    <div className="mx-auto flex min-h-dvh w-full max-w-[400px] items-center justify-center px-5 py-5">
+      <div className="flex-1">
+        <h2 className="text-center text-2xl font-semibold leading-[1.3] text-primary-gray-500">회원가입</h2>
+
+        <form className="mb-[40px] mt-[50px]">
+          <div className="grid gap-6">
+            <div className="grid gap-[10px]">
+              <Label htmlFor="name">이름</Label>
+              <Input
+                id="name"
+                placeholder="이름을 입력해주세요"
+                {...register("name", {
+                  maxLength: {
+                    value: 10,
+                    message: "열 자 이하로 작성해주세요.",
+                  },
+                })}
+                validationCheck={!!errors.name}
+              />
+              {errors?.name && <ErrorText>{errors.name?.message}</ErrorText>}
+            </div>
+
+            <div className="grid gap-[10px]">
+              <Label htmlFor="email">이메일</Label>
+              <Input
+                id="email"
+                placeholder="이메일을 입력해주세요"
+                {...register("email", {
+                  pattern: {
+                    value: EMAIL_REGEX,
+                    message: "이메일 형식으로 작성해 주세요.",
+                  },
+                })}
+                validationCheck={!!errors.email}
+              />
+              {errors?.email && <ErrorText>{errors.email?.message}</ErrorText>}
+            </div>
+
+            <div className="grid gap-[10px]">
+              <Label htmlFor="password">비밀번호</Label>
+              <Input
+                id="password"
+                type="password"
+                placeholder="비밀번호를 입력해주세요"
+                {...register("password", {
+                  minLength: {
+                    value: 8,
+                    message: "8자 이상 입력해주세요.",
+                  },
+                })}
+                validationCheck={!!errors.password}
+              />
+              {errors?.password && <ErrorText>{errors.password?.message}</ErrorText>}
+            </div>
+
+            <div className="grid gap-[10px]">
+              <Label htmlFor="passwordConfirmation">비밀번호 확인</Label>
+              <Input
+                id="passwordConfirmation"
+                type="password"
+                placeholder="비밀번호를 입력해주세요"
+                {...register("passwordConfirmation", {
+                  validate: value => (value === watch("password") ? true : "비밀번호가 일치하지 않습니다."),
+                })}
+                validationCheck={!!errors.passwordConfirmation}
+              />
+              {errors?.passwordConfirmation && <ErrorText>{errors.passwordConfirmation?.message}</ErrorText>}
+            </div>
+          </div>
+
+          <Button type="submit">가입하기</Button>
+        </form>
+
+        <div className="mt-[40px] flex items-center justify-center gap-[10px]">
+          <p className="text-center text-sm leading-[1.7] text-primary-gray-600">이미 회원이신가요?</p>
+          <Link href="./login" className="text-center text-sm leading-[1.7] text-primary-green-200">
+            로그인하기
+          </Link>
+        </div>
       </div>
-      {errors?.email ? <p className="error">{errors.email?.message}</p> : null}
-      <div>
-        <label htmlFor="email">이메일</label>
-        <input
-          id="email"
-          placeholder="이메일을 입력해주세요"
-          {...register("email", {
-            pattern: {
-              value: /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i,
-              message: "이메일 형식으로 작성해 주세요.",
-            },
-          })}
-        />
-        {errors?.email ? <p className="error">{errors.email?.message}</p> : null}
-      </div>
-      <div>
-        <label htmlFor="pwd">비밀번호</label>
-        <input
-          id="pwd"
-          type="password"
-          placeholder="비밀번호를 입력해주세요"
-          {...register("pwd", {
-            minLength: {
-              value: 8,
-              message: "8자 이상 입력해주세요.",
-            },
-          })}
-        />
-        {errors?.pwd ? <p className="error">{errors.pwd?.message}</p> : null}
-      </div>
-      <div>
-        <label htmlFor="pwd_confirm">비밀번호 확인</label>
-        <input
-          id="pwd_confirm"
-          type="password"
-          placeholder="비밀번호를 입력해주세요"
-          {...register("pwd_confirm", {
-            validate: value => (value === watch("pwd") ? true : "비밀번호가 일치하지 않습니다."),
-          })}
-        />
-        {errors?.pwd_confirm ? <p className="error">{errors.pwd_confirm?.message}</p> : null}
-      </div>
-      <button type="submit">가입하기</button>
-      <p>
-        이미 회원이신가요?<Link href="./login">로그인하기</Link>
-      </p>
-    </form>
+    </div>
   );
 }
 
