@@ -1,15 +1,22 @@
-import postSignUp from "@/apis/Auth/postSignUp";
-import { UserInput } from "@/types/auth";
+import getArticles from "@/apis/article/getArticles";
 
 function Home() {
-  const user: UserInput = {
-    email: "nape1204@gmail.com",
-    name: "Neview",
-    password: "im79517951",
-    passwordConfirmation: "im79517951",
-  };
+  // const user: UserInput = {
+  //   email: "nape1204@gmail.com",
+  //   name: "Neview",
+  //   password: "im79517951",
+  //   passwordConfirmation: "im79517951",
+  // };
+
+  // const load = async () => {
+  //   const { list } = await getProfiles({ page: 1, name: "김" });
+  //   console.log(list);
+  // };
+  // load();
+
   const load = async () => {
-    await postSignUp(user);
+    const { list } = await getArticles({ keyword: "8팀" });
+    console.log(list);
   };
   load();
 
