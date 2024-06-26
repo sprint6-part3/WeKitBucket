@@ -2,7 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { UserInput } from "@/types/auth";
 import Button from "./components/Button.tsx";
 import ErrorText from "./components/ErrorText.tsx";
@@ -15,15 +15,20 @@ function SignUp() {
   const {
     register,
     watch,
-    formState: { errors },
+    handleSubmit,
+    formState: { isSubmitting, errors, isValid },
   } = useForm<UserInput>({ mode: "onChange" });
+
+  const onSubmit: SubmitHandler<UserInput> = data => {
+    console.log(data);
+  };
 
   return (
     <div className="mx-auto flex min-h-dvh w-full max-w-[400px] items-center justify-center px-5 py-5">
       <div className="flex-1">
         <h2 className="text-center text-2xl font-semibold leading-[1.3] text-primary-gray-500">회원가입</h2>
 
-        <form className="mb-[40px] mt-[50px]">
+        <form className="mb-[40px] mt-[50px]" onSubmit={handleSubmit(onSubmit)}>
           <div className="grid gap-6">
             <div className="grid gap-[10px]">
               <Label htmlFor="name">이름</Label>
@@ -31,6 +36,7 @@ function SignUp() {
                 id="name"
                 placeholder="이름을 입력해주세요"
                 {...register("name", {
+                  required: true,
                   maxLength: {
                     value: 10,
                     message: "열 자 이하로 작성해주세요.",
@@ -47,6 +53,7 @@ function SignUp() {
                 id="email"
                 placeholder="이메일을 입력해주세요"
                 {...register("email", {
+                  required: true,
                   pattern: {
                     value: EMAIL_REGEX,
                     message: "이메일 형식으로 작성해 주세요.",
@@ -64,6 +71,7 @@ function SignUp() {
                 type="password"
                 placeholder="비밀번호를 입력해주세요"
                 {...register("password", {
+                  required: true,
                   minLength: {
                     value: 8,
                     message: "8자 이상 입력해주세요.",
@@ -81,6 +89,7 @@ function SignUp() {
                 type="password"
                 placeholder="비밀번호를 입력해주세요"
                 {...register("passwordConfirmation", {
+                  required: true,
                   validate: value => (value === watch("password") ? true : "비밀번호가 일치하지 않습니다."),
                 })}
                 validationCheck={!!errors.passwordConfirmation}
@@ -89,7 +98,9 @@ function SignUp() {
             </div>
           </div>
 
-          <Button type="submit">가입하기</Button>
+          <Button type="submit" disabled={!isValid || isSubmitting}>
+            가입하기
+          </Button>
         </form>
 
         <div className="mt-[40px] flex items-center justify-center gap-[10px]">
