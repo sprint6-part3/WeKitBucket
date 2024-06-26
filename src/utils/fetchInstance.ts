@@ -3,28 +3,34 @@ import createParams from "./createParams";
 
 const baseUrl = process.env.BASE_URL;
 
-const fetchInstance = async (
-  url: string,
-  query: Record<string, string | number> = {},
-  options: RequestInit = {},
-  requiresAuth = false,
-) => {
-  const defaultHeaders: HeadersInit = {
+const getDefaultHeaders = (requiresAuth: boolean): HeadersInit => {
+  const headers: HeadersInit = {
     Accept: "application/json",
     "Content-Type": "application/json",
   };
 
   if (requiresAuth) {
-    defaultHeaders.Authorization = `Bearer ${cookies().get("accessToken")}`;
+    headers.Authorization = `Bearer ${cookies().get("accessToken")}`;
   }
 
-  const params = createParams(query);
-  const fullUrl = params ? `${baseUrl}${url}?${params}` : `${baseUrl}${url}`;
+  return headers;
+};
 
-  const response = await fetch(fullUrl, {
+const createQueryString = (url: string, params?: Record<string, string | number>): string =>
+  url.includes("?") ? url : `${url}?${createParams(params || {})}`;
+
+const fetchInstance = async (
+  url: string,
+  options: RequestInit & { params?: Record<string, string | number> } = {},
+  requiresAuth = false,
+) => {
+  const headers = getDefaultHeaders(requiresAuth);
+  const queryString = createQueryString(url, options.params);
+
+  const response = await fetch(`${baseUrl}${queryString}`, {
     ...options,
     headers: {
-      ...defaultHeaders,
+      ...headers,
       ...options.headers,
     },
   });

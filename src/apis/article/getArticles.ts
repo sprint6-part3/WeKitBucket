@@ -9,16 +9,16 @@ const getArticles = async (options: {
   keyword?: string;
 }): Promise<ArticleData> => {
   try {
-    const data = await fetchInstance("articles?", options, {
+    const data = await fetchInstance(`articles?${options}`, {
       method: "GET",
     });
 
     return data;
   } catch (error) {
     if (error instanceof Error) {
-      throw new Error(error.message || "profile list failed");
+      throw new Error(error.message || "Artist list failed");
     } else {
-      throw new Error("profile list failed");
+      throw new Error("Artist list failed");
     }
   }
 };

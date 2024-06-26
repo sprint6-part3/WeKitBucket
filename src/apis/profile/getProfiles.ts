@@ -3,7 +3,7 @@ import fetchInstance from "@/utils/fetchInstance";
 // 목록 페이지
 const getProfiles = async (options: { page?: number; pageSize?: number; name?: string }): Promise<ProfileData> => {
   try {
-    const data = await fetchInstance("profiles?", options, {
+    const data = await fetchInstance(`profiles?${options}`, {
       method: "GET",
     });
 
