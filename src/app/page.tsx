@@ -1,5 +1,6 @@
 import "@/styles/globals.css";
 import Image from "next/image";
+import RedirectButton from "@/_components/RedirectButton";
 import landingKeyboard from "@/assets/images/landingKeyboard.webp";
 import topSectionItem1 from "@/assets/images/topSectionItem1.webp";
 import landingWrite from "@/assets/images/landingWrite.webp";
@@ -23,12 +24,7 @@ function HomePage() {
           남들이 만드는
         </p>
         <p className="mt-[15px] text-center text-3xl-bold text-primary-gray-500 md:text-5xl-bold">나만의 위키</p>
-        <button
-          type="button"
-          className="mt-[40px] flex items-center justify-center rounded-[15px] bg-primary-gray-500 px-[30px] py-[15px] text-center text-md-bold-20-alt leading-[24px] text-white"
-        >
-          위키 만들기
-        </button>
+        <RedirectButton text="위키 만들기" variant="primary" />
         <Image
           className="mt-[44px] w-[336px] md:mt-[54px] md:w-[498px]"
           src={topSectionItem1}
@@ -82,24 +78,19 @@ function HomePage() {
       </section>
       <section className="flex h-[329px] flex-col items-center justify-center gap-[40px] bg-primary-gray-500 md:h-[488px] xl:h-[568px]">
         <p className="text-xl-bold-32 text-white md:text-3xl-bold">나만의 위키 만들어보기</p>
-        <button
-          type="button"
-          className="h-[54px] w-[169px] rounded-[15px] bg-white text-md-semibold text-primary-gray-500"
-        >
-          지금 시작하기
-        </button>
+        <RedirectButton text="지금 시작하기" variant="secondary" />
       </section>
       <footer className="radius-[15px] flex h-[152px] items-center bg-primary-gray-600 pl-[20px] text-center text-white md:h-[230px] xl:h-[270px]">
         <div className="ml-[48px] flex w-full flex-col items-start xl:w-[1280px]">
-          <p className="md:text-sm-bold mb-[10px] text-xs-bold">Copyright ⓒ Wikied. All Rights Reserved</p>
+          <p className="mb-[10px] text-xs-bold md:text-sm-bold">Copyright ⓒ Wikied. All Rights Reserved</p>
           <p className="text-xs-regular md:text-sm-regular">
             사업자등록번호 000-00-00000 | 통신판매신고 제2020-서울-00000호 | 대표 : 이기주
           </p>
           <p className="mb-[20px] text-xs-regular md:text-sm-regular">서울특별시 중구 청계천로 123, 위키드빌딩</p>
           <div className="flex gap-[15px]">
-            <p className="md:text-sm-regular-14 text-xs-regular">서비스 이용약관</p>
-            <p className="md:text-sm-regular-14 text-xs-regular">개인정보 취급방침</p>
-            <p className="md:text-sm-regular-14 text-xs-regular">전자금융거래 기본약관</p>
+            <p className="text-xs-regular md:text-sm-regular-14">서비스 이용약관</p>
+            <p className="text-xs-regular md:text-sm-regular-14">개인정보 취급방침</p>
+            <p className="text-xs-regular md:text-sm-regular-14">전자금융거래 기본약관</p>
           </div>
         </div>
       </footer>

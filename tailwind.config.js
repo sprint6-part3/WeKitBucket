@@ -13,7 +13,6 @@ module.exports = {
         "sm-regular": ["16px", { lineHeight: "18.4px", fontWeight: "400" }],
         "sm-bold": ["16px", { lineHeight: "18.4px", fontWeight: "700" }],
         "md-bold-18": ["18px", { lineHeight: "32px", fontWeight: "bold" }],
-        "md-bold-20-alt": ["20px", { lineHeight: "23.5px", fontWeight: "700" }],
         "md-bold-20": ["20px", { lineHeight: "32px", fontWeight: "bold" }],
         "md-semibold": ["20px", { lineHeight: "32px", fontWeight: "600" }],
         "md-medium": ["20px", { lineHeight: "32px", fontWeight: "500" }],
