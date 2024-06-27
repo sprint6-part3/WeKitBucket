@@ -6,10 +6,10 @@ import Link from "next/link";
 import LikeIcon from "@/assets/icons/like.svg";
 import CameraIcon from "@/assets/icons/camera.svg";
 import SearchIcon from "@/assets/icons/search.svg";
-import Caret from "@/assets/icons/caret.svg";
+import Dropdown from "./components/Dropdown";
 
 function Board() {
-  const slides = Array.from({ length: 10 });
+  const slides = Array.from({ length: 4 });
   const posts = Array.from({ length: 10 });
 
   return (
@@ -74,7 +74,7 @@ function Board() {
             <div className="relative flex-1">
               <input
                 placeholder="제목을 입력해 주세요"
-                className="w-full rounded-[10px] bg-primary-gray-100 py-[7px] pl-[47px] pr-[15px] font-medium leading-[1.7] placeholder:text-primary-gray-400"
+                className="w-full rounded-[10px] bg-primary-gray-100 py-[7px] pl-[47px] pr-[15px] font-medium leading-[1.7] placeholder:text-primary-gray-400 focus:outline-none"
               />
               <div className="absolute left-[17px] top-1/2 -translate-y-1/2">
                 <SearchIcon width={17} height={17} />
@@ -87,14 +87,8 @@ function Board() {
               검색
             </button>
           </form>
-          <div className="w-full">
-            <button
-              type="button"
-              className="flex w-full cursor-pointer items-center justify-between rounded-[10px] bg-primary-gray-100 px-5 py-[10.5px]"
-            >
-              <p className="text-sm leading-[1.7] text-primary-gray-500">최신순</p>
-              <Caret width={7} height={4} />
-            </button>
+          <div className="relative w-full">
+            <Dropdown />
           </div>
         </div>
         {/* 리스트 영역 */}
