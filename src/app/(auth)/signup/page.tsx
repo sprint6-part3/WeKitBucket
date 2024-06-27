@@ -3,17 +3,6 @@ import Link from "next/link";
 import SignUpForm from "./components/SignUpForm.tsx";
 
 function SignUp() {
-  const {
-    register,
-    watch,
-    handleSubmit,
-    formState: { isSubmitting, errors, isValid },
-  } = useForm<UserInput>({ mode: "onChange" });
-
-  const onSubmit: SubmitHandler<UserInput> = data => {
-    console.log(data);
-  };
-
   return (
     <div className="mx-auto flex min-h-dvh w-full max-w-[400px] items-center justify-center px-5 py-5">
       <div className="flex-1">
