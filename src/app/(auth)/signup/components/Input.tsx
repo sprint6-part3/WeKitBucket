@@ -4,10 +4,7 @@ interface IInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   validationCheck?: boolean;
 }
 
-export default forwardRef(function Input(
-  { validationCheck, ...rest }: IInputProps,
-  ref: React.LegacyRef<HTMLInputElement>,
-) {
+function Input({ validationCheck, ...rest }: IInputProps, ref: React.LegacyRef<HTMLInputElement>) {
   return (
     <input
       autoComplete="off"
@@ -20,4 +17,6 @@ export default forwardRef(function Input(
       {...rest}
     />
   );
-});
+}
+
+export default forwardRef(Input);

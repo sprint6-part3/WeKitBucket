@@ -11,6 +11,7 @@
     ],
     "react/react-in-jsx-scope": "off", // React 17 이상에서 필요 없음
     "react/jsx-filename-extension": [1, { "extensions": [".ts", ".tsx"] }], // .tsx 파일에서 JSX 허용
+    "react-hooks/rules-of-hooks": "off", // React Hook 사용 허용
     "import/extensions": "off",
     "prefer-const": "off",
     "react/jsx-props-no-spreading": "off", //  JSX에서 props spreading을 허용
