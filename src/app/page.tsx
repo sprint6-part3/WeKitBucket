@@ -1,14 +1,16 @@
 import "@/styles/globals.css";
 import Image from "next/image";
-import RedirectButton from "@/_components/RedirectButton";
-import landingKeyboard from "@/assets/images/landingKeyboard.webp";
-import topSectionItem1 from "@/assets/images/topSectionItem1.webp";
-import landingWrite from "@/assets/images/landingWrite.webp";
-import middleSectionItem from "@/assets/images/middleSectionItem1.webp";
-import bottomSectionItem1 from "@/assets/images/bottomSectionItem1.webp";
-import bottomSectionItem2 from "@/assets/images/bottomSectionItem2.webp";
-import bottomSectionItem3 from "@/assets/images/bottomSectionItem3.webp";
-import backgroundImage from "@/assets/images/topSectionBackgroundImg.webp";
+import RedirectButton from "@/components/RedirectButton";
+import {
+  landingKeyboard,
+  topSectionItem1,
+  landingWrite,
+  middleSectionItem,
+  bottomSectionItem1,
+  bottomSectionItem2,
+  bottomSectionItem3,
+  backgroundImage,
+} from "@/assets/index";
 
 function HomePage() {
   return (

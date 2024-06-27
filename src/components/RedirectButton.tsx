@@ -5,7 +5,7 @@ import { useAuth } from "@/context/AuthContext";
 
 interface RedirectButtonProps {
   text: string;
-  variant?: "primary" | "secondary";
+  variant: "primary" | "secondary";
 }
 
 function RedirectButton({ text, variant }: RedirectButtonProps) {
@@ -22,7 +22,7 @@ function RedirectButton({ text, variant }: RedirectButtonProps) {
 
   const buttonClass =
     variant === "primary"
-      ? "mt-[40px] flex items-center justify-center rounded-[15px] bg-primary-gray-500 px-[30px] py-[15px] text-center text-md-bold-20-alt leading-[24px] text-white"
+      ? "mt-[40px] flex items-center justify-center rounded-[15px] bg-primary-gray-500 px-[30px] py-[15px] text-center text-md-bold-20 leading-[24px] text-white"
       : "h-[54px] w-[169px] rounded-[15px] bg-white text-md-semibold text-primary-gray-500";
 
   return (
@@ -31,9 +31,5 @@ function RedirectButton({ text, variant }: RedirectButtonProps) {
     </button>
   );
 }
-
-RedirectButton.defaultProps = {
-  variant: "primary",
-};
 
 export default RedirectButton;
