@@ -20,10 +20,12 @@
     "eslint-plugin-jsx-a11y": "^6.9.0",
     "eslint-plugin-react": "^7.34.3",
     "eslint-plugin-react-hooks": "^4.6.2",
+    "intellisense": "^0.0.1",
     "next": "14.2.4",
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.52.0",
+    "tailwind": "^4.0.0",
     "yarn": "^1.22.22"
   },
   "devDependencies": {
