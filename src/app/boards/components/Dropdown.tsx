@@ -12,7 +12,7 @@ function Dropdown() {
   };
 
   return (
-    <>
+    <div className="relative w-full">
       <button
         type="button"
         onClick={toggleDropdown}
@@ -36,7 +36,7 @@ function Dropdown() {
           </ul>
         </>
       )}
-    </>
+    </div>
   );
 }
 
