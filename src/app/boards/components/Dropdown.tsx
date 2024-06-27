@@ -28,7 +28,7 @@ function Dropdown() {
             {sort.map(value => (
               <li
                 key={value}
-                className="px-4 py-[6px] text-sm leading-[1.7] text-primary-gray-500 hover:bg-primary-green-100"
+                className="cursor-pointer px-4 py-[6px] text-sm leading-[1.7] text-primary-gray-500 hover:bg-primary-green-100"
               >
                 {value}
               </li>
