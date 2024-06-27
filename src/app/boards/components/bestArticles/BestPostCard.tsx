@@ -4,7 +4,7 @@ import CameraIcon from "@/assets/icons/camera.svg";
 
 function BestPostCard() {
   return (
-    <div className="h-[200px] w-[250px]">
+    <div className="h-[200px] w-[250px] sm:aspect-[1/0.73] sm:h-auto sm:w-full lg:aspect-[1/0.88]">
       <div className="flex h-full flex-col overflow-visible rounded-[10px] shadow-custom-shadow">
         <div className="flex-1">
           <div className="flex h-full items-center justify-center rounded-t-[10px] bg-primary-gray-100">

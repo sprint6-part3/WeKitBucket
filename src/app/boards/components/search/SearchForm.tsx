@@ -6,7 +6,7 @@ function SearchForm() {
   return (
     <form className="flex w-full items-center gap-[15px]">
       <SearchInput />
-      <Button px={27.5}>검색</Button>
+      <Button>검색</Button>
     </form>
   );
 }

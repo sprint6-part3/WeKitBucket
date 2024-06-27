@@ -1,14 +1,13 @@
 import React, { PropsWithChildren } from "react";
 
 interface IButtonProps extends PropsWithChildren {
-  px?: number;
+  padding?: boolean;
 }
 
-function Button({ px, children }: IButtonProps) {
-  const paddingX = px ? `px-[${px}px]` : "";
+function Button({ padding, children }: IButtonProps) {
   return (
     <button
-      className={`${paddingX} rounded-[10px] bg-primary-green-200 py-[10.5px] text-sm font-semibold leading-[1.7] text-white`}
+      className={`rounded-[10px] bg-primary-green-200 py-[10.5px] text-sm font-semibold leading-[1.7] text-white ${padding ? "px-[20.5px]" : "px-[27.5px]"}`}
     >
       {children}
     </button>
