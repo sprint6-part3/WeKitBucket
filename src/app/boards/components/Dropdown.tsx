@@ -12,7 +12,7 @@ function Dropdown() {
   };
 
   return (
-    <div className="relative w-full">
+    <div className="relative w-full md:w-[120px] lg:w-[140px]">
       <button
         type="button"
         onClick={toggleDropdown}

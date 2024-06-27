@@ -23,9 +23,9 @@ function Board() {
         </div>
         <BestPostList />
       </section>
-      <section className="mx-auto grid w-full max-w-[1180px] gap-[30px] px-5 sm:px-[60px]">
+      <section className="mx-auto grid w-full max-w-[1180px] gap-[30px] px-5 sm:px-[60px] md:gap-5">
         {/* 검색 및 정렬 영역 */}
-        <div className="flex flex-col items-center justify-center gap-5">
+        <div className="flex flex-col items-center justify-center gap-5 md:flex-row">
           <SearchForm />
           <Dropdown />
         </div>

@@ -7,7 +7,7 @@ interface IButtonProps extends PropsWithChildren {
 function Button({ padding, children }: IButtonProps) {
   return (
     <button
-      className={`rounded-[10px] bg-primary-green-200 py-[10.5px] text-sm font-semibold leading-[1.7] text-white ${padding ? "px-[20.5px]" : "px-[27.5px]"}`}
+      className={`rounded-[10px] bg-primary-green-200 py-[10.5px] text-sm font-semibold leading-[1.7] text-white ${padding ? "px-[20.5px] md:px-[35.5px]" : "px-[27.5px]"}`}
     >
       {children}
     </button>

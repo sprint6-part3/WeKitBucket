@@ -7,6 +7,10 @@ function BestPostList() {
   const windowSize = useWindowSize();
   const isMobile = windowSize < 640;
 
+  if (windowSize === 0) {
+    return;
+  }
+  // eslint-disable-next-line consistent-return
   return <div className="w-full overflow-hidden">{isMobile ? <BestSwiper /> : <BestFlex />}</div>;
 }
 
