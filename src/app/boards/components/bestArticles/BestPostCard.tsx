@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import LikeIcon from "@/assets/icons/like.svg";
 import CameraIcon from "@/assets/icons/camera.svg";

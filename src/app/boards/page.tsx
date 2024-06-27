@@ -1,12 +1,11 @@
-"use client";
-
 import "swiper/css";
 import Link from "next/link";
 import Dropdown from "./components/Dropdown";
-import PostList from "./components/PostList";
+import PostList from "./components/allArticles/PostList";
 import SearchForm from "./components/search/SearchForm";
 import Button from "./components/Button";
 import BestPostList from "./components/bestArticles/BestPostList";
+import PostHeader from "./components/allArticles/PostHeader";
 
 function Board() {
   const posts = Array.from({ length: 10 });
@@ -23,7 +22,7 @@ function Board() {
         </div>
         <BestPostList />
       </section>
-      <section className="mx-auto grid w-full max-w-[1180px] gap-[30px] px-5 sm:px-[60px] md:gap-5">
+      <section className="mx-auto grid w-full max-w-[1180px] gap-[30px] px-5 sm:gap-5 sm:px-[60px] md:gap-5">
         {/* 검색 및 정렬 영역 */}
         <div className="flex flex-col items-center justify-center gap-5 md:flex-row">
           <SearchForm />
@@ -32,13 +31,14 @@ function Board() {
         {/* 리스트 영역 */}
         <div className="w-full">
           <ul className="grid w-full gap-[14px]">
+            <PostHeader />
             {posts.map((post, idx) => (
               <PostList key={String(idx + 1)} />
             ))}
           </ul>
         </div>
         {/* 페이지네이션 영역 */}
-        <div>페이지네이션</div>
+        <div className="mt-10">페이지네이션</div>
       </section>
     </div>
   );
