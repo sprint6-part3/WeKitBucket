@@ -1,2 +1,15 @@
 {
+  "tailwindCSS.experimental.classRegex": [["classnames\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"]],
+  "tailwindCSS.includeLanguages": {
+    "typescript": "javascript",
+    "typescriptreact": "javascript"
+  },
+  "editor.quickSuggestions": {
+    "strings": true
+  },
+  "files.associations": {
+    "*.html": "html",
+    "*.css": "tailwindcss"
+  },
+  "tailwindCSS.emmetCompletions": true
 }
