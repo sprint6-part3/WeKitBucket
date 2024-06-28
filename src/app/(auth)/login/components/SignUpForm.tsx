@@ -15,7 +15,7 @@ interface ISignInValue {
 
 const EMAIL_REGEX = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
 
-function Form() {
+function SignInForm() {
   const {
     register,
     handleSubmit,
@@ -69,4 +69,4 @@ function Form() {
   );
 }
 
-export default Form;
+export default SignInForm;
