@@ -7,13 +7,15 @@ import SearchForm from "../search/SearchForm";
 import Dropdown, { ISortValue } from "../Dropdown";
 import PostHeader from "./PostHeader";
 import PostList from "./PostList";
+import Pagination from "../Pagination";
 
 function AllArticleSection({ article }: IArticleProps) {
+  const { totalCount } = article;
   const [articles, setArticles] = useState(article?.list || []);
   const [keyword, setKeyword] = useState("");
   const [options, setOptions] = useState<ArticleOption>({
     page: 1,
-    pageSize: 10,
+    pageSize: 2,
     orderBy: "recent",
     keyword: "",
   });
@@ -31,6 +33,7 @@ function AllArticleSection({ article }: IArticleProps) {
   const handleSort = (id: "recent" | "like") => {
     setOptions(prev => ({
       ...prev,
+      page: 1,
       orderBy: `${id}`,
     }));
   };
@@ -39,6 +42,7 @@ function AllArticleSection({ article }: IArticleProps) {
     e.preventDefault();
     setOptions(prev => ({
       ...prev,
+      page: 1,
       keyword: `${keyword}`,
     }));
   };
@@ -46,6 +50,13 @@ function AllArticleSection({ article }: IArticleProps) {
   const handleChangeSearchInput: React.ChangeEventHandler<HTMLInputElement> = e => {
     const { value } = e.target;
     setKeyword(value);
+  };
+
+  const handlePaginationClick: (number: number) => void = pageNum => {
+    setOptions(prev => ({
+      ...prev,
+      page: pageNum,
+    }));
   };
 
   useEffect(() => {
@@ -76,7 +87,14 @@ function AllArticleSection({ article }: IArticleProps) {
         </ul>
       </div>
       {/* 페이지네이션 영역 */}
-      <div className="mt-10">페이지네이션</div>
+      {options.page && options.pageSize && (
+        <Pagination
+          totalCount={totalCount}
+          currentPage={options.page}
+          pageSize={options.pageSize}
+          onClick={handlePaginationClick}
+        />
+      )}
     </section>
   );
 }
