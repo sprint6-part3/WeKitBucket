@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import dayjs from "dayjs";
 import LikeIcon from "@/assets/icons/like.svg";
 import { ArticleList } from "@/types/articles";
 
@@ -11,6 +12,8 @@ export interface IPostProps {
 function PostList({ post }: IPostProps) {
   const { id, title, createdAt, writer, likeCount } = post;
   const { name } = writer;
+
+  const formattedDate = dayjs(createdAt).format("YYYY.MM.DD.");
 
   return (
     <li className="board-tr w-full overflow-hidden border-b border-solid border-primary-gray-200 pb-[10px]">
@@ -25,7 +28,7 @@ function PostList({ post }: IPostProps) {
           </p>
           <p className="hidden leading-[1.7] text-primary-gray-500 sm:block sm:truncate sm:text-center">{likeCount}</p>
           <p className="leading-[1.7] text-primary-gray-400 sm:truncate sm:text-center sm:text-primary-gray-500">
-            {createdAt}
+            {formattedDate}
           </p>
         </div>
         <div className="flex items-center gap-[7px] sm:hidden">

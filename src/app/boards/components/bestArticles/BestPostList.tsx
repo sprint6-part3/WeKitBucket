@@ -13,7 +13,6 @@ export interface IBestPostListProps {
 }
 
 function BestPostList({ article }: IBestPostListProps) {
-  console.log(article, "article");
   const windowSize = useWindowSize();
   const isMobile = windowSize < 640 && windowSize !== 0;
 

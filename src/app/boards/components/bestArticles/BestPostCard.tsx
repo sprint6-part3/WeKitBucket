@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import dayjs from "dayjs";
 import LikeIcon from "@/assets/icons/like.svg";
 import CameraIcon from "@/assets/icons/camera.svg";
 import { IPostProps } from "../allArticles/PostList";
@@ -9,6 +10,8 @@ function BestPostCard({ post }: IPostProps) {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { title, image, createdAt, writer, likeCount } = post;
   const { name } = writer;
+
+  const formattedDate = dayjs(createdAt).format("YYYY.MM.DD.");
 
   return (
     <div className="h-[200px] w-[250px] sm:aspect-[1/0.73] sm:h-auto sm:w-full lg:aspect-[1/0.88]">
@@ -23,7 +26,7 @@ function BestPostCard({ post }: IPostProps) {
           <div className="flex items-center justify-between">
             <div className="flex gap-2">
               <p className="text-xs leading-[1.5] text-primary-gray-400">{name}</p>
-              <p className="text-xs leading-[1.5] text-primary-gray-400">{createdAt}</p>
+              <p className="text-xs leading-[1.5] text-primary-gray-400">{formattedDate}</p>
             </div>
             <div className="flex items-center gap-1">
               <div className="flex h-4 w-4 items-center justify-center">
