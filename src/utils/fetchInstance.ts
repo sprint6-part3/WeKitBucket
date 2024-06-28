@@ -12,7 +12,8 @@ const getDefaultHeaders = (requiresAuth: boolean): HeadersInit => {
   };
 
   if (requiresAuth) {
-    headers.Authorization = `Bearer ${cookies().get("accessToken")}`;
+    const token = cookies().get("cookie");
+    headers.Authorization = `Bearer ${token?.value}`;
   }
 
   return headers;
@@ -21,11 +22,9 @@ const getDefaultHeaders = (requiresAuth: boolean): HeadersInit => {
 const createQueryString = (url: string, params?: Record<string, string | number>): string =>
   url.includes("?") ? url : `${url}?${createParams(params || {})}`;
 
-const fetchInstance = async (
-  url: string,
-  options: RequestInit & { params?: Record<string, string | number> } = {},
-  requiresAuth = false,
-) => {
+const fetchInstance = async (url: string, options: RequestInit & { params?: Record<string, string | number> } = {}) => {
+  const methodsRequiringAuth = ["POST", "PUT", "DELETE"];
+  const requiresAuth = methodsRequiringAuth.includes(options.method?.toUpperCase() || "GET");
   const headers = getDefaultHeaders(requiresAuth);
   const queryString = createQueryString(url, options.params);
 

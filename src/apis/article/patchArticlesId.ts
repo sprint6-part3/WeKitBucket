@@ -6,10 +6,10 @@ export interface ArticleInput {
   title: string;
 }
 
-const postArticles = async (articleInput: ArticleInput) => {
+const patchArticlesId = async (articleInput: ArticleInput, articleId: number) => {
   try {
-    await fetchInstance("articles", {
-      method: "POST",
+    await fetchInstance(`articles/${articleId}`, {
+      method: "PATCH",
       body: JSON.stringify(articleInput),
     });
   } catch (error) {
@@ -21,4 +21,4 @@ const postArticles = async (articleInput: ArticleInput) => {
   }
 };
 
-export default postArticles;
+export default patchArticlesId;
