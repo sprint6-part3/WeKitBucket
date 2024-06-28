@@ -4,10 +4,10 @@ import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import BestPostCard from "./BestPostCard";
+// eslint-disable-next-line import/no-cycle
+import { IBestPostListProps } from "./BestPostList";
 
-function BestSwiper() {
-  const slides = Array.from({ length: 4 });
-
+function BestSwiper({ article }: IBestPostListProps) {
   return (
     <Swiper
       spaceBetween={16}
@@ -18,9 +18,9 @@ function BestSwiper() {
       observeSlideChildren
       className="w-full max-w-[1240px] !pl-5 sm:!px-5"
     >
-      {slides.map((slide, idx) => (
-        <SwiperSlide key={String(idx + 1)} style={{ width: "auto" }} className="py-5">
-          <BestPostCard />
+      {article?.map(post => (
+        <SwiperSlide key={post.id} style={{ width: "auto" }} className="py-5">
+          <BestPostCard post={post} />
         </SwiperSlide>
       ))}
     </Swiper>

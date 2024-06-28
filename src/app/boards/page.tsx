@@ -1,5 +1,5 @@
-import "swiper/css";
 import Link from "next/link";
+import getArticles, { ArticleOption } from "@/apis/article/getArticles";
 import Dropdown from "./components/Dropdown";
 import PostList from "./components/allArticles/PostList";
 import SearchForm from "./components/search/SearchForm";
@@ -7,8 +7,28 @@ import Button from "./components/Button";
 import BestPostList from "./components/bestArticles/BestPostList";
 import PostHeader from "./components/allArticles/PostHeader";
 
-function Board() {
-  const posts = Array.from({ length: 10 });
+async function Board() {
+  const allArticlesOption: ArticleOption = {
+    page: 1,
+    pageSize: 10,
+    orderBy: "recent",
+  };
+
+  const bestArticlesOption: ArticleOption = {
+    page: 1,
+    pageSize: 4,
+    orderBy: "like",
+  };
+
+  let allArticles;
+  let bestArticles;
+
+  try {
+    allArticles = await getArticles(allArticlesOption);
+    bestArticles = await getArticles(bestArticlesOption);
+  } catch (error) {
+    console.error("Failed to fetch articles");
+  }
 
   return (
     <div className="mx-auto mb-[57px] mt-10 grid gap-5">
@@ -20,7 +40,8 @@ function Board() {
             <Button padding>게시물 등록하기</Button>
           </Link>
         </div>
-        <BestPostList />
+
+        {bestArticles && <BestPostList article={bestArticles?.list} />}
       </section>
       <section className="mx-auto grid w-full max-w-[1180px] gap-[30px] px-5 sm:gap-5 sm:px-[60px] md:gap-5">
         {/* 검색 및 정렬 영역 */}
@@ -32,9 +53,7 @@ function Board() {
         <div className="w-full">
           <ul className="grid w-full gap-[14px]">
             <PostHeader />
-            {posts.map((post, idx) => (
-              <PostList key={String(idx + 1)} />
-            ))}
+            {allArticles?.list.map(article => <PostList key={article.id} post={article} />)}
           </ul>
         </div>
         {/* 페이지네이션 영역 */}
