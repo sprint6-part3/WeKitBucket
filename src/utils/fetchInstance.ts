@@ -1,21 +1,38 @@
+"use server";
+
 import { cookies } from "next/headers";
+import createParams from "./createParams";
 
 const baseUrl = process.env.BASE_URL;
 
-const fetchInstance = async (url: string, options: RequestInit = {}, requiresAuth = false) => {
-  const defaultHeaders: HeadersInit = {
+const getDefaultHeaders = (requiresAuth: boolean): HeadersInit => {
+  const headers: HeadersInit = {
     Accept: "application/json",
     "Content-Type": "application/json",
   };
 
   if (requiresAuth) {
-    defaultHeaders.Authorization = `Bearer ${cookies().get("accessToken")}`;
+    headers.Authorization = `Bearer ${cookies().get("accessToken")}`;
   }
 
-  const response = await fetch(`${baseUrl}${url}`, {
+  return headers;
+};
+
+const createQueryString = (url: string, params?: Record<string, string | number>): string =>
+  url.includes("?") ? url : `${url}?${createParams(params || {})}`;
+
+const fetchInstance = async (
+  url: string,
+  options: RequestInit & { params?: Record<string, string | number> } = {},
+  requiresAuth = false,
+) => {
+  const headers = getDefaultHeaders(requiresAuth);
+  const queryString = createQueryString(url, options.params);
+
+  const response = await fetch(`${baseUrl}${queryString}`, {
     ...options,
     headers: {
-      ...defaultHeaders,
+      ...headers,
       ...options.headers,
     },
   });
