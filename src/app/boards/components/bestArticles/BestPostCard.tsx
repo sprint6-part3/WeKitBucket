@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 import dayjs from "dayjs";
 import LikeIcon from "@/assets/icons/like.svg";
 import CameraIcon from "@/assets/icons/camera.svg";
@@ -8,13 +9,16 @@ import { IPostProps } from "../allArticles/PostList";
 
 function BestPostCard({ post }: IPostProps) {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { title, image, createdAt, writer, likeCount } = post;
+  const { id, title, image, createdAt, writer, likeCount } = post;
   const { name } = writer;
 
   const formattedDate = dayjs(createdAt).format("YYYY.MM.DD.");
 
   return (
-    <div className="h-[200px] w-[250px] sm:aspect-[1/0.73] sm:h-auto sm:w-full lg:aspect-[1/0.88]">
+    <Link
+      href={`/boards/${id}`}
+      className="h-[200px] w-[250px] sm:aspect-[1/0.73] sm:h-auto sm:w-full lg:aspect-[1/0.88]"
+    >
       <div className="flex h-full flex-col overflow-visible rounded-[10px] shadow-custom-shadow">
         <div className="flex-1">
           <div className="flex h-full items-center justify-center rounded-t-[10px] bg-primary-gray-100">
@@ -37,7 +41,7 @@ function BestPostCard({ post }: IPostProps) {
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }
 
