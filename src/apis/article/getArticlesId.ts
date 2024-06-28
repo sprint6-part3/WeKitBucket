@@ -1,10 +1,12 @@
+"use server";
+
 import { ArticleData } from "@/types/articles";
 import fetchInstance from "@/utils/fetchInstance";
 
 // 자유게시판 페이지
-const getArticlesId = async (articleId: number): Promise<ArticleData> => {
+const getArticlesId = async (articleId: number) => {
   try {
-    const data = await fetchInstance(`articles/${articleId}`, {
+    const data = await fetchInstance<ArticleData>(`articles/${articleId}`, {
       method: "GET",
     });
 

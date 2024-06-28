@@ -1,3 +1,5 @@
+"use server";
+
 import { ArticleData } from "@/types/articles";
 import fetchInstance from "@/utils/fetchInstance";
 
@@ -7,9 +9,9 @@ const getArticles = async (options: {
   pageSize?: number;
   orderBy?: "recent" | "like";
   keyword?: string;
-}): Promise<ArticleData> => {
+}) => {
   try {
-    const data = await fetchInstance(`articles?${options}`, {
+    const data = await fetchInstance<ArticleData>(`articles?${options}`, {
       method: "GET",
     });
 

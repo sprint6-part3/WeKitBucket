@@ -1,3 +1,5 @@
+"use server";
+
 import fetchInstance from "@/utils/fetchInstance";
 
 export interface ArticleInput {

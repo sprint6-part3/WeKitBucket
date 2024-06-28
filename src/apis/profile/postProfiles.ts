@@ -1,7 +1,9 @@
+"use server";
+
 import fetchInstance from "@/utils/fetchInstance";
 
 export interface ProfilesInput {
-  securityAnswer: string;
+  securityAnswer?: string;
   securityQuestion: string;
 }
 
@@ -13,9 +15,9 @@ const postProfiles = async (profilesInput: ProfilesInput) => {
     });
   } catch (error) {
     if (error instanceof Error) {
-      throw new Error(error.message || "프로필 수정 failed");
+      throw new Error(error.message || "profile changing failed");
     } else {
-      throw new Error("프로필 수정 failed");
+      throw new Error("profile changing failed");
     }
   }
 };

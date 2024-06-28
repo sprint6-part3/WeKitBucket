@@ -22,8 +22,11 @@ const getDefaultHeaders = (requiresAuth: boolean): HeadersInit => {
 const createQueryString = (url: string, params?: Record<string, string | number>): string =>
   url.includes("?") ? url : `${url}?${createParams(params || {})}`;
 
-const fetchInstance = async (url: string, options: RequestInit & { params?: Record<string, string | number> } = {}) => {
-  const methodsRequiringAuth = ["POST", "PUT", "DELETE"];
+const fetchInstance = async <T>(
+  url: string,
+  options: RequestInit & { params?: Record<string, string | number> } = {},
+): Promise<T> => {
+  const methodsRequiringAuth = ["POST", "PUT", "DELETE", "PATCH", "GET"];
   const requiresAuth = methodsRequiringAuth.includes(options.method?.toUpperCase() || "GET");
   const headers = getDefaultHeaders(requiresAuth);
   const queryString = createQueryString(url, options.params);

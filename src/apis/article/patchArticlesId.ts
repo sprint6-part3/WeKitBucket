@@ -1,3 +1,5 @@
+"use server";
+
 import fetchInstance from "@/utils/fetchInstance";
 
 export interface ArticleInput {
@@ -14,9 +16,9 @@ const patchArticlesId = async (articleInput: ArticleInput, articleId: number) =>
     });
   } catch (error) {
     if (error instanceof Error) {
-      throw new Error(error.message || "post article failed");
+      throw new Error(error.message || "Patch article failed");
     } else {
-      throw new Error("post article failed");
+      throw new Error("patch article failed");
     }
   }
 };
