@@ -1,11 +1,8 @@
 import Link from "next/link";
 import getArticles, { ArticleOption } from "@/apis/article/getArticles";
-import Dropdown from "./components/Dropdown";
-import PostList from "./components/allArticles/PostList";
-import SearchForm from "./components/search/SearchForm";
 import Button from "./components/Button";
 import BestPostList from "./components/bestArticles/BestPostList";
-import PostHeader from "./components/allArticles/PostHeader";
+import AllArticleSection from "./components/allArticles/AllArticleSection";
 
 async function Board() {
   const allArticlesOption: ArticleOption = {
@@ -41,24 +38,9 @@ async function Board() {
           </Link>
         </div>
 
-        {bestArticles && <BestPostList article={bestArticles?.list} />}
+        {bestArticles && <BestPostList article={bestArticles} />}
       </section>
-      <section className="mx-auto grid w-full max-w-[1180px] gap-[30px] px-5 sm:gap-5 sm:px-[60px] md:gap-5">
-        {/* 검색 및 정렬 영역 */}
-        <div className="flex flex-col items-center justify-center gap-5 md:flex-row">
-          <SearchForm />
-          <Dropdown />
-        </div>
-        {/* 리스트 영역 */}
-        <div className="w-full">
-          <ul className="grid w-full gap-[14px]">
-            <PostHeader />
-            {allArticles?.list.map(article => <PostList key={article.id} post={article} />)}
-          </ul>
-        </div>
-        {/* 페이지네이션 영역 */}
-        <div className="mt-10">페이지네이션</div>
-      </section>
+      {allArticles && <AllArticleSection article={allArticles} />}
     </div>
   );
 }

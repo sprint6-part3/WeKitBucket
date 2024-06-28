@@ -4,10 +4,16 @@ import React from "react";
 import SearchInput from "./SearchInput";
 import Button from "../Button";
 
-function SearchForm() {
+interface SearchFormProps {
+  onSubmit: React.FormEventHandler<HTMLFormElement>;
+  onChange?: React.ChangeEventHandler<HTMLInputElement>;
+  value?: string;
+}
+
+function SearchForm({ onSubmit, onChange, value, ...rest }: SearchFormProps) {
   return (
-    <form className="flex w-full items-center gap-[15px]">
-      <SearchInput />
+    <form className="flex w-full items-center gap-[15px]" onSubmit={onSubmit} {...rest}>
+      <SearchInput onChange={onChange} value={value} />
       <Button>검색</Button>
     </form>
   );

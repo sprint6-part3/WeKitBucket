@@ -3,11 +3,10 @@
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
+import { IArticleProps } from "@/types/articles";
 import BestPostCard from "./BestPostCard";
-// eslint-disable-next-line import/no-cycle
-import { IBestPostListProps } from "./BestPostList";
 
-function BestSwiper({ article }: IBestPostListProps) {
+function BestSwiper({ article }: IArticleProps) {
   return (
     <Swiper
       spaceBetween={16}
@@ -18,7 +17,7 @@ function BestSwiper({ article }: IBestPostListProps) {
       observeSlideChildren
       className="w-full max-w-[1240px] !pl-5 sm:!px-5"
     >
-      {article?.map(post => (
+      {article?.list?.map(post => (
         <SwiperSlide key={post.id} style={{ width: "auto" }} className="py-5">
           <BestPostCard post={post} />
         </SwiperSlide>
