@@ -48,3 +48,4 @@ const fetchInstance = async <T>(
 };
 
 export default fetchInstance;
+

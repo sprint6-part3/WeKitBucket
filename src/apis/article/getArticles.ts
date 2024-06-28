@@ -4,14 +4,9 @@ import { ArticleData } from "@/types/articles";
 import fetchInstance from "@/utils/fetchInstance";
 
 // 자유게시판 페이지
-const getArticles = async (options: {
-  page?: number;
-  pageSize?: number;
-  orderBy?: "recent" | "like";
-  keyword?: string;
-}) => {
+const getArticlesId = async (articleId: number) => {
   try {
-    const data = await fetchInstance<ArticleData>(`articles?${options}`, {
+    const data = await fetchInstance<ArticleData>(`articles/${articleId}`, {
       method: "GET",
     });
 
@@ -25,4 +20,4 @@ const getArticles = async (options: {
   }
 };
 
-export default getArticles;
+export default getArticlesId;
