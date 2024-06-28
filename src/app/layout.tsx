@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "@/styles/globals.css";
 import { AuthProvider } from "../context/AuthContext";
+import Header from "./_components/Header";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -15,6 +16,7 @@ function RootLayout({
   return (
     <html lang="ko">
       <body>
+        <Header />
         <AuthProvider>{children}</AuthProvider>
       </body>
     </html>
