@@ -21,10 +21,9 @@ async function Board() {
   let bestArticles;
 
   try {
-    allArticles = await getArticles(allArticlesOption);
-    bestArticles = await getArticles(bestArticlesOption);
+    [allArticles, bestArticles] = await Promise.all([getArticles(allArticlesOption), getArticles(bestArticlesOption)]);
   } catch (error) {
-    console.error("Failed to fetch articles");
+    console.error("Failed to fetch articles: ", error);
   }
 
   return (
