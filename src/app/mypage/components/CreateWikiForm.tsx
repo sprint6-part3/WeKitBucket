@@ -24,7 +24,7 @@ function CreateWikiForm() {
 
   return (
     <form className="mb-[40px] mt-[50px]" onSubmit={handleSubmit(onSubmit)}>
-      <div className="grid gap-[16px]">
+      <div className="grid gap-2">
         <div className="grid gap-[10px]">
           <Label htmlFor="wikiQuestion">위키 생성하기</Label>
           <Input
@@ -32,7 +32,7 @@ function CreateWikiForm() {
             type="text"
             placeholder="질문을 입력해주세요"
             {...register("wikiQuestion", {
-              required: true,
+              required: "질문을 입력해주세요",
             })}
             validationCheck={!!errors.wikiQuestion}
           />
@@ -44,7 +44,7 @@ function CreateWikiForm() {
             type="text"
             placeholder="답을 입력해주세요"
             {...register("wikiAnswer", {
-              required: true,
+              required: "답을 입력해주세요",
             })}
             validationCheck={!!errors.wikiAnswer}
           />

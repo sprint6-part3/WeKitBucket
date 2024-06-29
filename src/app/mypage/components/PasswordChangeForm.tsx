@@ -26,7 +26,7 @@ function PasswordChangeForm() {
 
   return (
     <form className="mb-[40px] mt-[50px]" onSubmit={handleSubmit(onSubmit)}>
-      <div className="grid gap-[16px]">
+      <div className="grid gap-2">
         <div className="grid gap-[10px]">
           <Label htmlFor="password">비밀번호 변경</Label>
           <Input
