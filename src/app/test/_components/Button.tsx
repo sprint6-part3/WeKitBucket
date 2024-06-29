@@ -1,7 +1,7 @@
 "use client";
 
-import postRefreshToken from "@/apis/tempAuth/postRefreshToken";
-import postSignIn from "@/apis/tempAuth/postSignIn";
+import postRefreshToken from "@/apis/auth/postRefreshToken";
+import postSignIn from "@/apis/auth/postSignIn";
 import { UserInput } from "@/types/auth";
 
 import React from "react";
