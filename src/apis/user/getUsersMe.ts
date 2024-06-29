@@ -21,10 +21,11 @@ const getUsersMe = async () => {
     const data = await fetchInstance<RequestUsersMe>("users/me", {
       method: "GET",
     });
-
+    console.log(data);
     return data;
   } catch (error) {
     if (error instanceof Error) {
+      console.error(error);
       throw new Error(error.message || "Artist list failed");
     } else {
       throw new Error("Artist list failed");
