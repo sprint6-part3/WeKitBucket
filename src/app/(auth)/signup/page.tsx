@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import SignUpForm from "./components/SignUpForm.tsx";
+import SignUpForm from "./_components/SignUpForm.tsx";
 
 function SignUp() {
   return (

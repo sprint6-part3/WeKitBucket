@@ -4,7 +4,7 @@ import Link from "next/link";
 
 // import debounce from "@/utils/debounce";
 // import { IUser } from "@/types/user";
-import getUsersMe from "@/apis/user/getUsersMe";
+// import getUsersMe from "@/apis/user/getUsersMe";
 
 import WikidLogo from "@/assets/icons/wikidLogo.svg";
 import MessageAlarm from "./_Header/MessageAlarm";
