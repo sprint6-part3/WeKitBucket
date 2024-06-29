@@ -2,7 +2,7 @@
 
 import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import postSignIn from "@/apis/TempAuth/postSignIn";
+import postSignIn from "@/apis/auth/postSignIn";
 import Button from "./Button";
 import ErrorText from "./ErrorText";
 import Label from "./Label";
