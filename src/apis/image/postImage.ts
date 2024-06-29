@@ -1,12 +1,16 @@
 "use server";
 
 import fetchInstance from "@/utils/fetchInstance";
-// 시간관계상 이미지 등록 페이지 생기면 이어서 하겠습니다..
-const postImage = async (image: string) => {
+
+const postImage = async (image: File) => {
+  const formData = new FormData();
+  formData.append("image", image);
+
   try {
     const data = await fetchInstance<string>("auth/signIn", {
       method: "POST",
-      body: JSON.stringify(image),
+      body: formData,
+      headers: {},
     });
 
     return data;

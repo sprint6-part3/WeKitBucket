@@ -5,7 +5,7 @@ interface RequestNotifications {
   totalCount?: number;
 }
 // 자유게시판 페이지
-const getArticles = async (options: { page?: number; pageSize?: number }) => {
+const GetNotificationOptions = async (options: { page?: number; pageSize?: number }) => {
   try {
     const data = await fetchInstance<RequestNotifications>(`notifications?${options}`, {
       method: "GET",
@@ -21,4 +21,4 @@ const getArticles = async (options: { page?: number; pageSize?: number }) => {
   }
 };
 
-export default getArticles;
+export default GetNotificationOptions;

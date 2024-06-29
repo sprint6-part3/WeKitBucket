@@ -1,5 +1,5 @@
 import fetchInstance from "@/utils/fetchInstance";
-
+// 얘 문제 존나 많음 고쳐야함
 interface RequestComment {
   list: unknown[];
   nextCursor?: null | string;
@@ -8,7 +8,7 @@ const getComment = async (
   articleId: number,
   options: {
     limit: number;
-    nextCursor: number;
+    nextCursor?: number;
   },
 ) => {
   try {

@@ -2,12 +2,6 @@
 
 import fetchInstance from "@/utils/fetchInstance";
 
-export interface ArticleInput {
-  image?: string;
-  content: string;
-  title: string;
-}
-
 const deleteArticlesId = async (articleId: number) => {
   try {
     await fetchInstance(`articles/${articleId}`, {
