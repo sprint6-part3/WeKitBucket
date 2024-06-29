@@ -33,18 +33,20 @@ function BestPostCard({ post }: IPostProps) {
             </div>
           )}
         </div>
-        <div className="grid px-5 py-[14px]">
-          <h3 className="w-full truncate font-semibold leading-[1.6]">{title}</h3>
+        <div className="grid px-5 pb-[15px] pt-[10px] sm:gap-[6px] sm:pb-[14px] sm:pt-5">
+          <h3 className="w-full truncate font-semibold leading-[1.6] sm:text-lg sm:leading-[1.4]">{title}</h3>
           <div className="flex items-center justify-between">
-            <div className="flex gap-2">
-              <p className="text-xs leading-[1.5] text-primary-gray-400">{name}</p>
-              <p className="text-xs leading-[1.5] text-primary-gray-400">{formattedDate}</p>
+            <div className="flex gap-2 sm:gap-[10px] lg:gap-2">
+              <p className="text-xs leading-[1.5] text-primary-gray-400 sm:text-sm sm:leading-[1.7]">{name}</p>
+              <p className="text-xs leading-[1.5] text-primary-gray-400 sm:text-sm sm:leading-[1.7]">{formattedDate}</p>
             </div>
             <div className="flex items-center gap-1">
-              <div className="flex h-4 w-4 items-center justify-center">
-                <LikeIcon width="12.67" height="11" />
+              <div className="flex h-4 w-4 items-center justify-center px-[2px] py-[2px] sm:h-[18px] sm:w-[18px]">
+                <LikeIcon />
               </div>
-              <span className="text-xs leading-[1.2] text-primary-gray-400">{likeCount}</span>
+              <span className="text-xs leading-[1.2] text-primary-gray-400 sm:text-sm sm:leading-[1.7]">
+                {likeCount}
+              </span>
             </div>
           </div>
         </div>
