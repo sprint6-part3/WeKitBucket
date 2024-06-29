@@ -35,11 +35,6 @@ function Pagination({ totalCount, currentPage, pageSize, onClick, groupSize }: I
   }
   let firstNum = groupSize >= lastNum ? 1 : groupSize * (pageGroup - 1) + 1;
 
-  useEffect(() => {
-    const newPageNumbers = Array.from({ length: lastNum - firstNum + 1 }, (_, index) => firstNum + index);
-    setPageNumbers(newPageNumbers);
-  }, [pageGroup, firstNum, lastNum]);
-
   const onClickNumberBtn: (number: number) => void = value => {
     onClick(value);
   };
@@ -57,6 +52,15 @@ function Pagination({ totalCount, currentPage, pageSize, onClick, groupSize }: I
     }
     onClick(currentPage + 1);
   };
+
+  useEffect(() => {
+    setPageGroup(Math.ceil(currentPage / groupSize));
+  }, [currentPage, groupSize]);
+
+  useEffect(() => {
+    const newPageNumbers = Array.from({ length: lastNum - firstNum + 1 }, (_, index) => firstNum + index);
+    setPageNumbers(newPageNumbers);
+  }, [pageGroup, firstNum, lastNum]);
 
   return (
     <div className="flex items-center justify-center gap-[10px] sm:mt-[30px] sm:gap-[15px]">

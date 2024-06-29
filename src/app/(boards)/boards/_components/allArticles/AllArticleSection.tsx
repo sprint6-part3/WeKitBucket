@@ -38,7 +38,7 @@ function AllArticleSection({ article }: IArticleProps) {
     }));
   };
 
-  const handleSearchSubmit: React.FormEventHandler<HTMLFormElement> = async e => {
+  const handleSearchSubmit: React.FormEventHandler<HTMLFormElement> = e => {
     e.preventDefault();
     setOptions(prev => ({
       ...prev,
