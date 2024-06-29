@@ -15,7 +15,7 @@ function AllArticleSection({ article }: IArticleProps) {
   const [keyword, setKeyword] = useState("");
   const [options, setOptions] = useState<ArticleOption>({
     page: 1,
-    pageSize: 2,
+    pageSize: 10,
     orderBy: "recent",
     keyword: "",
   });
@@ -93,6 +93,7 @@ function AllArticleSection({ article }: IArticleProps) {
           currentPage={options.page}
           pageSize={options.pageSize}
           onClick={handlePaginationClick}
+          groupSize={5}
         />
       )}
     </section>

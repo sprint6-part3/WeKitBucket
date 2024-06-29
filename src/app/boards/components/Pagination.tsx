@@ -10,22 +10,30 @@ interface IPaginationProps {
   currentPage: number;
   pageSize: number;
   onClick: (number: number) => void;
+  groupSize: number;
 }
 
-function Pagination({ totalCount, currentPage, pageSize, onClick }: IPaginationProps) {
-  const GROUP_SIZE = 2;
-  const [pageGroup, setPageGroup] = useState(Math.ceil(currentPage / GROUP_SIZE));
+/**
+ * pagination 컴포넌트
+ * @totalCount 전체 게시글 수 (api: totalCount)
+ * @currentPage 현재 페이지 (api: page)
+ * @pageSize 한 페이지에 보이는 게시글 수 (api: pageSize)
+ * @onClick 버튼 클릭 이벤트 핸들 함수 (콜백으로 숫자 전달)
+ * @groupSize 한 화면에 보이는 최대 페이지 버튼 수
+ */
+function Pagination({ totalCount, currentPage, pageSize, onClick, groupSize }: IPaginationProps) {
+  const [pageGroup, setPageGroup] = useState(Math.ceil(currentPage / groupSize));
   const [pageNumbers, setPageNumbers] = useState<number[]>([]);
   const totalPage =
     totalCount % pageSize > 0 ? Math.floor(totalCount / pageSize) + 1 : Math.floor(totalCount / pageSize);
   const isFirstNumber = currentPage === 1;
   const isLastNumber = currentPage === totalPage;
 
-  let lastNum = pageGroup * GROUP_SIZE;
+  let lastNum = pageGroup * groupSize;
   if (lastNum > totalPage) {
     lastNum = totalPage;
   }
-  let firstNum = GROUP_SIZE >= lastNum ? 1 : GROUP_SIZE * (pageGroup - 1) + 1;
+  let firstNum = groupSize >= lastNum ? 1 : groupSize * (pageGroup - 1) + 1;
 
   useEffect(() => {
     const newPageNumbers = Array.from({ length: lastNum - firstNum + 1 }, (_, index) => firstNum + index);
