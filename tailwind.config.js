@@ -65,6 +65,9 @@ module.exports = {
         },
       },
     },
+    fontFamily: {
+      sans: ["Pretendard", "ui-sans-serif", "system-ui"],
+    },
   },
   plugins: [],
 };

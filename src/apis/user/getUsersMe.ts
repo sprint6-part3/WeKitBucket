@@ -1,28 +1,19 @@
 "use server";
 
+import { IUser } from "@/types/user";
 import fetchInstance from "@/utils/fetchInstance";
-
-export interface IProfile {
-  id?: number;
-  code?: string;
-}
-
-export interface RequestUsersMe {
-  id?: number;
-  name?: string;
-  teamId?: string;
-  createdAt?: string;
-  updatedAt?: string;
-  profile?: IProfile;
-}
+import { cookies } from "next/headers";
 
 const getUsersMe = async () => {
   try {
-    const data = await fetchInstance<RequestUsersMe>("users/me", {
-      method: "GET",
-    });
-    console.log(data);
-    return data;
+    if (cookies().get("cookie")) {
+      const data = await fetchInstance<IUser>("users/me", {
+        method: "GET",
+      });
+
+      return data;
+    }
+    return null;
   } catch (error) {
     if (error instanceof Error) {
       console.error(error);

@@ -20,7 +20,7 @@ export default function NotUserDropDown() {
       </button>
 
       {isDropdownVisible && (
-        <div className="absolute right-[1%] z-[999] mt-2.5 flex h-[131px] w-[120px] flex-col items-center gap-y-5 rounded-lg pb-2.5 pt-2.5 shadow-[0px_4px_20px_0px_#00000014]">
+        <div className="z-3 absolute right-[1%] mt-2.5 flex h-[131px] w-[120px] flex-col items-center gap-y-5 rounded-lg bg-white pb-2.5 pt-2.5 shadow-[0px_4px_20px_0px_#00000014]">
           <Link href="/wikilist" className="flex items-center text-primary-gray-400">
             위키목록
           </Link>

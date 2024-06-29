@@ -38,7 +38,7 @@ export default function UserProfileDropdown() {
       </button>
 
       {isDropdownVisible && (
-        <div className="absolute right-[1%] mt-2.5 flex h-[131px] w-[120px] flex-col items-center gap-y-5 rounded-lg pb-2.5 pt-2.5 shadow-[0px_4px_20px_0px_#00000014]">
+        <div className="absolute right-[1%] mt-2.5 flex h-[131px] w-[120px] flex-col items-center gap-y-5 rounded-lg bg-white pb-2.5 pt-2.5 shadow-[0px_4px_20px_0px_#00000014]">
           <Link href="/mypage" className="flex items-center text-primary-gray-400">
             계정 설정
           </Link>
