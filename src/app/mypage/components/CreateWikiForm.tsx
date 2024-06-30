@@ -1,14 +1,15 @@
 "use client";
 
 import { SubmitHandler, useForm } from "react-hook-form";
+import postProfiles from "@/apis/profile/postProfiles.ts";
 import Button from "./Button.tsx";
 import ErrorText from "./ErrorText.tsx";
 import Label from "./Label.tsx";
 import Input from "./Input.tsx";
 
 interface WikiCreateValue {
-  wikiQuestion: string;
-  wikiAnswer: string;
+  securityAnswer: string;
+  securityQuestion: string;
 }
 
 function CreateWikiForm() {
@@ -19,6 +20,7 @@ function CreateWikiForm() {
   } = useForm<WikiCreateValue>({ mode: "onChange" });
 
   const onSubmit: SubmitHandler<WikiCreateValue> = async data => {
+    await postProfiles(data);
     console.log(data);
   };
 
@@ -26,29 +28,29 @@ function CreateWikiForm() {
     <form className="mb-[40px] mt-[50px]" onSubmit={handleSubmit(onSubmit)}>
       <div className="grid gap-2">
         <div className="grid gap-[10px]">
-          <Label htmlFor="wikiQuestion">위키 생성하기</Label>
+          <Label htmlFor="securityQuestion">위키 생성하기</Label>
           <Input
-            id="wikiQuestion"
+            id="securityQuestion"
             type="text"
             placeholder="질문을 입력해주세요"
-            {...register("wikiQuestion", {
+            {...register("securityQuestion", {
               required: "질문을 입력해주세요",
             })}
-            validationCheck={!!errors.wikiQuestion}
+            validationCheck={!!errors.securityQuestion}
           />
-          {errors?.wikiQuestion && <ErrorText>{errors.wikiQuestion?.message}</ErrorText>}
+          {errors?.securityQuestion && <ErrorText>{errors.securityQuestion?.message}</ErrorText>}
         </div>
 
         <div className="grid gap-[10px]">
           <Input
             type="text"
             placeholder="답을 입력해주세요"
-            {...register("wikiAnswer", {
+            {...register("securityAnswer", {
               required: "답을 입력해주세요",
             })}
-            validationCheck={!!errors.wikiAnswer}
+            validationCheck={!!errors.securityAnswer}
           />
-          {errors?.wikiAnswer && <ErrorText>{errors.wikiAnswer?.message}</ErrorText>}
+          {errors?.securityAnswer && <ErrorText>{errors.securityAnswer?.message}</ErrorText>}
         </div>
       </div>
 
