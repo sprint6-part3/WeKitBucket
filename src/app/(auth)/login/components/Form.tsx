@@ -1,8 +1,12 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable no-alert */
+
 "use client";
 
 import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import postSignIn from "@/apis/auth/postSignIn";
+import { useRouter } from "next/navigation";
 import Button from "./Button";
 import ErrorText from "./ErrorText";
 import Label from "./Label";
@@ -18,12 +22,32 @@ const EMAIL_REGEX = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
 function Form() {
   const {
     register,
+    setError,
     handleSubmit,
     formState: { errors },
   } = useForm<ISignInValue>({ mode: "onChange" });
 
+  const router = useRouter();
+
   const onSubmit: SubmitHandler<ISignInValue> = async data => {
-    await postSignIn(data);
+    try {
+      await postSignIn(data);
+      router.push("/");
+    } catch (error: any) {
+      if (error?.message === "비밀번호가 일치하지 않습니다.") {
+        setError("password", {
+          type: "pw not match",
+          message: error?.message,
+        });
+      } else if (error?.message === "존재하지 않는 이메일입니다.") {
+        setError("email", {
+          type: "email is void",
+          message: error?.message,
+        });
+      } else {
+        alert("로그인에 실패했습니다.");
+      }
+    }
   };
 
   return (
