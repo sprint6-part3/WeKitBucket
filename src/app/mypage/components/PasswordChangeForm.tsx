@@ -1,15 +1,16 @@
 "use client";
 
 import { SubmitHandler, useForm } from "react-hook-form";
+import patchUsersMe from "@/apis/user/patchUsersMe.ts";
 import Button from "./Button.tsx";
 import ErrorText from "./ErrorText.tsx";
 import Label from "./Label.tsx";
 import Input from "./Input.tsx";
 
 interface PassWordChangeValue {
-  existingPassword: string;
-  password: string;
   passwordConfirmation: string;
+  password: string;
+  currentPassword: string;
 }
 
 function PasswordChangeForm() {
@@ -21,6 +22,7 @@ function PasswordChangeForm() {
   } = useForm<PassWordChangeValue>({ mode: "onChange" });
 
   const onSubmit: SubmitHandler<PassWordChangeValue> = async data => {
+    await patchUsersMe(data);
     console.log(data);
   };
 
@@ -33,14 +35,14 @@ function PasswordChangeForm() {
             id="password"
             type="password"
             placeholder="기존 비밀번호"
-            {...register("existingPassword", {
+            {...register("currentPassword", {
               required: true,
               minLength: {
                 value: 8,
                 message: "8자 이상 입력해주세요.",
               },
             })}
-            validationCheck={!!errors.existingPassword}
+            validationCheck={!!errors.currentPassword}
           />
           {errors?.password && <ErrorText>{errors.password?.message}</ErrorText>}
         </div>
