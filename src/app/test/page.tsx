@@ -1,7 +1,5 @@
 "use server";
 
-import getComment from "@/apis/comment/getComment";
-
 async function page() {
   // const password = {
   //   passwordConfirmation: "12341234",
@@ -9,8 +7,8 @@ async function page() {
   //   currentPassword: "12341234",
   // };
   // const content = "stringd";
-  const data = await getComment(103, { limit: 1 });
-  console.log(data);
+  // const data = await getComment(103, { limit: 1 });
+  // console.log(data);
   return (
     <div>
       <div>test</div>
