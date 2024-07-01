@@ -8,10 +8,10 @@ import DefaultProfile from "@/assets/icons/defaultProfile.svg";
 
 function PostDetail() {
   return (
-    <main className="mx-auto grid max-w-[1060px] gap-10 px-5 py-5 sm:px-[60px] sm:pb-[46px] sm:pt-10">
+    <main className="mx-auto grid max-w-[1060px] gap-10 px-5 py-5 sm:px-[60px] sm:pb-[46px] sm:pt-10 lg:gap-[60px] lg:pb-[130px] lg:pt-[60px]">
       <section className="rounded-[10px] px-5 pb-[14px] pt-5 shadow-custom-shadow sm:px-[30px] sm:py-10">
-        <div className="grid gap-[14px] border-b-[1px] border-solid border-primary-gray-200 pb-[10px] sm:gap-[31.5px] sm:pb-2">
-          <div className="flex flex-wrap items-center justify-between gap-2 overflow-hidden">
+        <div className="grid gap-[14px] border-b-[1px] border-solid border-primary-gray-200 pb-[10px] sm:gap-[31.5px] sm:pb-2 lg:gap-[30px] lg:border-none">
+          <div className="flex flex-wrap items-center justify-between gap-2">
             <h1 className="text-2xl font-semibold leading-[1.3] text-primary-gray-500 sm:text-[32px] sm:leading-[1.3]">
               게시글 제목입니다.
             </h1>
@@ -58,7 +58,7 @@ function PostDetail() {
         <div className="font-semibold leading-[1.7] text-primary-gray-500 sm:text-lg sm:leading-[1.4]">
           댓글 <span className="text-primary-green-200">29</span>
         </div>
-        <div className="mb-6 mt-2 grid h-[140px] gap-1 rounded-[10px] bg-primary-gray-100 pb-[14px] pl-5 pr-[14px] pt-4 sm:mt-[15px] sm:pt-5">
+        <div className="mb-6 mt-2 grid h-[140px] gap-1 rounded-[10px] bg-primary-gray-100 pb-[14px] pl-5 pr-[14px] pt-4 sm:mt-[15px] sm:pt-5 lg:mb-10 lg:px-[15px] lg:py-[13px]">
           <textarea
             placeholder="댓글을 입력해 주세요"
             className="w-full resize-none bg-transparent text-sm leading-[1.7] text-primary-gray-500 outline-none placeholder:text-primary-gray-400"
@@ -72,13 +72,13 @@ function PostDetail() {
             </button>
           </div>
         </div>
-        <ul className="grid gap-[14px] sm:gap-4">
-          <li className="flex gap-[15px] rounded-[10px] px-5 py-4 shadow-custom-shadow sm:gap-5 sm:px-[30px] sm:py-5">
+        <ul className="grid gap-[14px] sm:gap-4 lg:gap-6">
+          <li className="flex gap-[15px] rounded-[10px] px-5 py-4 shadow-custom-shadow sm:gap-5 sm:px-[30px] sm:py-5 lg:py-[22px]">
             <div className="h-10 w-10 sm:h-[50px] sm:w-[50px]">
               <DefaultProfile width="100%" height="100%" />
             </div>
             <div className="flex-1">
-              <div className="flex justify-between gap-1 sm:gap-[6px]">
+              <div className="flex justify-between gap-1">
                 <span className="font-semibold leading-[1.7] text-primary-gray-500 sm:text-lg sm:leading-[1.4]">
                   김동욱
                 </span>
@@ -91,10 +91,10 @@ function PostDetail() {
                   </div>
                 </div>
               </div>
-              <p className="mb-1 text-sm leading-[1.7] text-primary-gray-500 sm:mb-[10px] sm:text-base">
+              <p className="mb-1 text-sm leading-[1.7] text-primary-gray-500 sm:mb-[10px] sm:mt-[6px] sm:text-base">
                 Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloremque, quo!
               </p>
-              <span className="text-xs leading-[1.5] text-primary-gray-400">2024.02.26.</span>
+              <span className="text-xs leading-[1.5] text-primary-gray-400 sm:text-sm">2024.02.26.</span>
             </div>
           </li>
           <li className="flex gap-[15px] rounded-[10px] px-5 py-4 shadow-custom-shadow sm:gap-5 sm:px-[30px] sm:py-5">
