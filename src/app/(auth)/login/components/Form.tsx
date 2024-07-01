@@ -5,8 +5,9 @@
 
 import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import postSignIn from "@/apis/auth/postSignIn";
 import { useRouter } from "next/navigation";
+// import { useAuth } from "@/context/AuthContext";
+import postSignIn from "@/apis/auth/postSignIn";
 import Button from "./Button";
 import ErrorText from "./ErrorText";
 import Label from "./Label";
@@ -28,10 +29,12 @@ function Form() {
   } = useForm<ISignInValue>({ mode: "onChange" });
 
   const router = useRouter();
+  // const { getUser } = useAuth();
 
   const onSubmit: SubmitHandler<ISignInValue> = async data => {
     try {
       await postSignIn(data);
+      // getUser();
       router.push("/");
     } catch (error: any) {
       if (error?.message === "비밀번호가 일치하지 않습니다.") {
