@@ -47,10 +47,10 @@ export default function HeaderRight() {
     };
   }, [windowWidth]);
 
-  // useEffect(() => {
-  //   getUser();
-  // }, []);
-  getUser();
+  useEffect(() => {
+    getUser();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div>

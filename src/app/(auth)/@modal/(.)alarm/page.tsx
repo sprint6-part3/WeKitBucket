@@ -49,7 +49,7 @@ export default function AlarmModal() {
   };
 
   return (
-    <ul className="flex h-[100dvh] w-[100dvw] flex-col gap-y-5 bg-primary-gray-100 pl-[1.5em] pt-[1.125em] text-[1.25em]">
+    <ul className="flex h-[100dvh] w-[100dvw] flex-col gap-y-5 bg-primary-gray-100 px-[1.5em] pt-[1.125em] text-[1.25em]">
       <div className="space-between flex pb-[10px]">
         <h3 className="flex flex-1 justify-start text-xl font-bold leading-7 text-primary-black-200">{`알림 ${messages.length}개`}</h3>
         {messages.length > 0 && (
