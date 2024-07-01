@@ -58,6 +58,12 @@ module.exports = {
           100: "#FDD181",
         },
       },
+      fontFamily: {
+        sans: ["Pretendard", "ui-sans-serif", "system-ui"],
+      },
+      boxShadow: {
+        "custom-shadow": "0px 4px 20px 0px #00000014",
+      },
     },
   },
   plugins: [],
