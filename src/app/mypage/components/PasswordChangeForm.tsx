@@ -23,7 +23,6 @@ function PasswordChangeForm() {
 
   const onSubmit: SubmitHandler<PassWordChangeValue> = async data => {
     await patchUsersMe(data);
-    console.log(data);
   };
 
   return (

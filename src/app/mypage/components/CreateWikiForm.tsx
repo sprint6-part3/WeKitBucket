@@ -21,7 +21,6 @@ function CreateWikiForm() {
 
   const onSubmit: SubmitHandler<WikiCreateValue> = async data => {
     await postProfiles(data);
-    console.log(data);
   };
 
   return (
