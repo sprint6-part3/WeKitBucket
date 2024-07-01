@@ -1,8 +1,8 @@
 import Link from "next/link";
 import getArticles, { ArticleOption } from "@/apis/article/getArticles";
-import Button from "./_components/Button";
-import BestPostList from "./_components/bestArticles/BestPostList";
-import AllArticleSection from "./_components/allArticles/AllArticleSection";
+import Button from "./components/Button";
+import BestPostList from "./components/bestArticles/BestPostList";
+import AllArticleSection from "./components/allArticles/AllArticleSection";
 
 async function Board() {
   const allArticlesOption: ArticleOption = {
