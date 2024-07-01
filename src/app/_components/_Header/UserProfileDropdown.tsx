@@ -1,18 +1,30 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import UserProfile from "@/assets/icons/userProfileIcon.svg";
 import Link from "next/link";
+import { useSelectedLayoutSegments } from "next/navigation";
 // import Image from "next/image";
 
-export default function UserProfileDropdown() {
-  const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+export default function UserProfileDropdown({
+  toggle,
+  setToggle,
+  code,
+}: {
+  toggle: boolean;
+  setToggle: Dispatch<SetStateAction<boolean[]>>;
+  code?: string;
+}) {
   const [windowWidth, setWindowWidth] = useState(0);
+  const segments = useSelectedLayoutSegments();
+  // const router = useRouter();
+
+  console.log(segments);
 
   const handleLogout = () => {};
 
   const toggleDropdown = () => {
-    setIsDropdownVisible(!isDropdownVisible);
+    setToggle([false, !toggle]);
   };
 
   const handleResize = () => {
@@ -31,20 +43,32 @@ export default function UserProfileDropdown() {
   }, [windowWidth]);
 
   return (
-    <div>
+    <div className="flex">
       <button onClick={toggleDropdown} aria-label="User Profile">
         {/* <Image src={UserProfile} alt="프로필 이미지" /> */}
         <UserProfile width="32" height="32" />
       </button>
 
-      {isDropdownVisible && (
-        <div className="absolute right-[1%] mt-2.5 flex h-[131px] w-[120px] flex-col items-center gap-y-5 rounded-lg bg-white pb-2.5 pt-2.5 shadow-[0px_4px_20px_0px_#00000014]">
-          <Link href="/mypage" className="flex items-center text-primary-gray-400">
-            계정 설정
-          </Link>
-          <Link href="/wiki/{code}" className="flex items-center text-primary-gray-400">
-            내 위키
-          </Link>
+      {toggle && (
+        <div className="absolute right-[1%] top-[70%] mt-2.5 flex h-[131px] w-[120px] flex-col items-center gap-y-5 rounded-lg bg-white pb-2.5 pt-2.5 shadow-[0px_4px_20px_0px_#00000014]">
+          {segments.includes("mypage") ? (
+            <Link href="/mypage" className="flex items-center text-primary-green-200">
+              계정 설정
+            </Link>
+          ) : (
+            <Link href="/mypage" className="flex items-center text-primary-gray-400">
+              계정 설정
+            </Link>
+          )}
+          {segments.includes("wiki") ? (
+            <Link href={`/wiki/${code}`} className="flex items-center text-primary-green-200">
+              내 위키
+            </Link>
+          ) : (
+            <Link href={`/wiki/${code}`} className="flex items-center text-primary-gray-400">
+              내 위키
+            </Link>
+          )}
           <button onClick={handleLogout} className="flex items-center text-primary-gray-400">
             로그아웃
           </button>

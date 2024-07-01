@@ -3,6 +3,7 @@
 import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import postSignIn from "@/apis/auth/postSignIn";
+import { useAuth } from "@/context/AuthContext";
 
 import Button from "./Button";
 import ErrorText from "./ErrorText";
@@ -23,8 +24,12 @@ function Form() {
     formState: { errors },
   } = useForm<ISignInValue>({ mode: "onChange" });
 
+  const { getUser } = useAuth();
+
   const onSubmit: SubmitHandler<ISignInValue> = async data => {
     await postSignIn(data);
+    // 로그아웃 시엔 쿠키를 삭제하고
+    getUser();
   };
 
   return (

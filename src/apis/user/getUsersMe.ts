@@ -11,6 +11,8 @@ const getUsersMe = async () => {
         method: "GET",
       });
 
+      console.log(data);
+
       return data;
     }
     return null;

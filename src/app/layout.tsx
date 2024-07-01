@@ -16,8 +16,10 @@ function RootLayout({
   return (
     <html lang="ko">
       <body>
-        <Header />
-        <AuthProvider>{children}</AuthProvider>
+        <AuthProvider>
+          <Header />
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );
