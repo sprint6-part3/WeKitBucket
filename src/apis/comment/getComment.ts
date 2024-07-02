@@ -4,11 +4,12 @@ interface RequestComment {
   list: unknown[];
   nextCursor?: null | string;
 }
+
 const getComment = async (
   articleId: number,
   options: {
     limit: number;
-    nextCursor: number;
+    nextCursor?: number;
   },
 ) => {
   try {

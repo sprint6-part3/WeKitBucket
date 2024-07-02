@@ -31,8 +31,9 @@ const postSignIn = async (userInput: UserInput) => {
       body: JSON.stringify(userInput),
     });
 
-    if (data.accessToken) {
-      cookies().set("cookie", data.accessToken);
+    if (data.accessToken && data.refreshToken) {
+      cookies().set("accessToken", data.accessToken);
+      cookies().set("refreshToken", data.refreshToken);
     } else {
       throw new Error("Access token is missing");
     }

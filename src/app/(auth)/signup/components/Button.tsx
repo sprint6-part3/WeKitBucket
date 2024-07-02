@@ -1,6 +1,7 @@
 import React from "react";
 
 const handleClick = () => {
+  // eslint-disable-next-line no-alert
   alert("가입이 완료되었습니다");
 };
 
