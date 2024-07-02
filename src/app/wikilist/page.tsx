@@ -5,8 +5,10 @@ import Input from "./_components/Input";
 import ProfileList from "./_components/ProfileList";
 import Pagination from "./_components/Pagination";
 
-async function WikiList() {
-  const { list, totalCount } = await getProfiles();
+async function WikiList({ searchParams }: { searchParams: { keyword: string } }) {
+  const { keyword } = searchParams;
+
+  const { list, totalCount } = keyword ? await getProfiles({ name: keyword }) : await getProfiles();
 
   return (
     <div className="mx-auto max-w-[900px] px-5">

@@ -5,12 +5,22 @@ import { ProfileCatalog } from "@/types/profiles";
 import NoProfilePicture from "@/assets/icons/noProfilePicture.svg";
 import useResponsive from "@/hooks/useResponsive";
 import LinkIcon from "@/assets/icons/link.svg";
+import Link from "next/link";
 
 function Profile({ item }: { item: ProfileCatalog }) {
   const { isTablet } = useResponsive();
-  const { city, nationality, job, name } = item;
+  const { code, city, nationality, job, name } = item;
+  const copyLinkUrl = `${process.env.VERCEL_URL}/wiki/${code}`;
+
+  const handleCopyLink = () => {
+    navigator.clipboard.writeText(copyLinkUrl);
+  };
+
   return (
-    <div className="flex w-full gap-5 px-5 py-6 shadow-[0_4px_20px_rgba(0,0,0,0.08)] md:gap-8 md:px-9 md:py-6">
+    <Link
+      href={`/wiki/${code}`}
+      className="flex w-full gap-5 px-5 py-6 shadow-[0_4px_20px_rgba(0,0,0,0.08)] md:gap-8 md:px-9 md:py-6"
+    >
       <NoProfilePicture width={isTablet ? 85 : 60} height={isTablet ? 85 : 60} />
       <div className="flex w-full flex-col">
         <h1 className="mb-3 text-md-semibold leading-6 text-primary-gray-500 md:mb-4 md:text-lg-semibold">{name}</h1>
@@ -23,13 +33,19 @@ function Profile({ item }: { item: ProfileCatalog }) {
           </p>
           <div className="ml-auto flex w-fit items-center gap-1 rounded-xl bg-primary-green-100 px-2 py-1">
             <LinkIcon width={16} height={16} />
-            <p className="bg-primary-green-100 text-xs font-normal leading-4 text-primary-green-200 md:text-sm md:leading-6">
-              이 프로필 주소 적어야함
-            </p>
+            <button
+              onClick={e => {
+                e.preventDefault(); // 버튼 클릭 시 링크 이동을 막음
+                handleCopyLink();
+              }}
+              className="bg-primary-green-100 text-xs font-normal leading-4 text-primary-green-200 md:text-sm md:leading-6"
+            >
+              {copyLinkUrl}
+            </button>
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }
 
