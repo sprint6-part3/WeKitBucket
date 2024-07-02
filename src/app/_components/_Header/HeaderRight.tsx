@@ -25,7 +25,6 @@ import UserProfileDropdown from "./UserProfileDropdown";
 
 export default function HeaderRight() {
   const { user, getUser } = useAuth();
-  // const router = useRouter();
 
   const [windowWidth, setWindowWidth] = useState(0);
   const [isDropdownVisible, setIsDropdownVisible] = useState<boolean[]>([false, false]);
