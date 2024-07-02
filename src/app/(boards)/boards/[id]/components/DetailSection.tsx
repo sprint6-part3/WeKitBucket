@@ -12,7 +12,7 @@ function DetailSection() {
     <section className="rounded-[10px] px-5 pb-[14px] pt-5 shadow-custom-shadow sm:px-[30px] sm:py-10">
       <div className="grid gap-[14px] border-b-[1px] border-solid border-primary-gray-200 pb-[10px] sm:gap-[31.5px] sm:pb-2 lg:gap-[30px] lg:border-none">
         <div className="flex flex-wrap items-center justify-between gap-2">
-          <h1 className="text-2xl font-semibold leading-[1.3] text-primary-gray-500 sm:text-[32px] sm:leading-[1.3]">
+          <h1 className="break-keep text-2xl font-semibold leading-[1.3] text-primary-gray-500 sm:text-[32px] sm:leading-[1.3]">
             게시글 제목입니다.
           </h1>
           <div className="ml-auto flex items-center justify-between gap-[12px]">
@@ -41,7 +41,7 @@ function DetailSection() {
         <div className="w-full max-w-[500px]">
           <Image src={testImg} alt="이미지" />
         </div>
-        <div className="text-sm leading-[1.7] text-primary-gray-500 sm:text-base">
+        <div className="break-keep text-sm leading-[1.7] text-primary-gray-500 sm:text-base">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa atque sequi voluptate, facilis magnam culpa
           asperiores veniam blanditiis doloremque sint rem. Animi saepe, ut a dolorem velit dolorum laboriosam
           accusantium.

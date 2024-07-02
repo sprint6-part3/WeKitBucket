@@ -24,7 +24,7 @@ function CommentList() {
             </button>
           </div>
         </div>
-        <p className="mb-1 text-sm leading-[1.7] text-primary-gray-500 sm:mb-[10px] sm:mt-[6px] sm:text-base">
+        <p className="mb-1 break-keep text-sm leading-[1.7] text-primary-gray-500 sm:mb-[10px] sm:mt-[6px] sm:text-base">
           Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloremque, quo!
         </p>
         <span className="text-xs leading-[1.5] text-primary-gray-400 sm:text-sm">2024.02.26.</span>
