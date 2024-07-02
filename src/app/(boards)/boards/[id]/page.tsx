@@ -15,7 +15,7 @@ async function PostDetail({ params }: { params: { id: number } }) {
   let articleDetail;
   let token;
 
-  const getAuthToken = () => cookies().get("cookie")?.value;
+  const getAuthToken = () => cookies().get("accessToken")?.value;
 
   try {
     token = getAuthToken();
@@ -24,7 +24,7 @@ async function PostDetail({ params }: { params: { id: number } }) {
       throw new Error("로그인이 필요합니다.");
     }
 
-    articleDetail = await getArticlesId(id, token);
+    articleDetail = await getArticlesId(103);
   } catch (error) {
     console.error("Failed to fetch Article Detail: ", error);
 
@@ -50,7 +50,9 @@ async function PostDetail({ params }: { params: { id: number } }) {
           댓글 <span className="text-primary-green-200">29</span>
         </div>
         <CommentForm />
-        <ul className="grid gap-[14px] sm:gap-4 lg:gap-6">{arr?.map(() => <CommentList />)}</ul>
+        <ul className="grid gap-[14px] sm:gap-4 lg:gap-6">
+          {arr?.map((_, idx) => <CommentList key={String(idx + 1)} />)}
+        </ul>
       </section>
     </main>
   );
