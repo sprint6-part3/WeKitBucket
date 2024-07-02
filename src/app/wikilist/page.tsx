@@ -5,19 +5,25 @@ import Input from "./_components/Input";
 import ProfileList from "./_components/ProfileList";
 import Pagination from "./_components/Pagination";
 
-async function WikiList({ searchParams }: { searchParams: { keyword: string } }) {
-  const { keyword } = searchParams;
-
-  const { list, totalCount } = keyword ? await getProfiles({ name: keyword }) : await getProfiles();
+async function WikiList({ searchParams }: { searchParams: { keyword: string; number: number } }) {
+  const { keyword, number } = searchParams;
+  const pageSize = 3;
+  const { list, totalCount } = await getProfiles({ page: number, name: keyword, pageSize });
 
   return (
     <div className="mx-auto max-w-[900px] px-5">
       <Input />
-      <p className="mb-10 mt-4 text-sm-regular-14 font-medium text-primary-gray-400 md:mb-24 md:text-sm-regular xl:mb-14">
-        &quot;동욱&quot;님을 총 7명 찾았습니다.
+      <p className="mb-10 mt-4 h-[18.4px] text-sm-regular-14 font-medium text-primary-gray-400 md:mb-24 md:text-sm-regular xl:mb-14">
+        {!keyword ? (
+          ""
+        ) : (
+          <span>
+            ”{keyword}”님을 총 <span className="text-primary-green-200">{totalCount}</span>명 찾았습니다.
+          </span>
+        )}
       </p>
       <ProfileList list={list} />
-      <Pagination totalCount={totalCount} />
+      <Pagination totalCount={totalCount} pageSize={pageSize} keyword={keyword} page={number} />
     </div>
   );
 }

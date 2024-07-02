@@ -16,6 +16,13 @@ function Profile({ item }: { item: ProfileCatalog }) {
     navigator.clipboard.writeText(copyLinkUrl);
   };
 
+  const truncateText = (text: string, maxLength: number) => {
+    if (text.length > maxLength) {
+      return `${text.slice(0, maxLength)}...`;
+    }
+    return text;
+  };
+
   return (
     <Link
       href={`/wiki/${code}`}
@@ -38,9 +45,9 @@ function Profile({ item }: { item: ProfileCatalog }) {
                 e.preventDefault(); // 버튼 클릭 시 링크 이동을 막음
                 handleCopyLink();
               }}
-              className="bg-primary-green-100 text-xs font-normal leading-4 text-primary-green-200 md:text-sm md:leading-6"
+              className="bg-primary-green-100 text-left text-xs font-normal leading-4 text-primary-green-200 md:text-sm md:leading-6"
             >
-              {copyLinkUrl}
+              {truncateText(copyLinkUrl, 34)}
             </button>
           </div>
         </div>
