@@ -1,3 +1,5 @@
+"use server";
+
 import { ArticleData } from "@/types/articles";
 import fetchInstance from "@/utils/fetchInstance";
 
@@ -8,29 +10,25 @@ export interface ArticleOption {
   keyword?: string;
 }
 
-const convertToRecord = (option: ArticleOption): Record<string, string> => {
-  const record: Record<string, string> = {};
-  Object.keys(option).forEach(key => {
-    record[key] = String((option as never)[key]);
-  });
-  return record;
-};
-
 // 자유게시판 페이지
-const getArticles = async (options: ArticleOption): Promise<ArticleData> => {
-  const params = new URLSearchParams(convertToRecord(options)).toString();
 
+const getArticles = async (options?: {
+  page?: number;
+  pageSize?: number;
+  orderBy?: "recent" | "like";
+  keyword?: string;
+}) => {
   try {
-    const data = await fetchInstance(`articles?${params}`, {
+    const data = await fetchInstance<ArticleData>("articles", {
       method: "GET",
+      params: options,
     });
-
     return data;
   } catch (error) {
     if (error instanceof Error) {
-      throw new Error(error.message || "Artist list failed");
+      throw new Error(error.message || "Article list failed");
     } else {
-      throw new Error("Artist list failed");
+      throw new Error("Article list failed");
     }
   }
 };

@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { UserInput } from "@/types/auth";
-import postSignUp from "@/apis/Auth/postSignUp.ts";
+import postSignUp from "@/apis/auth/postSignUp.ts";
 import Button from "./Button.tsx";
 import ErrorText from "./ErrorText.tsx";
 import Input from "./Input.tsx";

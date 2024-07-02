@@ -1,9 +1,9 @@
 import { ProfileData } from "@/types/profiles";
 import fetchInstance from "@/utils/fetchInstance";
 // 목록 페이지
-const getProfiles = async (options: { page?: number; pageSize?: number; name?: string }): Promise<ProfileData> => {
+const getProfiles = async (options?: { page?: number; pageSize?: number; name?: string }) => {
   try {
-    const data = await fetchInstance(`profiles?${options}`, {
+    const data = await fetchInstance<ProfileData>(`profiles?${options}`, {
       method: "GET",
     });
 
@@ -18,3 +18,4 @@ const getProfiles = async (options: { page?: number; pageSize?: number; name?: s
 };
 
 export default getProfiles;
+
