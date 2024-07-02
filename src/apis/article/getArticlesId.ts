@@ -1,12 +1,12 @@
 "use server";
 
-import { ArticleData } from "@/types/articles";
+import { ArticleDetail } from "@/app/(boards)/boards/[id]/components/DetailSection";
 import fetchInstance from "@/utils/fetchInstance";
 
 // 자유게시판 페이지
 const getArticlesId = async (articleId: number) => {
   try {
-    const data = await fetchInstance<ArticleData>(`articles/${articleId}`, {
+    const data = await fetchInstance<ArticleDetail>(`articles/${articleId}`, {
       method: "GET",
     });
 
