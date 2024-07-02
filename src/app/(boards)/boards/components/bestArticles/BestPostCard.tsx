@@ -1,15 +1,14 @@
 "use client";
 
+import dayjs from "dayjs";
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import dayjs from "dayjs";
 import LikeIcon from "@/assets/icons/like.svg";
 import CameraIcon from "@/assets/icons/camera.svg";
 import { IPostProps } from "../allArticles/PostList";
 
 function BestPostCard({ post }: IPostProps) {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { id, title, image, createdAt, writer, likeCount } = post;
   const { name } = writer;
 
