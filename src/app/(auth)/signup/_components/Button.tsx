@@ -1,8 +1,8 @@
 import React from "react";
 
 const handleClick = () => {
-  // alert("가입이 완료되었습니다");
-  console.log("가입이 완료되었습니다");
+  // eslint-disable-next-line no-alert
+  alert("가입이 완료되었습니다");
 };
 
 function Button({ type, children, disabled }: React.ButtonHTMLAttributes<HTMLButtonElement>) {

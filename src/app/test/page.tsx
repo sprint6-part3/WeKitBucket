@@ -1,14 +1,20 @@
-import getUsersMe from "@/apis/user/getUsersMe";
-import React from "react";
+"use server";
 
-function page() {
-  const load = async () => {
-    const data = await getUsersMe();
-    console.log(data);
-  };
-  load();
-
-  return <div>test</div>;
+async function page() {
+  // const password = {
+  //   passwordConfirmation: "12341234",
+  //   password: "12341234",
+  //   currentPassword: "12341234",
+  // };
+  // const content = "stringd";
+  // const data = await getComment(103, { limit: 1 });
+  // console.log(data);
+  return (
+    <div>
+      <div>test</div>
+      {/* <Button /> */}
+    </div>
+  );
 }
 
 export default page;

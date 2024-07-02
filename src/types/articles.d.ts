@@ -17,3 +17,7 @@ export interface ArticleData {
   list: ArticleList[] | [];
   totalCount: number;
 }
+
+export interface IArticleProps {
+  article: ArticleData;
+}
