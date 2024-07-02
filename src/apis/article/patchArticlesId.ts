@@ -1,12 +1,7 @@
 "use server";
 
 import fetchInstance from "@/utils/fetchInstance";
-
-export interface ArticleInput {
-  image?: string;
-  content: string;
-  title: string;
-}
+import { ArticleInput } from "./postArticles";
 
 const patchArticlesId = async (articleInput: ArticleInput, articleId: number) => {
   try {
