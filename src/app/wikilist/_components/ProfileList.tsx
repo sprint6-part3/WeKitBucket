@@ -1,11 +1,11 @@
 "use server";
 
-import { ProfileData } from "@/types/profiles";
+import { ProfileCatalog } from "@/types/profiles";
 import Profile from "./Profile";
 
-function ProfileList({ list }: ProfileData) {
+function ProfileList({ list }: { list: ProfileCatalog[] }) {
   return (
-    <div>
+    <div className="flex flex-col gap-2 md:gap-6">
       {list.map(item => (
         <Profile item={item} key={item.id} />
       ))}
