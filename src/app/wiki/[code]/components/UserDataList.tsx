@@ -1,8 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
-import ToggleIcon from "@/assets/icons/arrowdown.svg";
 import Image from "next/image";
+import ToggleIcon from "@/assets/icons/arrowdown.svg";
+import DefaultProfile from "@/assets/icons/defaultProfile.svg";
 import { RequestProfileCode } from "@/apis/profile/getProfilesCode";
 import dayjs from "dayjs";
 import UserData from "./UserData";
@@ -23,7 +24,9 @@ function UserDataList({ privateData }: userDataProps) {
   return (
     <>
       <div className="flex">
-        <Image src={image} alt="유저 이미지" width={62} height={62} />
+        <div className="h-50 w-50 sm:h-[62px] sm:w-[62px]">
+          {image ? <Image src={image} alt="프로필 이미지" /> : <DefaultProfile width="100%" height="100%" />}
+        </div>
         <div className="w-[175px] gap-2">
           <UserData dataProp={city}>거주 도시</UserData>
           <UserData dataProp={mbti}>MBTI</UserData>

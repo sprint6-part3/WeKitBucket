@@ -1,15 +1,9 @@
 import getProfilesCode from "@/apis/profile/getProfilesCode";
 import UserDataList from "./components/UserDataList";
 
-function Wiki() {
+async function Wiki() {
   const code: string = "13";
-  let requestData;
-
-  try {
-    requestData = getProfilesCode(code);
-  } catch (error) {
-    console.error("Failed to get data: ", error);
-  }
+  const requestData = await getProfilesCode(code);
 
   return (
     <div className="mx-auto flex min-h-dvh w-full justify-center p-5">
