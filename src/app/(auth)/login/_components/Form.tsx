@@ -6,8 +6,9 @@
 import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
-import { useAuth } from "@/context/AuthContext";
 import postSignIn from "@/apis/auth/postSignIn";
+import { useAuth } from "@/context/AuthContext";
+
 import Button from "./Button";
 import ErrorText from "./ErrorText";
 import Label from "./Label";
@@ -34,6 +35,7 @@ function Form() {
   const onSubmit: SubmitHandler<ISignInValue> = async data => {
     try {
       await postSignIn(data);
+      // 로그아웃 시엔 쿠키를 삭제하고
       await getUser();
       router.push("/");
     } catch (error: any) {

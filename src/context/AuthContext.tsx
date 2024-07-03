@@ -4,6 +4,7 @@ import { createContext, useContext, useState, ReactNode, useMemo } from "react";
 
 import getUsersMe from "@/apis/user/getUsersMe";
 import { IUser } from "@/types/user";
+import getProfilesCode, { RequestProfileCode } from "@/apis/profile/getProfilesCode";
 
 // interface AuthContextType {
 //   isLoggedIn: boolean;
@@ -23,30 +24,51 @@ import { IUser } from "@/types/user";
 
 interface AuthContextType {
   user: IUser | null;
+  userProfile: RequestProfileCode | null;
   getUser: () => void;
 }
 
 // const AuthContext = createContext<AuthContextType | undefined>(undefined);
 const AuthContext = createContext<AuthContextType>({
   user: null,
+  userProfile: null,
   getUser: () => {},
 });
 
 function AuthProvider({ children }: { children: ReactNode }) {
   // const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState<IUser | null>(null);
+  const [userProfile, setUserProfile] = useState<RequestProfileCode | null>(null);
 
+  const getUserProfile = async (newUser: IUser | null) => {
+    if (newUser) {
+      const newUserProfile = await getProfilesCode(newUser.profile.code);
+      setUserProfile(() => {
+        if (newUserProfile) return newUserProfile;
+        return null;
+      });
+    }
+    return null;
+  };
   // const value = useMemo(() => ({ isLoggedIn, setIsLoggedIn }), [isLoggedIn]);
   const getUser = async () => {
     const newUser = await getUsersMe();
-    console.log(newUser, "new");
     setUser(() => {
-      if (newUser) return newUser;
+      if (newUser) {
+        (async () => {
+          await getUserProfile(newUser);
+        })();
+        return newUser;
+      }
       return null;
     });
   };
 
-  const values = useMemo(() => ({ user, getUser }), [user]);
+  const values = useMemo(
+    () => ({ user, userProfile, getUser }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [user],
+  );
 
   return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>;
 }

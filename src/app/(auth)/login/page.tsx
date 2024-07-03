@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import Form from "./components/Form.tsx";
+import Form from "./_components/Form.tsx";
 
 function Login() {
   return (
