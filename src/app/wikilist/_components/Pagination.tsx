@@ -11,7 +11,7 @@ type PaginationProps = {
   page: number;
 };
 
-function Pagination({ totalCount, pageSize, keyword, page }: PaginationProps) {
+function Pagination({ totalCount, pageSize, keyword, page = 1 }: PaginationProps) {
   const pageItemCount = Math.floor(totalCount / pageSize) <= 1 ? 1 : Math.floor(totalCount / pageSize);
   const pageArray = Array.from({ length: pageItemCount }, (_, index) => Number(index + 1));
 

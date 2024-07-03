@@ -9,7 +9,7 @@ import PostHeader from "./PostHeader";
 import PostList from "./PostList";
 import Pagination from "../Pagination";
 
-interface ArticleOption {
+export interface ArticleOption {
   page?: number;
   pageSize?: number;
   orderBy?: "recent" | "like";
