@@ -22,7 +22,7 @@ const nextConfig = {
     return config;
   },
   images: {
-    domains: ["example.com"],
+    domains: ["example.com", "sprint-fe-project.s3.ap-northeast-2.amazonaws.com"],
   },
 };
 
