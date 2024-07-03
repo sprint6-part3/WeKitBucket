@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import LikeIcon from "@/assets/icons/like.svg";
 import CameraIcon from "@/assets/icons/camera.svg";
+
 import dayjs from "dayjs";
 import { IPostProps } from "../allArticles/PostList";
 
@@ -21,7 +22,7 @@ function BestPostCard({ post }: IPostProps) {
       href={`/boards/${id}`}
       className="block h-[200px] w-[250px] sm:aspect-[1/0.73] sm:h-auto sm:w-full lg:aspect-[1/0.88]"
     >
-      <div className="flex h-full flex-col overflow-visible rounded-[10px] shadow-custom-shadow">
+      <div className="shadow-custom-shadow flex h-full flex-col overflow-visible rounded-[10px]">
         <div className="flex-1">
           {isImageUrl && image ? (
             <div className="relative flex h-full items-center justify-center">
