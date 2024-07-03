@@ -5,7 +5,6 @@ import Link from "next/link";
 import Image from "next/image";
 import LikeIcon from "@/assets/icons/like.svg";
 import CameraIcon from "@/assets/icons/camera.svg";
-
 import dayjs from "dayjs";
 import { IPostProps } from "../allArticles/PostList";
 
