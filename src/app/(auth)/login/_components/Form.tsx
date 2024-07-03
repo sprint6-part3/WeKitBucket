@@ -4,11 +4,11 @@
 /* eslint-disable no-alert */
 
 import React from "react";
+import { useToast } from "@/context/ToastContext";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import postSignIn from "@/apis/auth/postSignIn";
 import { useAuth } from "@/context/AuthContext";
-
 import Button from "./Button";
 import ErrorText from "./ErrorText";
 import Label from "./Label";
@@ -31,6 +31,7 @@ function Form() {
 
   const router = useRouter();
   const { getUser } = useAuth();
+  const { popupToast } = useToast();
 
   const onSubmit: SubmitHandler<ISignInValue> = async data => {
     try {
@@ -50,7 +51,7 @@ function Form() {
           message: error?.message,
         });
       } else {
-        alert("로그인에 실패했습니다.");
+        popupToast({ color: "red", pos: "top", message: "로그인에 실패했습니다." });
       }
     }
   };
