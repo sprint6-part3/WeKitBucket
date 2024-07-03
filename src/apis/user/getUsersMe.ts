@@ -6,15 +6,13 @@ import { cookies } from "next/headers";
 
 const getUsersMe = async () => {
   try {
-    if (cookies().get("cookie")) {
+    if (cookies().get("accessToken")) {
       const data = await fetchInstance<IUser>("users/me", {
         method: "GET",
       });
-
-      console.log(data);
-
       return data;
     }
+
     return null;
   } catch (error) {
     if (error instanceof Error) {

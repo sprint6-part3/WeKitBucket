@@ -29,7 +29,7 @@ function Form() {
   const onSubmit: SubmitHandler<ISignInValue> = async data => {
     await postSignIn(data);
     // 로그아웃 시엔 쿠키를 삭제하고
-    getUser();
+    await getUser();
   };
 
   return (

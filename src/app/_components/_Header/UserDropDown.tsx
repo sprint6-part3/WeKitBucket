@@ -1,10 +1,13 @@
 "use client";
 
 import React, { useState } from "react";
-import HamburgerMenu from "@/assets/icons/hamburgerMenu.svg";
 import Link from "next/link";
-import { useSelectedLayoutSegment } from "next/navigation";
+import { useRouter, useSelectedLayoutSegment } from "next/navigation";
 
+import postSignOut from "@/apis/auth/postSignout";
+import { useAuth } from "@/context/AuthContext";
+
+import HamburgerMenu from "@/assets/icons/hamburgerMenu.svg";
 import ModalComponent from "./ModalComponent";
 import MenuModalHeader from "./MenuModalHeader";
 import AlarmModal from "./AlarmModal";
@@ -12,10 +15,10 @@ import AlarmModal from "./AlarmModal";
 export default function UserDropDown() {
   const [isOpen, setIsOpen] = useState(false);
   const [isAlarmOpen, setIsAlarmOpen] = useState(false);
+  const { getUser } = useAuth();
+  const router = useRouter();
 
   const segment = useSelectedLayoutSegment();
-
-  const handleLogout = () => {};
 
   const onAlarmOpen = () => {
     setIsAlarmOpen(true);
@@ -27,10 +30,24 @@ export default function UserDropDown() {
 
   const onOpen = () => {
     setIsOpen(true);
+    document.body.style.overflow = "hidden";
   };
 
   const onClose = () => {
     setIsOpen(false);
+    document.body.style.overflow = "scroll";
+  };
+
+  const handleLogout = async () => {
+    try {
+      await postSignOut(); // 쿠키 삭제
+      await getUser(); // 쿠키가 없으면 user를 null로 상태 변경
+    } catch (error) {
+      console.error(error);
+    } finally {
+      if (isOpen) onClose();
+      router.push("/");
+    }
   };
 
   return (

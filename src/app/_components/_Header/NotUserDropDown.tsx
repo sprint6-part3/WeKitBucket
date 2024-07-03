@@ -12,14 +12,14 @@ export default function NotUserDropDown() {
   const [isOpen, setIsOpen] = useState(false);
   const segment = useSelectedLayoutSegment();
 
-  console.log(segment);
-
   const onOpen = () => {
     setIsOpen(true);
+    document.body.style.overflow = "hidden";
   };
 
   const onClose = () => {
     setIsOpen(false);
+    document.body.style.overflow = "scroll";
   };
 
   return (

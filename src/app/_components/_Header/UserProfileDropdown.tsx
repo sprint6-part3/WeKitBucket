@@ -1,10 +1,12 @@
 "use client";
 
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
-import UserProfile from "@/assets/icons/userProfileIcon.svg";
 import Link from "next/link";
-import { useSelectedLayoutSegments } from "next/navigation";
-// import Image from "next/image";
+import { useRouter, useSelectedLayoutSegments } from "next/navigation";
+
+import UserProfile from "@/assets/icons/userProfileIcon.svg";
+import postSignOut from "@/apis/auth/postSignout";
+import { useAuth } from "@/context/AuthContext";
 
 export default function UserProfileDropdown({
   toggle,
@@ -17,11 +19,14 @@ export default function UserProfileDropdown({
 }) {
   const [windowWidth, setWindowWidth] = useState(0);
   const segments = useSelectedLayoutSegments();
-  // const router = useRouter();
+  const { getUser } = useAuth();
+  const router = useRouter();
 
-  console.log(segments);
-
-  const handleLogout = () => {};
+  const handleLogout = async () => {
+    await postSignOut();
+    await getUser();
+    router.push("/");
+  };
 
   const toggleDropdown = () => {
     setToggle([false, !toggle]);
