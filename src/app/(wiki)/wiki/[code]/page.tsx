@@ -1,8 +1,8 @@
 import getProfilesCode from "@/apis/profile/getProfilesCode";
 import UserDataList from "./components/UserDataList";
 
-async function Wiki() {
-  const code: string = "13";
+async function Wiki({ params }: { params: { code: string } }) {
+  const { code } = params;
   const requestData = await getProfilesCode(code);
 
   return (
@@ -18,7 +18,7 @@ async function Wiki() {
               <br /> 위키에 참여해보세요!
             </h1>
             <button className="mt-3 rounded-[10px] bg-primary-green-200 px-[20px] py-[11px] text-sm font-semibold leading-[1.7] text-white">
-              시작하기
+              시작하기f
             </button>
           </div>
         </div>
