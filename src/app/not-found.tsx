@@ -4,7 +4,7 @@ import Empty from "@/assets/icons/questionMark.svg";
 
 function NotFound() {
   return (
-    <div className="flex min-h-dvh items-center justify-center px-5 py-5">
+    <div className="flex min-h-[calc(100dvh-60px)] items-center justify-center px-5 py-5 xl:min-h-[calc(100dvh-80px)]">
       <div className="flex flex-col items-center gap-5">
         <div className="w-full max-w-[100px]">
           <Empty width="100%" height="100%" />
