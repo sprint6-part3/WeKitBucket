@@ -1,12 +1,12 @@
+"use client";
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-alert */
-
-"use client";
 
 import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
-// import { useAuth } from "@/context/AuthContext";
+import { useAuth } from "@/context/AuthContext";
 import postSignIn from "@/apis/auth/postSignIn";
 import Button from "./Button";
 import ErrorText from "./ErrorText";
@@ -30,11 +30,13 @@ function Form() {
 
   const router = useRouter();
   // const { getUser } = useAuth();
+  const { setIsLoggedIn } = useAuth();
 
   const onSubmit: SubmitHandler<ISignInValue> = async data => {
     try {
       await postSignIn(data);
       // getUser();
+      setIsLoggedIn(true);
       router.push("/");
     } catch (error: any) {
       if (error?.message === "비밀번호가 일치하지 않습니다.") {

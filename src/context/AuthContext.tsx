@@ -12,6 +12,8 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 function AuthProvider({ children }: { children: ReactNode }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+  console.log(isLoggedIn);
+
   const value = useMemo(() => ({ isLoggedIn, setIsLoggedIn }), [isLoggedIn]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
