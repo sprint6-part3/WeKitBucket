@@ -6,6 +6,7 @@ import Link from "next/link";
 import debounce from "@/utils/debounce";
 
 import { useAuth } from "@/context/AuthContext";
+import { AlarmProvider } from "@/context/AlarmContext";
 import MessageAlarm from "./MessageAlarm";
 import UserDropDown from "./UserDropDown";
 import NotUserDropDown from "./NotUserDropDown";
@@ -40,7 +41,7 @@ export default function HeaderRight() {
   }, []);
 
   return (
-    <div>
+    <AlarmProvider>
       {user ? (
         <div className="z-3">
           {windowWidth > 450 ? (
@@ -68,6 +69,6 @@ export default function HeaderRight() {
           )}
         </div>
       )}
-    </div>
+    </AlarmProvider>
   );
 }

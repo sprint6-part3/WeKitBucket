@@ -1,41 +1,17 @@
 "use client";
 
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect } from "react";
 
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import "dayjs/locale/ko";
 
+import { useAlarm } from "@/context/AlarmContext";
 import Alarm from "@/assets/icons/alarmIcon.svg";
 import NoAlarmMessage from "./NoAlarmMessage";
 
 dayjs.locale("ko");
 dayjs.extend(relativeTime);
-
-/** 더미 데이터 시작 */
-const pushAlarm = {
-  totalCount: 3,
-  list: [
-    {
-      createdAt: "2024-06-27T17:54:16.963Z",
-      content: "민재 업고 튀어",
-      id: 1,
-    },
-    {
-      createdAt: "2024-06-27T17:54:16.963Z",
-      content:
-        "전 대체 무엇을 하고 있을까요? 지금 예하님의 뒤에 있을지도 모릅니다. 이런 민재님이 뒤에서 쳐다보고 계시네요.",
-      id: 2,
-    },
-
-    {
-      createdAt: "2024-06-27T17:54:16.963Z",
-      content: "우리 강산 푸르게 푸르게",
-      id: 3,
-    },
-  ],
-};
-/** 더미 데이터 끝 */
 
 export default function MessageAlarm({
   toggle,
@@ -44,28 +20,22 @@ export default function MessageAlarm({
   toggle: boolean;
   setToggle: Dispatch<SetStateAction<boolean[]>>;
 }) {
-  const [messages, setMessages] = useState(pushAlarm.list);
-
-  const removeMessage = (id: number) => {
-    // e.stopPropagation();
-    setMessages(messages.filter(m => m.id !== id));
-  };
-
-  const removeAllMessage = () => {
-    // e.stopPropagation();
-    setMessages([]);
-  };
-
+  const { alarmMessages, getAlarmMessages, removeAlarmMessage, removeAllMessages } = useAlarm();
   const toggleDropdown = () => {
     setToggle([!toggle, false]);
   };
 
+  useEffect(() => {
+    getAlarmMessages();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <div className="relative">
       <button onClick={toggleDropdown} aria-label="Alarm Button" className="relative flex">
-        {messages.length > 0 && (
+        {alarmMessages.length > 0 && (
           <div className="absolute bottom-auto top-[1%] h-[16px] w-[16px] rounded-[50%] bg-[red] text-center text-[8px] leading-[16px] text-[white]">
-            {messages.length}
+            {alarmMessages.length}
           </div>
         )}
         <Alarm width={32} height={32} />
@@ -76,23 +46,23 @@ export default function MessageAlarm({
           className="absolute right-[-170%] top-[150%] flex w-[368px] max-w-[30em] flex-col gap-y-5 rounded-2xl bg-primary-gray-100 px-[1.5em] py-[1.125em] text-[1.25em] shadow-[0_0.125rem_0.5rem_rgba(0,0,0,0.3),0_0.0625rem_0.125rem_rgba(0,0,0,0.2)] before:absolute before:bottom-full before:right-[60px] before:h-0 before:w-0 before:border-[0.75rem] before:border-solid before:border-transparent before:border-b-primary-gray-100 before:border-t-[none] before:drop-shadow-[0_-0.0625rem_0.0625rem_rgba(0,0,0,0.1)]"
         >
           <div className="space-between flex pb-[10px]">
-            <h3 className="flex flex-1 justify-start text-xl font-bold leading-7 text-primary-black-200">{`알림 ${messages.length}개`}</h3>
-            {messages.length > 0 && (
-              <button onClickCapture={removeAllMessage} className="text-xl font-bold leading-7 text-primary-black-200">
+            <h3 className="flex flex-1 justify-start text-xl font-bold leading-7 text-primary-black-200">{`알림 ${alarmMessages.length}개`}</h3>
+            {alarmMessages.length > 0 && (
+              <button onClickCapture={removeAllMessages} className="text-xl font-bold leading-7 text-primary-black-200">
                 X
               </button>
             )}
           </div>
-          {messages.length > 0 ? (
+          {alarmMessages.length > 0 ? (
             <>
-              {messages.map(m => (
+              {alarmMessages.map(m => (
                 <li
                   key={m.id}
                   className="flex flex-col rounded-[8px] bg-white p-5 shadow-[0_0.125rem_0.5rem_rgba(0,0,0,0.3),0_0.0625rem_0.125rem_rgba(0,0,0,0.2)]"
                 >
                   <button
                     onClickCapture={() => {
-                      removeMessage(m.id);
+                      removeAlarmMessage(m.id);
                     }}
                     className="flex justify-end text-primary-gray-900"
                   >
