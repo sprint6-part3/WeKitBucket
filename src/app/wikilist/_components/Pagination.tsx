@@ -29,7 +29,7 @@ function Pagination({ totalCount, pageSize, keyword, page }: PaginationProps) {
         </PageItem>
       ))}
       <Link
-        href={`/wikilist?${keyword ? `keyword=${keyword}` : ""}&number=${page !== pageItemCount ? Number(page) + 1 : page}`}
+        href={`/wikilist?${keyword ? `keyword=${keyword}` : ""}&number=${page < pageItemCount ? Number(page) + 1 : page}`}
         className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-xl text-primary-gray-400 shadow-[0_4px_20px_rgba(0,0,0,0.08)]"
       >
         <RightArrow />

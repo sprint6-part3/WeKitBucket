@@ -9,8 +9,7 @@ type PageItemProps = {
 
 function PageItem({ children, keyword, page = 1 }: PageItemProps) {
   const isPage: boolean = Number(page) === children;
-  console.log(isPage, children, page);
-  console.log(typeof children, typeof page);
+
   return (
     <Link
       href={`/wikilist?${keyword ? `keyword=${keyword}` : ""}&number=${children}`}
