@@ -1,9 +1,9 @@
 "use client";
 
 import dayjs from "dayjs";
-import React from "react";
 import Link from "next/link";
-import Image from "next/image";
+import React, { useEffect } from "react";
+import NextImage from "next/image";
 import LikeIcon from "@/assets/icons/like.svg";
 import CameraIcon from "@/assets/icons/camera.svg";
 import { IPostProps } from "../allArticles/PostList";
@@ -11,9 +11,22 @@ import { IPostProps } from "../allArticles/PostList";
 function BestPostCard({ post }: IPostProps) {
   const { id, title, image, createdAt, writer, likeCount } = post;
   const { name } = writer;
+  const [imgError, setImgError] = React.useState<boolean | undefined>();
+
+  useEffect(() => {
+    const imgClass = new Image();
+    imgClass.src = image ?? "";
+
+    imgClass.onload = () => {
+      setImgError(false);
+    };
+
+    imgClass.onerror = () => {
+      setImgError(true);
+    };
+  }, [image]);
 
   const formattedDate = dayjs(createdAt).format("YYYY.MM.DD.");
-  const isImageUrl = image !== "" && image !== "https://example.com/...";
 
   return (
     <Link
@@ -22,14 +35,16 @@ function BestPostCard({ post }: IPostProps) {
     >
       <div className="flex h-full flex-col overflow-visible rounded-[10px] shadow-custom-shadow">
         <div className="flex-1">
-          {isImageUrl && image ? (
+          {imgError === false && image ? (
             <div className="relative flex h-full items-center justify-center">
-              <Image src={image} alt={title} objectFit="contain" fill />
+              <NextImage src={image} alt={title} objectFit="contain" fill />
             </div>
           ) : (
-            <div className="flex h-full items-center justify-center rounded-t-[10px] bg-primary-gray-100">
-              <CameraIcon />
-            </div>
+            imgError === true && (
+              <div className="flex h-full items-center justify-center rounded-t-[10px] bg-primary-gray-100">
+                <CameraIcon />
+              </div>
+            )
           )}
         </div>
         <div className="grid px-5 pb-[15px] pt-[10px] sm:gap-[6px] sm:pb-[14px] sm:pt-5">

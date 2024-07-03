@@ -1,6 +1,6 @@
 import "@/styles/globals.css";
 import Image from "next/image";
-import RedirectButton from "@/components/RedirectButton";
+import RedirectButton from "@/_components/RedirectButton";
 import {
   landingKeyboard,
   topSectionItem1,

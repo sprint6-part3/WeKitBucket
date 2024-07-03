@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useMemo, useRef } from "react";
 import ReactQuill, { UnprivilegedEditor } from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import React, { useMemo, useRef } from "react";
 
 const formats = ["bold", "italic", "underline", "align", "list", "bullet", "color", "image", "link", "height", "width"];
 
