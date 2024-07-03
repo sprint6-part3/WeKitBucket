@@ -4,14 +4,22 @@ import { createContext, useContext, useState, ReactNode, useMemo } from "react";
 
 interface ToastProps {
   active: boolean;
-  color: "red" | "green";
+  color: "red" | "green" | "gray";
   pos: "top" | "bottom";
   message: string;
 }
 
 interface ToastContextType {
   toast: ToastProps;
-  popupToast: ({ color, pos, message }: { color: "red" | "green"; pos: "top" | "bottom"; message: string }) => void;
+  popupToast: ({
+    color,
+    pos,
+    message,
+  }: {
+    color: "red" | "green" | "gray";
+    pos: "top" | "bottom";
+    message: string;
+  }) => void;
 }
 
 const ToastContext = createContext<ToastContextType>({
@@ -27,7 +35,7 @@ function ToastProvider({ children }: { children: ReactNode }) {
     pos,
     message,
   }: {
-    color: "red" | "green";
+    color: "red" | "green" | "gray";
     pos: "top" | "bottom";
     message: string;
   }) => {
