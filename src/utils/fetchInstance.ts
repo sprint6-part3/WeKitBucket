@@ -1,6 +1,7 @@
 "use server";
 
 import { cookies } from "next/headers";
+import postRefreshToken from "@/apis/auth/postRefreshToken";
 import createParams from "./createParams";
 
 const baseUrl = process.env.BASE_URL;
@@ -34,17 +35,45 @@ const fetchInstance = async <T>(
 
   const queryString = createQueryString(url, options.params);
 
-  const response = await fetch(`${baseUrl}${queryString}`, {
-    ...options,
-    headers,
-  });
+  try {
+    const response = await fetch(`${baseUrl}${queryString}`, {
+      ...options,
+      headers,
+    });
+    // interceptor
+    if (!response.ok) {
+      if (response.status === 401) {
+        // accessToken 재발급 시도
+        const refreshTokenCookie = cookies().get("refreshToken");
+        if (refreshTokenCookie) {
+          try {
+            await postRefreshToken(); // 새로운 accessToken을 받아옴
+            const retryHeaders = getDefaultHeaders();
+            const retryResponse = await fetch(`${baseUrl}${queryString}`, {
+              ...options,
+              headers: new Headers({
+                ...retryHeaders,
+                ...options.headers,
+              }),
+            });
+            if (retryResponse.ok) {
+              return retryResponse.json();
+            }
+          } catch (error) {
+            throw new Error(error instanceof Error ? error.message : "Failed to refresh token");
+          }
+        }
+        throw new Error("Unauthorized: No refresh token available");
+      } else {
+        const error = await response.json().catch(() => ({ message: "Unknown error" }));
+        throw new Error(error.message || "Request failed");
+      }
+    }
 
-  if (!response.ok) {
-    const error = await response.json().catch(() => ({ message: "Unknown error" }));
-    throw new Error(error.message || "Request failed");
+    return response.json();
+  } catch (error) {
+    throw new Error(error instanceof Error ? error.message : "Request failed");
   }
-
-  return response.json();
 };
 
 export default fetchInstance;
