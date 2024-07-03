@@ -11,20 +11,8 @@ import UserDropDown from "./UserDropDown";
 import NotUserDropDown from "./NotUserDropDown";
 import UserProfileDropdown from "./UserProfileDropdown";
 
-// const user = {
-//   profile: {
-//     code: "string",
-//     id: 1,
-//   },
-//   updatedAt: "2024-06-26T17:35:13.682Z",
-//   createdAt: "2024-06-26T17:35:13.682Z",
-//   teamId: "string",
-//   name: "이름",
-//   id: 1,
-// };
-
 export default function HeaderRight() {
-  const { user, getUser } = useAuth();
+  const { user, userProfile, getUser } = useAuth();
 
   const [windowWidth, setWindowWidth] = useState(0);
   const [isDropdownVisible, setIsDropdownVisible] = useState<boolean[]>([false, false]);
@@ -61,7 +49,8 @@ export default function HeaderRight() {
               <UserProfileDropdown
                 toggle={isDropdownVisible[1]}
                 setToggle={setIsDropdownVisible}
-                code={user.profile?.code}
+                code={user?.profile.code}
+                profileImage={userProfile?.image}
               />
             </div>
           ) : (

@@ -41,7 +41,7 @@ export default function UserDropDown() {
   const handleLogout = async () => {
     try {
       await postSignOut(); // 쿠키 삭제
-      await getUser(); // 쿠키가 없으면 user를 null로 상태 변경
+      await getUser();
     } catch (error) {
       console.error(error);
     } finally {

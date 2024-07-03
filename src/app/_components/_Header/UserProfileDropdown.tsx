@@ -2,6 +2,7 @@
 
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter, useSelectedLayoutSegments } from "next/navigation";
 
 import UserProfile from "@/assets/icons/userProfileIcon.svg";
@@ -12,10 +13,12 @@ export default function UserProfileDropdown({
   toggle,
   setToggle,
   code,
+  profileImage,
 }: {
   toggle: boolean;
   setToggle: Dispatch<SetStateAction<boolean[]>>;
-  code?: string;
+  code: string;
+  profileImage?: string | null;
 }) {
   const [windowWidth, setWindowWidth] = useState(0);
   const segments = useSelectedLayoutSegments();
@@ -51,7 +54,13 @@ export default function UserProfileDropdown({
     <div className="flex">
       <button onClick={toggleDropdown} aria-label="User Profile">
         {/* <Image src={UserProfile} alt="프로필 이미지" /> */}
-        <UserProfile width="32" height="32" />
+        {profileImage ? (
+          <div className="relative aspect-[1/1] h-[32px] w-[32px] border-none">
+            <Image fill src={profileImage} alt="프로필 이미지" className="rounded-full" />
+          </div>
+        ) : (
+          <UserProfile width="32" height="32" />
+        )}
       </button>
 
       {toggle && (
