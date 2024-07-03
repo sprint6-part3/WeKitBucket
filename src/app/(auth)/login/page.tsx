@@ -4,7 +4,7 @@ import Form from "./_components/Form.tsx";
 
 function Login() {
   return (
-    <div className="mx-auto flex min-h-dvh w-full max-w-[440px] items-center justify-center px-5 py-5">
+    <div className="mx-auto flex min-h-[calc(100dvh-60px)] w-full max-w-[440px] items-center justify-center px-5 py-5 xl:min-h-[calc(100dvh-80px)]">
       <div className="flex-1">
         <h2 className="text-center text-2xl font-semibold leading-[1.3] text-primary-gray-500">로그인</h2>
         <Form />
