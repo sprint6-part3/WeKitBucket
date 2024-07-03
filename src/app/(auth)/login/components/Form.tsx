@@ -29,14 +29,14 @@ function Form() {
   } = useForm<ISignInValue>({ mode: "onChange" });
 
   const router = useRouter();
-  // const { getUser } = useAuth();
-  const { setIsLoggedIn } = useAuth();
+  const { getUser } = useAuth();
+  // const { setIsLoggedIn } = useAuth();
 
   const onSubmit: SubmitHandler<ISignInValue> = async data => {
     try {
       await postSignIn(data);
-      // getUser();
-      setIsLoggedIn(true);
+      await getUser();
+      // setIsLoggedIn(true);
       router.push("/");
     } catch (error: any) {
       if (error?.message === "비밀번호가 일치하지 않습니다.") {
