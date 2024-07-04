@@ -41,7 +41,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
   const [userProfile, setUserProfile] = useState<RequestProfileCode | null>(null);
 
   const getUserProfile = async (newUser: IUser | null) => {
-    if (newUser) {
+    if (newUser && newUser.profile) {
       const newUserProfile = await getProfilesCode(newUser.profile.code);
       setUserProfile(() => {
         if (newUserProfile) return newUserProfile;

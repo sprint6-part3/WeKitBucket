@@ -1,29 +1,16 @@
 "use client";
 
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/control-has-associated-label */
-import React from "react";
-import Image from "next/image";
+import React, { useEffect, useState } from "react";
+import NextImage from "next/image";
 import EditIcon from "@/assets/icons/pencilIcon.svg";
 import DeleteIcon from "@/assets/icons/trashIcon.svg";
 import LikeIcon from "@/assets/icons/like.svg";
 import postArticlesLike from "@/apis/article/postArticlesLike";
-
-export interface ArticleDetail {
-  id: number;
-  title: string;
-  content: string;
-  image?: string;
-  likeCount?: number;
-  isLiked: any;
-  createdAt: string;
-  updatedAt?: string;
-  writer: {
-    id: number;
-    name: string;
-  };
-}
+import deleteArticlesLike, { ArticleDetail } from "@/apis/article/deleteArticlesLike";
+import dayjs from "dayjs";
+import getArticlesId from "@/apis/article/getArticlesId";
 
 interface IArticleDetailProps {
   article: ArticleDetail;
@@ -31,15 +18,39 @@ interface IArticleDetailProps {
 }
 
 function DetailSection({ article, articleId }: IArticleDetailProps) {
-  const { title, content, image, isLiked, likeCount, createdAt, writer } = article;
-  const { id, name } = writer;
+  const [imgError, setImgError] = useState<boolean | undefined>();
+  const [options, setOptions] = useState<ArticleDetail>(article);
+
+  useEffect(() => {
+    const getArticleDetails = async () => {
+      try {
+        const articleDetail = await getArticlesId(articleId);
+        setOptions(articleDetail);
+      } catch (error) {
+        console.error("Failed to fetch Article Detail: ", error);
+      }
+    };
+
+    getArticleDetails();
+  }, []);
+
+  const formattedDate = dayjs(options.createdAt).format("YYYY.MM.DD.");
 
   /**
    * @TODO 로그인 토큰 유효성, 갱신 로직 추가 후 테스트
    */
   const handleClickLikeButton = async () => {
     try {
-      await postArticlesLike(articleId);
+      let res;
+      if (options.isLiked) {
+        res = await deleteArticlesLike(articleId);
+      } else {
+        res = await postArticlesLike(articleId);
+      }
+      setOptions(prev => ({
+        ...prev,
+        ...res,
+      }));
     } catch (error) {
       console.error("Failed to fetch articles like: ", error);
       /**
@@ -48,12 +59,25 @@ function DetailSection({ article, articleId }: IArticleDetailProps) {
     }
   };
 
+  useEffect(() => {
+    const imgClass = new Image();
+    imgClass.src = options.image ?? "";
+
+    imgClass.onload = () => {
+      setImgError(false);
+    };
+
+    imgClass.onerror = () => {
+      setImgError(true);
+    };
+  }, [options.image]);
+
   return (
     <section className="rounded-[10px] px-5 pb-[14px] pt-5 shadow-custom-shadow sm:px-[30px] sm:py-10">
       <div className="grid gap-[14px] border-b-[1px] border-solid border-primary-gray-200 pb-[10px] sm:gap-[31.5px] sm:pb-2 lg:gap-[30px] lg:border-none">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <h1 className="break-keep text-2xl font-semibold leading-[1.3] text-primary-gray-500 sm:text-[32px] sm:leading-[1.3]">
-            {title}
+            {options.title}
           </h1>
           <div className="ml-auto flex items-center justify-between gap-[12px]">
             <button className="flex h-[22px] w-[22px] items-center justify-center px-[3.21px] py-[3.21px]">
@@ -66,27 +90,35 @@ function DetailSection({ article, articleId }: IArticleDetailProps) {
         </div>
         <div className="flex items-center justify-between gap-2">
           <div className="flex items-center gap-[10px]">
-            <p className="text-xs leading-[1.5] text-primary-gray-400 sm:text-sm sm:leading-[1.7]">{name}</p>
-            <p className="text-xs leading-[1.5] text-primary-gray-400 sm:text-sm sm:leading-[1.7]">2024.02.24.</p>
+            <p className="text-xs leading-[1.5] text-primary-gray-400 sm:text-sm sm:leading-[1.7]">
+              {options.writer.name}
+            </p>
+            <p className="text-xs leading-[1.5] text-primary-gray-400 sm:text-sm sm:leading-[1.7]">{formattedDate}</p>
           </div>
           <div className="flex items-center gap-1">
             <button
               onClick={handleClickLikeButton}
               className="flex h-4 w-4 items-center justify-center px-[1.6px] py-[2.5px] sm:h-[18px] sm:w-[18px] sm:px-[1.87px] sm:pb-[3.22px] sm:pt-[2.36px]"
             >
-              <LikeIcon width="100%" height="100%" />
+              {options.isLiked ? (
+                <LikeIcon width="100%" height="100%" fill="#4cbfa4" />
+              ) : (
+                <LikeIcon width="100%" height="100%" fill="#8f95b2" />
+              )}
             </button>
-            <p className="text-xs leading-[1.5] text-primary-gray-400 sm:text-sm sm:leading-[1.7]">{likeCount}</p>
+            <p className="text-xs leading-[1.5] text-primary-gray-400 sm:text-sm sm:leading-[1.7]">
+              {options.likeCount}
+            </p>
           </div>
         </div>
       </div>
       <div className="grid gap-[15px] pt-[15px] sm:gap-5 sm:pt-[30px]">
-        {image && image !== "https://example.com/..." && (
+        {options.image && imgError === false && (
           <div className="relative w-full max-w-[500px]">
-            <Image fill src={image} alt={title} />
+            <NextImage fill src={options.image} alt={options.title} />
           </div>
         )}
-        <div className="break-keep text-sm leading-[1.7] text-primary-gray-500 sm:text-base">{content}</div>
+        <div className="break-keep text-sm leading-[1.7] text-primary-gray-500 sm:text-base">{options.content}</div>
       </div>
     </section>
   );

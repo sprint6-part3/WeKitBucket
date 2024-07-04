@@ -1,7 +1,7 @@
 "use server";
 
-import { ArticleDetail } from "@/app/(boards)/boards/[id]/components/DetailSection";
 import fetchInstance from "@/utils/fetchInstance";
+import { ArticleDetail } from "./deleteArticlesLike";
 
 // 자유게시판 페이지
 const getArticlesId = async (articleId: number) => {
