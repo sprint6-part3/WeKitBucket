@@ -2,6 +2,7 @@ import React from "react";
 import getProfilesCode from "@/apis/profile/getProfilesCode";
 import LabelBox from "./components/LabelBox";
 import UserDataList from "./components/UserDataList";
+import ModalBox from "./components/Modal/ModalBox";
 
 async function Wiki({ params }: { params: { code: string } }) {
   const { code } = params;
@@ -18,13 +19,11 @@ async function Wiki({ params }: { params: { code: string } }) {
             <UserDataList privateData={requestData} />
           </div>
           <div className="px-23 box-border w-full rounded-[10px] border border-primary-gray-100 bg-primary-gray-100 py-10 text-center">
-            <h1 className="text-sm leading-6 text-primary-gray-600">
+            <h1 className="text-sm leading-6 text-primary-gray-400">
               아직 작성된 내용이 없네요
               <br /> 위키에 참여해보세요!
             </h1>
-            <button className="mt-3 rounded-[10px] bg-primary-green-200 px-[20px] py-[11px] text-sm font-semibold leading-[1.7] text-white">
-              시작하기
-            </button>
+            <ModalBox privateData={requestData} />
           </div>
         </div>
       </div>
