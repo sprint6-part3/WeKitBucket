@@ -19,3 +19,4 @@ const deleteNotifications = async (notificationsId: number) => {
 
 export default deleteNotifications;
 
+
