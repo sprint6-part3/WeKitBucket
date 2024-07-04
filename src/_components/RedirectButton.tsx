@@ -10,10 +10,10 @@ interface RedirectButtonProps {
 
 function RedirectButton({ text, variant }: RedirectButtonProps) {
   const router = useRouter();
-  const { isLoggedIn } = useAuth();
+  const { user } = useAuth();
 
   const handleButtonClick = () => {
-    if (isLoggedIn) {
+    if (user) {
       router.push("/wiki/{code}");
     } else {
       router.push("/login");

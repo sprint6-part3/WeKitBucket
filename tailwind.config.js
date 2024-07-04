@@ -41,6 +41,8 @@ module.exports = {
           400: "#8F95B2",
           500: "#474D66",
           600: "#3B415B",
+          800: "#A1A1A1",
+          900: "#A4A1AA",
         },
         "primary-green": {
           100: "#EEF9F6",
@@ -56,6 +58,30 @@ module.exports = {
         },
         "primary-yellow": {
           100: "#FDD181",
+        },
+        "primary-black": {
+          100: "#111322",
+          200: "#1B1B1B",
+        },
+      },
+      fontFamily: {
+        sans: ["Pretendard", "ui-sans-serif", "system-ui"],
+      },
+      boxShadow: {
+        "custom-shadow": "0px 4px 20px 0px #00000014",
+      },
+      animation: {
+        "fade-in": "fadeIn 0.25s ease-out forwards",
+        "fade-out": "fadeOut 0.25s ease-in forwards",
+      },
+      keyframes: {
+        fadeIn: {
+          "0%": { opacity: 0 },
+          "100%": { opacity: 1 },
+        },
+        fadeOut: {
+          "0%": { opacity: 1 },
+          "100%": { opacity: 0 },
         },
       },
     },

@@ -3,6 +3,16 @@
 @tailwind utilities;
 @import "./reset.css";
 
+@layer base {
+  .board-tr {
+    @apply gap-[3px] sm:grid sm:grid-cols-[30px,1fr,280px] sm:gap-[50px] sm:px-5 lg:grid-cols-[30px,1fr,340px] lg:gap-20 lg:px-[50px];
+  }
+
+  .board-td-info {
+    @apply flex gap-4 sm:grid sm:grid-cols-[45px,45px,90px] sm:gap-[50px] lg:gap-20;
+  }
+}
+
 @font-face {
   font-family: "Pretendard";
   src: url("../assets/fonts/pretendard/PretendardGOV-Thin.woff2") format("woff2");
@@ -64,4 +74,7 @@
   src: url("../assets/fonts/pretendard/PretendardGOV-Black.woff2") format("woff2");
   font-weight: 900;
   font-style: normal;
+}
+input:focus {
+  outline: none;
 }

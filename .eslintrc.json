@@ -18,6 +18,14 @@
     "react/prop-types": "off", // TypeScript를 사용하기 때문에 prop-types 검사를 비활성화
     "react/button-has-type": "off", // <button> 요소에 type 속성을 명시적으로 지정하지 않아도 되도록 함
     "react/require-default-props": "off", // 기본 props를 요구하지 않도록 비활성화 (TypeScript를 사용하기 때문에 필요 없음)
-    "prefer-arrow-callback": "off" // 콜백 함수에서 화살표 함수를 강제하지 않음
+    "prefer-arrow-callback": "off", // 콜백 함수에서 화살표 함수를 강제하지 않음
+    "import/no-unresolved": "off" // 지정된 모듈이 실제로 존재하지 않을 경우 오류를 표시하지 않음
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      }
+    }
   }
 }

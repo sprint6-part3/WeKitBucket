@@ -5,7 +5,7 @@ interface RequestNotifications {
   totalCount?: number;
 }
 
-const GetNotificationOptions = async (options: { page?: number; pageSize?: number }) => {
+const getNotificationOptions = async (options: { page?: number; pageSize?: number }) => {
   try {
     const data = await fetchInstance<RequestNotifications>(`notifications?${options}`, {
       method: "GET",
@@ -22,5 +22,4 @@ const GetNotificationOptions = async (options: { page?: number; pageSize?: numbe
 };
 
 
-export default GetNotificationOptions;
-
+export default getNotificationOptions;
