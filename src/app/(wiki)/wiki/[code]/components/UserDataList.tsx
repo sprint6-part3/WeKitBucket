@@ -23,15 +23,15 @@ function UserDataList({ privateData }: userDataProps) {
 
   return (
     <>
-      <div className="flex">
-        <div className="h-50 w-50 sm:h-[62px] sm:w-[62px]">
+      <div className="flex gap-5 px-5">
+        <div className="h-[62px] w-[62px]">
           {image ? <Image src={image} alt="프로필 이미지" /> : <DefaultProfile width="100%" height="100%" />}
         </div>
-        <div className="w-[175px] gap-2">
+        <div className="grid w-[175px] gap-3">
           <UserData dataProp={city}>거주 도시</UserData>
           <UserData dataProp={mbti}>MBTI</UserData>
           <UserData dataProp={job}>직업</UserData>
-          <ul className={isOpen ? "" : "hidden"}>
+          <ul className={`grid gap-3 ${isOpen ? "" : "hidden"}`}>
             <UserData dataProp={sns}>SNS 계정</UserData>
             <UserData dataProp={formattedDate}>생일</UserData>
             <UserData dataProp={nickname}>별명</UserData>
@@ -40,8 +40,10 @@ function UserDataList({ privateData }: userDataProps) {
           </ul>
         </div>
       </div>
-      <div>
-        <ToggleIcon alt="arrow" onClick={handleToggle} />
+      <div className="flex justify-center">
+        <div className="h-6 w-6">
+          <ToggleIcon width="100%" height="100%" alt="arrow" onClick={handleToggle} />
+        </div>
       </div>
     </>
   );
