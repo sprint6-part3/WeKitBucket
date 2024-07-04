@@ -18,4 +18,3 @@ const getProfiles = async (options?: { page?: number; pageSize?: number; name?: 
 };
 
 export default getProfiles;
-
