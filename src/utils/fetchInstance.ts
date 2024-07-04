@@ -43,11 +43,10 @@ const fetchInstance = async <T>(
     // interceptor
     if (!response.ok) {
       if (response.status === 401) {
-        // accessToken 재발급 시도
         const refreshTokenCookie = cookies().get("refreshToken");
         if (refreshTokenCookie) {
           try {
-            await postRefreshToken(); // 새로운 accessToken을 받아옴
+            await postRefreshToken();
             const retryHeaders = getDefaultHeaders();
             const retryResponse = await fetch(`${baseUrl}${queryString}`, {
               ...options,

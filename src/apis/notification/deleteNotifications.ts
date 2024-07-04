@@ -2,6 +2,7 @@
 
 import fetchInstance from "@/utils/fetchInstance";
 
+
 const deleteNotifications = async (notificationsId: number) => {
   try {
     await fetchInstance(`notifications/${notificationsId}`, {
@@ -17,3 +18,5 @@ const deleteNotifications = async (notificationsId: number) => {
 };
 
 export default deleteNotifications;
+
+

@@ -15,6 +15,7 @@ function page() {
     };
     load();
   });
+
   return (
     <div>
       <div>test</div>
