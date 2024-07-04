@@ -106,11 +106,11 @@ function DetailSection({ article, articleId }: IArticleDetailProps) {
       </div>
       <div className="grid gap-[15px] pt-[15px] sm:gap-5 sm:pt-[30px]">
         {options.image && imgError === false && (
-          <div className="relative w-full max-w-[500px]">
-            <NextImage fill src={options.image} alt={options.title} />
+          <div>
+            <NextImage width={500} height={100} src={options.image} alt={options.title} />
           </div>
         )}
-        <div className="break-keep text-sm leading-[1.7] text-primary-gray-500 sm:text-base">{options.content}</div>
+        <div className="text-sm leading-[1.7] text-primary-gray-500 sm:text-base">{options.content}</div>
       </div>
     </section>
   );

@@ -3,6 +3,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import { useAuth } from "@/context/AuthContext";
 import getArticlesId from "@/apis/article/getArticlesId";
 import { ArticleDetail } from "@/apis/article/deleteArticlesLike";
 import getComment, { ICommentList } from "@/apis/comment/getComment";
@@ -12,10 +13,9 @@ import DetailSection from "./components/DetailSection";
 
 function PostDetail({ params }: { params: { id: number } }) {
   const { id } = params;
+  const { user } = useAuth();
   const [articleDetail, setArticleDetail] = useState<ArticleDetail | null>(null);
   const [commentList, setCommentList] = useState<ICommentList[] | null>(null);
-
-  console.log(commentList);
 
   const fetchArticleComment = async () => {
     try {
@@ -54,7 +54,9 @@ function PostDetail({ params }: { params: { id: number } }) {
         </div>
         <CommentForm articleId={id} onCommentSubmitted={fetchArticleComment} />
         <ul className="grid gap-[14px] sm:gap-4 lg:gap-6">
-          {commentList?.map(comment => <CommentList list={comment} key={comment.id} />)}
+          {commentList?.map(comment => (
+            <CommentList list={comment} key={comment.id} myId={user?.id} onDelete={fetchArticleComment} />
+          ))}
         </ul>
       </section>
     </main>
