@@ -1,10 +1,11 @@
 import { ProfileData } from "@/types/profiles";
 import fetchInstance from "@/utils/fetchInstance";
-// 목록 페이지
-const getProfiles = async (options?: { page?: number; pageSize?: number; name?: string }) => {
+
+const getProfiles = async ({ page = 1, pageSize = 3, name = "" }: ProfilesOption = {}) => {
   try {
-    const data = await fetchInstance<ProfileData>(`profiles?${options}`, {
+    const data = await fetchInstance<ProfileData>("profiles", {
       method: "GET",
+      params: { page, pageSize, name },
     });
 
     return data;
@@ -18,4 +19,3 @@ const getProfiles = async (options?: { page?: number; pageSize?: number; name?: 
 };
 
 export default getProfiles;
-
