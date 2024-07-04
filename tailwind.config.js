@@ -72,9 +72,20 @@ module.exports = {
         "custom-shadow": "0px 4px 20px 0px #00000014",
         "custom-all": "0 0 10px rgba(0, 0, 0, 0.1)",
       },
-    },
-    fontFamily: {
-      sans: ["Pretendard", "ui-sans-serif", "system-ui"],
+      animation: {
+        "fade-in": "fadeIn 0.25s ease-out forwards",
+        "fade-out": "fadeOut 0.25s ease-in forwards",
+      },
+      keyframes: {
+        fadeIn: {
+          "0%": { opacity: 0 },
+          "100%": { opacity: 1 },
+        },
+        fadeOut: {
+          "0%": { opacity: 1 },
+          "100%": { opacity: 0 },
+        },
+      },
     },
   },
   plugins: [],

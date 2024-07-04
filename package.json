@@ -16,6 +16,7 @@
     "@typescript-eslint/eslint-plugin": "^7.13.1",
     "@typescript-eslint/parser": "^7.13.1",
     "css-loader": "^7.1.2",
+    "@xeger/quill-image-actions": "^0.7.2",
     "dayjs": "^1.11.11",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-plugin-import": "^2.29.1",
@@ -33,6 +34,7 @@
     "react-hook-form": "^7.52.0",
     "react-quill": "^2.0.0",
     "style-loader": "^4.0.0",
+    "react-responsive": "^10.0.0",
     "swiper": "^11.1.4",
     "tailwind": "^4.0.0",
     "yarn": "^1.22.22"

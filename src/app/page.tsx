@@ -1,6 +1,5 @@
 import "@/styles/globals.css";
 import Image from "next/image";
-import RedirectButton from "@/_components/RedirectButton";
 import {
   landingKeyboard,
   topSectionItem1,
@@ -11,6 +10,7 @@ import {
   bottomSectionItem3,
   backgroundImage,
 } from "@/assets/index";
+import RedirectButton from "@/_components/RedirectButton";
 
 function HomePage() {
   return (

@@ -80,4 +80,7 @@
 .ql-editor em,
 .ql-editor i {
   font-style: italic;
+  input:focus {
+    outline: none;
+  }
 }

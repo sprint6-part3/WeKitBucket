@@ -1,14 +1,20 @@
-"use server";
+"use client";
 
-async function page() {
-  // const password = {
-  //   passwordConfirmation: "12341234",
-  //   password: "12341234",
-  //   currentPassword: "12341234",
-  // };
-  // const content = "stringd";
-  // const data = await getComment(103, { limit: 1 });
-  // console.log(data);
+import postArticles from "@/apis/article/postArticles";
+import { useEffect } from "react";
+
+function page() {
+  const data = {
+    image: "https://example.com/",
+    content: "게시글 내용adfd입니다.",
+    title: "게시글 제목입adf니다.",
+  };
+  useEffect(() => {
+    const load = async () => {
+      await postArticles(data);
+    };
+    load();
+  });
   return (
     <div>
       <div>test</div>

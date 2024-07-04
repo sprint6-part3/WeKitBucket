@@ -1,4 +1,4 @@
-export interface ProfileList {
+export interface ProfileCatalog {
   id: number;
   code: string;
   image: null | string;
@@ -10,6 +10,6 @@ export interface ProfileList {
 }
 
 export interface ProfileData {
-  list: ProfileList[] | [];
-  totalCount?: number;
+  list: ProfileCatalog[] | [];
+  totalCount: number;
 }
