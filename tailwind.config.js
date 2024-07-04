@@ -9,6 +9,7 @@ module.exports = {
         "xs-regular": ["8px", { lineHeight: "10px", fontWeight: "400" }],
         "xs-bold-10": ["10px", { lineHeight: "12px", fontWeight: "700" }],
         "xs-bold": ["10px", { lineHeight: "11.5px", fontWeight: "700" }],
+        "sm-regular-12": ["12px", { lineHeight: "18px", fontWeight: "400" }],
         "sm-regular-14": ["14px", { lineHeight: "17px", fontWeight: "500" }],
         "sm-regular": ["16px", { lineHeight: "18.4px", fontWeight: "400" }],
         "sm-bold": ["16px", { lineHeight: "18.4px", fontWeight: "700" }],
@@ -37,7 +38,7 @@ module.exports = {
         "primary-gray": {
           100: "#F7F7FA",
           200: "#E4E5F0",
-          300: "#C6CADA",
+          300: "#C8CADA",
           400: "#8F95B2",
           500: "#474D66",
           600: "#3B415B",
@@ -69,6 +70,7 @@ module.exports = {
       },
       boxShadow: {
         "custom-shadow": "0px 4px 20px 0px #00000014",
+        "custom-all": "0 0 10px rgba(0, 0, 0, 0.1)",
       },
     },
     fontFamily: {

@@ -80,8 +80,13 @@ button:hover .ql-stroke,
   left: 0 !important;
 }
 
+.ql-editor::placeholder {
+  color: #c6cada !important;
+}
+
 .ql-editor {
-  padding: 0;
+  padding-left: 0 !important;
+  padding-top: 16px !important;
 }
 
 @media screen and (min-width: 481px) {

@@ -39,7 +39,7 @@ function QuillEditor({ content, setContent }: QuillEditorProps) {
   };
 
   return (
-    <div className="quill-editor-wrapper">
+    <div className="quill-editor-wrapper text-gray-600 md:text-md-regular">
       <ReactQuill
         ref={QuillRef}
         placeholder="본문을 입력해주세요"
