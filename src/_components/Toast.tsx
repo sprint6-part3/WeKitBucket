@@ -9,7 +9,9 @@ export default function Toast() {
 
   return (
     <div className="fixed">
-      {toast.active && <ToastPopup message={toast.message} position={toast.pos} color={toast.color} />}
+      {toast.active && (
+        <ToastPopup message={toast.message} position={toast.pos} color={toast.color} width={toast.width} />
+      )}
     </div>
   );
 }

@@ -8,10 +8,12 @@ export default function ToastPopup({
   message,
   position,
   color,
+  width,
 }: {
   message: string;
   position: "top" | "bottom";
   color: "red" | "green" | "gray";
+  width: number;
 }) {
   return createPortal(
     <AnimatePresence>
@@ -22,7 +24,7 @@ export default function ToastPopup({
         className="absolute top-10 flex h-[100dvh] w-[100dvw] justify-center py-[30px] xl:py-[50px]"
       >
         <div
-          className={`absolute flex h-[42px] max-w-[860px] items-center justify-center gap-x-[15px] rounded-[1rem] px-[15px] py-[12px] md:h-[50px] md:px-[20px] md:py-[13px] ${`bg-primary-${color}-200`} shadow-[0px_2px_8px_rgba(0,0,0,0.25)] backdrop-opacity-5 ${
+          className={`absolute flex h-[42px] w-[${width}px] max-w-[860px] items-center justify-start gap-x-[15px] rounded-[1rem] px-[15px] py-[12px] md:h-[50px] md:px-[20px] md:py-[13px] ${`bg-primary-${color}-200`} shadow-[0px_2px_8px_rgba(0,0,0,0.25)] backdrop-opacity-5 ${
             position === "top" ? "animate-toast-top" : "animate-toast-bottom"
           }`}
         >
