@@ -1,22 +1,30 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import getArticlesId from "@/apis/article/getArticlesId";
+import { ArticleDetail } from "@/apis/article/deleteArticlesLike";
 import CommentForm from "./components/CommentForm";
 import CommentList from "./components/CommentList";
 import DetailSection from "./components/DetailSection";
 
-async function PostDetail({ params }: { params: { id: number } }) {
-  const arr = new Array(3).fill(0);
+function PostDetail({ params }: { params: { id: number } }) {
   const { id } = params;
-  let articleDetail;
+  const [articleDetail, setArticleDetail] = useState<ArticleDetail | null>(null);
+  const arr = new Array(3).fill(0);
 
-  console.log(id, "id");
+  useEffect(() => {
+    const fetchArticleDetail = async () => {
+      try {
+        const data = await getArticlesId(id);
+        setArticleDetail(data);
+      } catch (error) {
+        console.error("Failed to fetch Article Detail: ", error);
+      }
+    };
 
-  try {
-    articleDetail = await getArticlesId(id);
-  } catch (error) {
-    console.error("Failed to fetch Article Detail: ", error);
-  }
+    fetchArticleDetail();
+  }, [id]);
 
   return (
     <main className="mx-auto grid min-w-[300px] max-w-[1060px] gap-10 px-5 py-5 sm:px-[60px] sm:pb-[46px] sm:pt-10 lg:gap-[60px] lg:pb-[130px] lg:pt-[60px]">

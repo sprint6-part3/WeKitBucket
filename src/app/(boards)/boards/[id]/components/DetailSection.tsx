@@ -10,7 +10,8 @@ import LikeIcon from "@/assets/icons/like.svg";
 import postArticlesLike from "@/apis/article/postArticlesLike";
 import deleteArticlesLike, { ArticleDetail } from "@/apis/article/deleteArticlesLike";
 import dayjs from "dayjs";
-import getArticlesId from "@/apis/article/getArticlesId";
+// import getArticlesId from "@/apis/article/getArticlesId";
+import { useRouter } from "next/navigation";
 
 interface IArticleDetailProps {
   article: ArticleDetail;
@@ -18,27 +19,13 @@ interface IArticleDetailProps {
 }
 
 function DetailSection({ article, articleId }: IArticleDetailProps) {
+  const router = useRouter();
   const [imgError, setImgError] = useState<boolean | undefined>();
   const [options, setOptions] = useState<ArticleDetail>(article);
 
-  useEffect(() => {
-    const getArticleDetails = async () => {
-      try {
-        const articleDetail = await getArticlesId(articleId);
-        setOptions(articleDetail);
-      } catch (error) {
-        console.error("Failed to fetch Article Detail: ", error);
-      }
-    };
-
-    getArticleDetails();
-  }, []);
-
   const formattedDate = dayjs(options.createdAt).format("YYYY.MM.DD.");
 
-  /**
-   * @TODO 로그인 토큰 유효성, 갱신 로직 추가 후 테스트
-   */
+  // 좋아요 버튼 클릭 함수
   const handleClickLikeButton = async () => {
     try {
       let res;
@@ -52,10 +39,13 @@ function DetailSection({ article, articleId }: IArticleDetailProps) {
         ...res,
       }));
     } catch (error) {
-      console.error("Failed to fetch articles like: ", error);
-      /**
-       * @TODO 비로그인시 로그인 페이지로 리다이렉트
-       */
+      if (error instanceof Error) {
+        if (error?.message === "Unauthorized: No refresh token available") {
+          router.push("/login");
+        } else {
+          console.error("Failed to fetch articles like: ", error);
+        }
+      }
     }
   };
 
