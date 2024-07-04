@@ -57,7 +57,7 @@ function PostDetail({ params }: { params: { id: number } }) {
         <CommentForm articleId={id} onCommentSubmitted={fetchArticleComment} />
         <ul className="grid gap-[14px] sm:gap-4 lg:gap-6">
           {commentList?.map(comment => (
-            <CommentList list={comment} key={comment.id} myId={user?.id} onDelete={fetchArticleComment} />
+            <CommentList list={comment} key={comment.id} myId={user?.id} onChangeApi={fetchArticleComment} />
           ))}
         </ul>
       </section>

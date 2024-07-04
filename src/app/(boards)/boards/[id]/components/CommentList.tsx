@@ -10,19 +10,24 @@ import { ICommentList } from "@/apis/comment/getComment";
 import dayjs from "dayjs";
 import Image from "next/image";
 import deleteComment from "@/apis/comment/deleteComment";
+import patchComment from "@/apis/comment/patchComment";
 import CommonModal from "@/_components/CommonModal";
 import DeleteModal from "./DeleteModal";
+import { LIMIT } from "./CommentForm";
 
 interface ICommentListProps {
   list: ICommentList;
   myId: number | undefined;
-  onDelete: () => void;
+  onChangeApi: () => void;
 }
 
-function CommentList({ list, myId, onDelete }: ICommentListProps) {
+function CommentList({ list, myId, onChangeApi }: ICommentListProps) {
   const { id, content, createdAt, writer } = list;
   const { id: writerId, image, name } = writer;
   const [viewModal, setViewModal] = useState(false);
+  const [editMode, setEditMode] = useState(false);
+  const [commentValue, setCommentValue] = useState(content);
+  const [commentCount, setCommentCount] = useState(content.length);
   const isMyComment = writerId === myId;
   const formattedDate = dayjs(createdAt).format("YYYY.MM.DD.");
 
@@ -33,11 +38,33 @@ function CommentList({ list, myId, onDelete }: ICommentListProps) {
   const handleClickDeleteButton = async () => {
     try {
       await deleteComment(id);
-      onDelete();
+      onChangeApi();
     } catch (error) {
       console.error("Failed to fetch Delete Comment: ", error);
     }
     handleViewModal();
+  };
+
+  const handleChangeComment: React.ChangeEventHandler<HTMLTextAreaElement> = e => {
+    const { value } = e.target;
+    setCommentValue(value);
+    setCommentCount(value.length);
+  };
+
+  const handleCancleEditMode = () => {
+    setEditMode(false);
+    setCommentValue(content);
+  };
+
+  const handleEditComment: React.MouseEventHandler<HTMLButtonElement> = async e => {
+    e.preventDefault();
+    try {
+      await patchComment(id, commentValue);
+      setEditMode(false);
+      onChangeApi();
+    } catch (error) {
+      console.error("Failed to fetch Patch Comment: ", error);
+    }
   };
 
   return (
@@ -57,7 +84,12 @@ function CommentList({ list, myId, onDelete }: ICommentListProps) {
             </span>
             {isMyComment && (
               <div className="flex gap-[15px] sm:gap-5">
-                <button className="flex h-5 w-5 items-center justify-center p-[3px] sm:h-6 sm:w-6 sm:p-[3.5px]">
+                <button
+                  onClick={() => {
+                    setEditMode(true);
+                  }}
+                  className="flex h-5 w-5 items-center justify-center p-[3px] sm:h-6 sm:w-6 sm:p-[3.5px]"
+                >
                   <EditIcon />
                 </button>
                 <button
@@ -69,9 +101,41 @@ function CommentList({ list, myId, onDelete }: ICommentListProps) {
               </div>
             )}
           </div>
-          <p className="mb-1 text-sm leading-[1.7] text-primary-gray-500 sm:mb-[10px] sm:mt-[6px] sm:text-base">
-            {content}
-          </p>
+          {editMode ? (
+            <form className="mb-6 mt-2 grid h-[120px] gap-1 rounded-[10px] bg-primary-gray-100 pb-[14px] pl-5 pr-[14px] pt-4 sm:mt-[15px] sm:pt-5 lg:mb-10 lg:px-[15px] lg:py-[13px]">
+              <textarea
+                value={commentValue}
+                maxLength={LIMIT}
+                onChange={handleChangeComment}
+                placeholder="댓글을 입력해 주세요"
+                className="w-full resize-none bg-transparent text-sm leading-[1.7] text-primary-gray-500 outline-none placeholder:text-primary-gray-400"
+              />
+              <div className="flex items-end justify-between gap-1">
+                <p className="text-sm leading-[1.7] text-primary-gray-300">
+                  <span>{commentCount}</span> / <span>{LIMIT}</span>
+                </p>
+                <div className="flex gap-2">
+                  <button
+                    onClick={handleEditComment}
+                    className="text-xs font-semibold leading-[1.7] text-primary-gray-300"
+                  >
+                    수정
+                  </button>
+                  <button
+                    onClick={handleCancleEditMode}
+                    className="text-xs font-semibold leading-[1.7] text-primary-gray-300"
+                  >
+                    취소
+                  </button>
+                </div>
+              </div>
+            </form>
+          ) : (
+            <p className="mb-1 text-sm leading-[1.7] text-primary-gray-500 sm:mb-[10px] sm:mt-[6px] sm:text-base">
+              {content}
+            </p>
+          )}
+
           <span className="text-xs leading-[1.5] text-primary-gray-400 sm:text-sm">{formattedDate}</span>
         </div>
       </li>

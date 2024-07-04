@@ -5,7 +5,7 @@ import postComment from "@/apis/comment/postComment";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
-const LIMIT = 500;
+export const LIMIT = 500;
 
 function CommentForm({ articleId, onCommentSubmitted }: { articleId: number; onCommentSubmitted: () => void }) {
   const router = useRouter();
