@@ -2,6 +2,7 @@
 const nextConfig = {
   env: {
     BASE_URL: process.env.BASE_URL,
+    VERCEL_URL: process.env.VERCEL_URL || "https://wekit-bucket.vercel.app",
   },
   reactStrictMode: true,
   swcMinify: true,
@@ -21,7 +22,7 @@ const nextConfig = {
     return config;
   },
   images: {
-    domains: ["example.com"],
+    domains: ["example.com", "sprint-fe-project.s3.ap-northeast-2.amazonaws.com"],
   },
 };
 

@@ -21,6 +21,4 @@ const GetNotificationOptions = async (options: { page?: number; pageSize?: numbe
   }
 };
 
-
 export default GetNotificationOptions;
-

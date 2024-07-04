@@ -2,12 +2,19 @@
 
 import React, { useEffect, useState } from "react";
 import { IArticleProps } from "@/types/articles";
-import getArticles, { ArticleOption } from "@/apis/article/getArticles";
+import getArticles from "@/apis/article/getArticles";
 import SearchForm from "../search/SearchForm";
 import Dropdown, { ISortValue } from "../Dropdown";
 import PostHeader from "./PostHeader";
 import PostList from "./PostList";
 import Pagination from "../Pagination";
+
+export interface ArticleOption {
+  page?: number;
+  pageSize?: number;
+  orderBy?: "recent" | "like";
+  keyword?: string;
+}
 
 function AllArticleSection({ article }: IArticleProps) {
   const { totalCount } = article;
