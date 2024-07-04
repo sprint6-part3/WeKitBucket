@@ -1,12 +1,5 @@
 import { ProfileData } from "@/types/profiles";
 import fetchInstance from "@/utils/fetchInstance";
-// 목록 페이지
-
-interface ProfilesOption {
-  page?: number;
-  pageSize?: number;
-  name?: string;
-}
 
 const getProfiles = async ({ page = 1, pageSize = 3, name = "" }: ProfilesOption) => {
   try {
