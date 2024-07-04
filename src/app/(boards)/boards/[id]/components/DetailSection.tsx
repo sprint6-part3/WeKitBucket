@@ -42,7 +42,7 @@ function DetailSection({ article, articleId, myId, onDelete }: IArticleDetailPro
       router.push("/boards");
     } catch (error) {
       if (error instanceof Error) {
-        if (error?.message === "게시글을 찾을 수 없습니다.") {
+        if (error?.message === "Error: 게시글을 찾을 수 없습니다.") {
           console.log(error.message);
           router.push("/boards");
         } else {
@@ -100,15 +100,24 @@ function DetailSection({ article, articleId, myId, onDelete }: IArticleDetailPro
               {options.title}
             </h1>
             {isMyPost && (
-              <div className="ml-auto flex items-center justify-between gap-[12px]">
-                <button className="flex h-[22px] w-[22px] items-center justify-center px-[3.21px] py-[3.21px]">
+              <div className="ml-auto flex items-center justify-between gap-[12px] lg:gap-[14px]">
+                <button className="flex h-[22px] w-[22px] items-center justify-center px-[3.21px] py-[3.21px] sm:hidden">
                   <EditIcon />
                 </button>
                 <button
                   onClick={handleViewModal}
-                  className="flex h-6 w-6 items-center justify-center px-[4.5px] py-[3.5px]"
+                  className="flex h-6 w-6 items-center justify-center px-[4.5px] py-[3.5px] sm:hidden"
                 >
                   <DeleteIcon />
+                </button>
+                <button className="hidden h-[45px] w-[120px] items-center justify-center rounded-[10px] bg-primary-green-200 text-sm font-semibold text-white sm:flex lg:w-[140px]">
+                  수정하기
+                </button>
+                <button
+                  onClick={handleViewModal}
+                  className="hidden h-[45px] w-[120px] items-center justify-center rounded-[10px] bg-primary-green-200 text-sm font-semibold text-white sm:flex lg:w-[140px]"
+                >
+                  삭제하기
                 </button>
               </div>
             )}
