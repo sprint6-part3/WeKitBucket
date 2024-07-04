@@ -20,10 +20,9 @@ interface IArticleDetailProps {
   article: ArticleDetail;
   articleId: number;
   myId: number | undefined;
-  onDelete: () => void;
 }
 
-function DetailSection({ article, articleId, myId, onDelete }: IArticleDetailProps) {
+function DetailSection({ article, articleId, myId }: IArticleDetailProps) {
   const router = useRouter();
   const [imgError, setImgError] = useState<boolean | undefined>();
   const [options, setOptions] = useState<ArticleDetail>(article);
@@ -38,7 +37,6 @@ function DetailSection({ article, articleId, myId, onDelete }: IArticleDetailPro
   const handleClickDeleteButton = async () => {
     try {
       await deleteArticlesId(options.id);
-      onDelete();
       router.push("/boards");
     } catch (error) {
       if (error instanceof Error) {
