@@ -27,7 +27,7 @@ function AlarmProvider({ children }: { children: ReactNode }) {
 
   const getAlarmMessages = async () => {
     const { totalCount, list } = await GetNotificationOptions({ page, pageSize: 10 });
-    if (list) setAlarmMessages(prev => [...prev, ...list]);
+    if (list) setAlarmMessages(() => list);
     if (totalCount && totalCount / page > page + 1) setPage(() => page + 1);
     console.log(`${totalCount} ${list} ${alarmMessages}`);
   };
@@ -40,8 +40,9 @@ function AlarmProvider({ children }: { children: ReactNode }) {
 
   const removeAllMessages = () => {
     alarmMessages.forEach(async m => {
-      await removeAlarmMessage(m.id);
+      await deleteNotifications(m.id);
     });
+    setAlarmMessages(alarmMessages.filter(v => v.id === 0));
   };
 
   const values = useMemo(

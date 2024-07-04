@@ -32,14 +32,19 @@ export default function AlarmModal({ onClose }: { onClose: () => void }) {
                 key={m.id}
                 className="flex flex-col rounded-[8px] bg-white p-5 shadow-[0_0.125rem_0.5rem_rgba(0,0,0,0.3),0_0.0625rem_0.125rem_rgba(0,0,0,0.2)]"
               >
-                <button
-                  onClickCapture={() => {
-                    removeAlarmMessage(m.id);
-                  }}
-                  className="flex justify-end text-sm text-primary-gray-900"
-                >
-                  X
-                </button>
+                <div className="flex justify-between pb-[10px]">
+                  <h2 className="relative top-[-6px] flex flex-col items-start justify-start text-4xl leading-4 text-primary-red-200">
+                    .
+                  </h2>
+                  <button
+                    onClickCapture={() => {
+                      removeAlarmMessage(m.id);
+                    }}
+                    className="flex justify-end text-sm text-primary-gray-900"
+                  >
+                    X
+                  </button>
+                </div>
                 <div className="flex flex-col items-start justify-stretch text-left">
                   <h3 className="flex max-w-[250px] flex-1 text-sm font-normal leading-6 text-primary-black-100">
                     {m.content}
