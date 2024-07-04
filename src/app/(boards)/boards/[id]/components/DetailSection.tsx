@@ -1,5 +1,6 @@
 "use client";
 
+/* eslint-disable no-alert */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/control-has-associated-label */
 import React, { useEffect, useState } from "react";
@@ -41,6 +42,7 @@ function DetailSection({ article, articleId }: IArticleDetailProps) {
     } catch (error) {
       if (error instanceof Error) {
         if (error?.message === "Unauthorized: No refresh token available") {
+          alert("로그인이 필요합니다.");
           router.push("/login");
         } else {
           console.error("Failed to fetch articles like: ", error);

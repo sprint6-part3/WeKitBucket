@@ -1,9 +1,11 @@
 "use client";
 
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import getArticlesId from "@/apis/article/getArticlesId";
 import { ArticleDetail } from "@/apis/article/deleteArticlesLike";
+import getComment, { ICommentList } from "@/apis/comment/getComment";
 import CommentForm from "./components/CommentForm";
 import CommentList from "./components/CommentList";
 import DetailSection from "./components/DetailSection";
@@ -11,7 +13,18 @@ import DetailSection from "./components/DetailSection";
 function PostDetail({ params }: { params: { id: number } }) {
   const { id } = params;
   const [articleDetail, setArticleDetail] = useState<ArticleDetail | null>(null);
-  const arr = new Array(3).fill(0);
+  const [commentList, setCommentList] = useState<ICommentList[] | null>(null);
+
+  console.log(commentList);
+
+  const fetchArticleComment = async () => {
+    try {
+      const data = await getComment({ articleId: id, limit: 100 });
+      setCommentList(data?.list);
+    } catch (error) {
+      console.error("Failed to fetch Article Comment: ", error);
+    }
+  };
 
   useEffect(() => {
     const fetchArticleDetail = async () => {
@@ -24,6 +37,7 @@ function PostDetail({ params }: { params: { id: number } }) {
     };
 
     fetchArticleDetail();
+    fetchArticleComment();
   }, [id]);
 
   return (
@@ -36,11 +50,11 @@ function PostDetail({ params }: { params: { id: number } }) {
       </Link>
       <section>
         <div className="font-semibold leading-[1.7] text-primary-gray-500 sm:text-lg sm:leading-[1.4]">
-          댓글 <span className="text-primary-green-200">29</span>
+          댓글 <span className="text-primary-green-200">{commentList?.length}</span>
         </div>
-        <CommentForm />
+        <CommentForm articleId={id} onCommentSubmitted={fetchArticleComment} />
         <ul className="grid gap-[14px] sm:gap-4 lg:gap-6">
-          {arr?.map((_, idx) => <CommentList key={String(idx + 1)} />)}
+          {commentList?.map(comment => <CommentList list={comment} key={comment.id} />)}
         </ul>
       </section>
     </main>

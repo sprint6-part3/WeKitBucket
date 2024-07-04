@@ -1,12 +1,36 @@
 "use client";
 
+/* eslint-disable no-alert */
+import postComment from "@/apis/comment/postComment";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 const LIMIT = 500;
 
-function CommentForm() {
+function CommentForm({ articleId, onCommentSubmitted }: { articleId: number; onCommentSubmitted: () => void }) {
+  const router = useRouter();
   const [commentValue, setCommentValue] = useState("");
   const [commentCount, setCommentCount] = useState(0);
+
+  const handleSubmitComment: React.FormEventHandler<HTMLFormElement> = async e => {
+    e.preventDefault();
+    try {
+      await postComment(articleId, commentValue);
+      onCommentSubmitted();
+    } catch (error) {
+      if (error instanceof Error) {
+        if (error?.message === "Unauthorized: No refresh token available") {
+          alert("로그인이 필요합니다.");
+          router.push("/login");
+        } else {
+          console.error("Failed to fetch Post Comment: ", error);
+        }
+      }
+    } finally {
+      setCommentValue("");
+      setCommentCount(0);
+    }
+  };
 
   const handleChangeComment: React.ChangeEventHandler<HTMLTextAreaElement> = e => {
     const { value } = e.target;
@@ -15,7 +39,10 @@ function CommentForm() {
   };
 
   return (
-    <form className="mb-6 mt-2 grid h-[140px] gap-1 rounded-[10px] bg-primary-gray-100 pb-[14px] pl-5 pr-[14px] pt-4 sm:mt-[15px] sm:pt-5 lg:mb-10 lg:px-[15px] lg:py-[13px]">
+    <form
+      onSubmit={handleSubmitComment}
+      className="mb-6 mt-2 grid h-[140px] gap-1 rounded-[10px] bg-primary-gray-100 pb-[14px] pl-5 pr-[14px] pt-4 sm:mt-[15px] sm:pt-5 lg:mb-10 lg:px-[15px] lg:py-[13px]"
+    >
       <textarea
         value={commentValue}
         maxLength={LIMIT}
