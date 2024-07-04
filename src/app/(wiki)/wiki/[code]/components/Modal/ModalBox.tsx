@@ -25,7 +25,7 @@ function ModalBox({ privateData }: userDataProps) {
         시작하기
       </button>
       <CommonModal active={active} close={handleActive}>
-        <QuizModal code={code} securityQuestion={securityQuestion} />
+        <QuizModal code={code} securityQuestion={securityQuestion} close={handleActive} />
       </CommonModal>
     </div>
   );

@@ -7,9 +7,8 @@ const postProfilesCodePing = async (profileCode: string, securityAnswer: Profile
   try {
     const data = await fetchInstance<ProfilesInput>(`profiles/${profileCode}/ping`, {
       method: "POST",
-      body: JSON.stringify({ securityAnswer }),
+      body: JSON.stringify(securityAnswer),
     });
-
     return data;
   } catch (error) {
     if (error instanceof Error) {

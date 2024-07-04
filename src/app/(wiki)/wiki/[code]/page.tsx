@@ -13,7 +13,7 @@ async function Wiki({ params }: { params: { code: string } }) {
       <div className="flex-1">
         <div className="grid gap-10">
           <div className="grid justify-start gap-4">
-            <LabelBox code={code} />
+            <LabelBox privateData={requestData} />
           </div>
           <div className="rounded-[10px] shadow-lg">
             <UserDataList privateData={requestData} />

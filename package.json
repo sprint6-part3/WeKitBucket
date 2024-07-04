@@ -16,6 +16,7 @@
     "@types/quill": "^2.0.14",
     "@typescript-eslint/eslint-plugin": "^7.13.1",
     "@typescript-eslint/parser": "^7.13.1",
+    "@uiw/react-md-editor": "^4.0.4",
     "@xeger/quill-image-actions": "^0.7.2",
     "busboy": "^1.6.0",
     "compressorjs": "^1.2.1",

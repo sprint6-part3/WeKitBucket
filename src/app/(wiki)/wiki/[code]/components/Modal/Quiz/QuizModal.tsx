@@ -1,3 +1,5 @@
+"use client";
+
 import Lock from "@/assets/icons/lock.svg";
 import { SubmitHandler, useForm } from "react-hook-form";
 import postProfilesCodePing from "@/apis/profile/postProfilesCodePing";
@@ -9,21 +11,27 @@ import Button from "../Button";
 interface SecurityData {
   code: string;
   securityQuestion: string;
+  close: () => void;
 }
 
 interface QuizInput {
   securityAnswer: string;
 }
 
-function QuizModal({ code, securityQuestion }: SecurityData) {
+function QuizModal({ code, securityQuestion, close }: SecurityData) {
   const {
     register,
     handleSubmit,
     formState: { isSubmitting, errors, isValid },
   } = useForm<QuizInput>({ mode: "onChange" });
 
+  const closeEvent = () => {
+    close();
+  };
+
   const onSubmit: SubmitHandler<QuizInput> = async data => {
     await postProfilesCodePing(code, data);
+    closeEvent();
   };
 
   return (
@@ -56,7 +64,7 @@ function QuizModal({ code, securityQuestion }: SecurityData) {
               {errors?.securityAnswer && <ErrorText>{errors.securityAnswer?.message}</ErrorText>}
             </div>
             <Button type="submit" disabled={!isValid || isSubmitting}>
-              가입하기
+              확인
             </Button>
           </div>
         </form>

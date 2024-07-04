@@ -1,8 +1,14 @@
 "use client";
 
 import LinkIcon from "@/assets/icons/link.svg";
+import { RequestProfileCode } from "@/apis/profile/getProfilesCode";
 
-function LabelBox({ code }: { code: string }) {
+export interface userDataProps {
+  privateData: RequestProfileCode;
+}
+
+function LabelBox({ privateData }: userDataProps) {
+  const { code, name } = privateData;
   const copyLinkUrl = `${process.env.VERCEL_URL}/wiki/${code}`;
 
   const handleCopyLink = () => {
@@ -17,7 +23,7 @@ function LabelBox({ code }: { code: string }) {
   };
   return (
     <>
-      <h1 className="text-xl-bold-32 text-primary-gray-500">이지동</h1>
+      <h1 className="text-xl-bold-32 text-primary-gray-500">{name}</h1>
       <div className="ml-auto flex gap-1 rounded-xl bg-primary-green-100 px-[10px] py-[5px]">
         <LinkIcon width={16} height={16} />
         <button
