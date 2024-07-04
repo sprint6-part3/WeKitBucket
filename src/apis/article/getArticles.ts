@@ -23,6 +23,7 @@ const getArticles = async (options?: {
       method: "GET",
       params: options,
     });
+
     return data;
   } catch (error) {
     if (error instanceof Error) {
