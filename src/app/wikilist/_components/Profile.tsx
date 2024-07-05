@@ -6,10 +6,12 @@ import LinkIcon from "@/assets/icons/link.svg";
 import Link from "next/link";
 import Image from "next/image";
 import { ProfileCatalog } from "@/types/profiles.type";
+import useImageLoad from "@/hooks/useImageLoad";
 
 function Profile({ item }: { item: ProfileCatalog }) {
   const { code, city, nationality, job, name, image } = item;
   const copyLinkUrl = `${process.env.VERCEL_URL}/wiki/${code}`;
+  const imageError = useImageLoad(image);
 
   const handleCopyLink = () => {
     navigator.clipboard.writeText(copyLinkUrl);
@@ -27,7 +29,7 @@ function Profile({ item }: { item: ProfileCatalog }) {
       href={`/wiki/${code}`}
       className="flex w-full gap-5 px-5 py-6 shadow-[0_4px_20px_rgba(0,0,0,0.08)] md:gap-8 md:px-9 md:py-6"
     >
-      {image ? (
+      {!imageError && image ? (
         <div className="relative h-[60px] w-[60px] rounded-full md:h-[85px] md:w-[85px]">
           <Image src={image} alt={`${name}'s profile`} fill className="rounded-full" style={{ objectFit: "cover" }} />
         </div>
