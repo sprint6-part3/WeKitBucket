@@ -16,7 +16,7 @@ function Pagination({ totalCount, pageSize, keyword, page = 1 }: PaginationProps
   const pageArray = Array.from({ length: pageItemCount }, (_, index) => Number(index + 1));
 
   return (
-    <div className="mt-14 flex items-center justify-center gap-2 rounded-xl border p-2 md:mt-20 xl:mt-[120px]">
+    <div className="mt-14 flex items-center justify-center gap-2 rounded-xl p-2 md:mt-20 xl:mt-[120px]">
       <Link
         href={`/wikilist?${keyword ? `keyword=${keyword}` : ""}&number=${page > 1 ? Number(page) - 1 : 1}`}
         className={`${Number(page) === 1 && "invisible"} flex h-11 w-11 cursor-pointer items-center justify-center rounded-xl text-primary-gray-400 shadow-[0_4px_20px_rgba(0,0,0,0.08)]`}
