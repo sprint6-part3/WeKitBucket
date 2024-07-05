@@ -51,7 +51,7 @@ function Form() {
           message: error?.message,
         });
       } else {
-        popupToast({ color: "red", pos: "top", message: "로그인에 실패했습니다." });
+        popupToast({ color: "red", pos: "top", message: "로그인에 실패했습니다.", width: 320 });
       }
     }
   };
