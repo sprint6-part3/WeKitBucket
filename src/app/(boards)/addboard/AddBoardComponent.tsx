@@ -9,7 +9,7 @@ import patchArticlesId from "@/apis/article/patchArticlesId";
 import getArticlesId from "@/apis/article/getArticlesId";
 import getUsersMe from "@/apis/user/getUsersMe";
 import CustomButton from "./CustomButton";
-import turndownService from "./turndownService"; // TurndownService import 추가
+import turndownService from "./turndownService";
 
 const TITLE_MAX_LEN = 30;
 

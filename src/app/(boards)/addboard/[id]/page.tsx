@@ -6,7 +6,7 @@ const AddBoardComponent = dynamic(() => import("../AddBoardComponent"), {
   ssr: false,
 });
 
-function AddBoardPage({ params }: { params: { id: string } }) {
+function AddBoardEditPage({ params }: { params: { id: string } }) {
   const articleId = parseInt(params.id, 10);
 
   return (
@@ -26,4 +26,4 @@ function AddBoardPage({ params }: { params: { id: string } }) {
   );
 }
 
-export default AddBoardPage;
+export default AddBoardEditPage;
