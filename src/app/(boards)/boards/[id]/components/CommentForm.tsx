@@ -7,7 +7,13 @@ import React, { useState } from "react";
 
 export const LIMIT = 500;
 
-function CommentForm({ articleId, onCommentSubmitted }: { articleId: number; onCommentSubmitted: () => void }) {
+interface CommentFormProps {
+  articleId: number;
+  onCommentSubmitted: () => void;
+  myId: number | undefined;
+}
+
+function CommentForm({ articleId, onCommentSubmitted, myId }: CommentFormProps) {
   const router = useRouter();
   const [commentValue, setCommentValue] = useState("");
   const [commentCount, setCommentCount] = useState(0);
@@ -15,11 +21,14 @@ function CommentForm({ articleId, onCommentSubmitted }: { articleId: number; onC
   const handleSubmitComment: React.FormEventHandler<HTMLFormElement> = async e => {
     e.preventDefault();
     try {
+      if (!myId) {
+        throw new Error("User is not authenticated");
+      }
       await postComment(articleId, commentValue);
       onCommentSubmitted();
     } catch (error) {
       if (error instanceof Error) {
-        if (error?.message === "Unauthorized: No refresh token available") {
+        if (error?.message === "User is not authenticated") {
           alert("로그인이 필요합니다.");
           router.push("/login");
         } else {
