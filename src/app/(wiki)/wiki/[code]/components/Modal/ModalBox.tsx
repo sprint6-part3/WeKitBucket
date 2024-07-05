@@ -4,6 +4,7 @@ import CommonModal from "@/_components/CommonModal";
 import { useState } from "react";
 import { RequestProfileCode } from "@/apis/profile/getProfilesCode";
 import QuizModal from "./Quiz/QuizModal";
+import EditForm from "../EditForm";
 
 export interface userDataProps {
   privateData: RequestProfileCode;
@@ -12,6 +13,11 @@ export interface userDataProps {
 function ModalBox({ privateData }: userDataProps) {
   const [active, setActive] = useState(false);
   const { code, securityQuestion } = privateData;
+  const [isEditing, setIsEditing] = useState(false);
+
+  const handleEdit = () => {
+    setIsEditing(!isEditing);
+  };
 
   const handleActive = () => {
     setActive(!active);
@@ -25,8 +31,10 @@ function ModalBox({ privateData }: userDataProps) {
         시작하기
       </button>
       <CommonModal active={active} close={handleActive}>
-        <QuizModal code={code} securityQuestion={securityQuestion} close={handleActive} />
+        <QuizModal code={code} securityQuestion={securityQuestion} close={handleActive} isEdit={handleEdit} />
       </CommonModal>
+
+      {isEditing && <EditForm />}
     </div>
   );
 }

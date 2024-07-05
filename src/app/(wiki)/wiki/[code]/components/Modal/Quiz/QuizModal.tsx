@@ -8,17 +8,18 @@ import Label from "../Label";
 import ErrorText from "../ErrorText";
 import Button from "../Button";
 
-interface SecurityData {
+export interface SecurityData {
   code: string;
   securityQuestion: string;
   close: () => void;
+  isEdit: () => void;
 }
 
 interface QuizInput {
   securityAnswer: string;
 }
 
-function QuizModal({ code, securityQuestion, close }: SecurityData) {
+function QuizModal({ code, securityQuestion, close, isEdit }: SecurityData) {
   const {
     register,
     handleSubmit,
@@ -26,6 +27,7 @@ function QuizModal({ code, securityQuestion, close }: SecurityData) {
   } = useForm<QuizInput>({ mode: "onChange" });
 
   const closeEvent = () => {
+    isEdit();
     close();
   };
 
