@@ -45,7 +45,7 @@ export default function MessageAlarm({
           style={{ zIndex: 3 }}
           className="absolute right-[-170%] top-[150%] flex w-[368px] max-w-[30em] flex-col gap-y-5 rounded-2xl bg-primary-gray-100 px-[1.5em] py-[1.125em] text-[1.25em] shadow-[0_0.125rem_0.5rem_rgba(0,0,0,0.3),0_0.0625rem_0.125rem_rgba(0,0,0,0.2)] before:absolute before:bottom-full before:right-[60px] before:h-0 before:w-0 before:border-[0.75rem] before:border-solid before:border-transparent before:border-b-primary-gray-100 before:border-t-[none] before:drop-shadow-[0_-0.0625rem_0.0625rem_rgba(0,0,0,0.1)]"
         >
-          <div className="space-between flex pb-[10px]">
+          <div className="space-between sticky top-0 flex pb-[10px]">
             <h3 className="flex flex-1 justify-start text-xl font-bold leading-7 text-primary-black-200">{`알림 ${alarmMessages.length}개`}</h3>
             {alarmMessages.length > 0 && (
               <button onClickCapture={removeAllMessages} className="text-xl font-bold leading-7 text-primary-black-200">
@@ -54,7 +54,7 @@ export default function MessageAlarm({
             )}
           </div>
           {alarmMessages.length > 0 ? (
-            <>
+            <div className="flex max-h-[400px] w-[3] flex-col gap-y-5 overflow-y-scroll scroll-smooth px-[5px] py-[5px]">
               {alarmMessages.map(m => (
                 <li
                   key={m.id}
@@ -83,7 +83,7 @@ export default function MessageAlarm({
                   </div>
                 </li>
               ))}
-            </>
+            </div>
           ) : (
             <NoAlarmMessage />
           )}
