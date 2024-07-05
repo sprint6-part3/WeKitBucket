@@ -7,7 +7,6 @@ import Button from "../Button";
 
 function BestHeader() {
   const { user } = useAuth();
-  console.log(user);
 
   return (
     <div className="mx-auto flex w-full max-w-[1180px] items-center justify-between px-5 sm:px-[60px]">

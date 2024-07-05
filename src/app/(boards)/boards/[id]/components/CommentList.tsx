@@ -2,13 +2,13 @@
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable jsx-a11y/control-has-associated-label */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import DefaultProfile from "@/assets/icons/defaultProfile.svg";
 import EditIcon from "@/assets/icons/pencilIcon.svg";
 import DeleteIcon from "@/assets/icons/trashIcon.svg";
 import { ICommentList } from "@/apis/comment/getComment";
 import dayjs from "dayjs";
-import Image from "next/image";
+import NextImage from "next/image";
 import deleteComment from "@/apis/comment/deleteComment";
 import patchComment from "@/apis/comment/patchComment";
 import CommonModal from "@/_components/CommonModal";
@@ -30,6 +30,7 @@ function CommentList({ list, myId, onChangeApi }: ICommentListProps) {
   const [commentCount, setCommentCount] = useState(content.length);
   const isMyComment = writerId === myId;
   const formattedDate = dayjs(createdAt).format("YYYY.MM.DD.");
+  const [imgError, setImgError] = React.useState<boolean | undefined>();
 
   const handleViewModal = () => {
     setViewModal(!viewModal);
@@ -67,14 +68,27 @@ function CommentList({ list, myId, onChangeApi }: ICommentListProps) {
     }
   };
 
+  useEffect(() => {
+    const imgClass = new Image();
+    imgClass.src = image ?? "";
+
+    imgClass.onload = () => {
+      setImgError(false);
+    };
+
+    imgClass.onerror = () => {
+      setImgError(true);
+    };
+  }, [image]);
+
   return (
     <>
       <li className="flex gap-[15px] rounded-[10px] px-5 py-4 shadow-custom-shadow sm:gap-5 sm:px-[30px] sm:py-5 lg:py-[22px]">
         <div className="flex h-10 w-10 overflow-hidden rounded-full sm:h-[50px] sm:w-[50px]">
-          {image ? (
-            <Image src={image} alt={name} style={{ objectFit: "cover" }} />
+          {imgError === false && image ? (
+            <NextImage src={image} alt={name} style={{ objectFit: "cover" }} />
           ) : (
-            <DefaultProfile width="100%" height="100%" />
+            imgError === true && <DefaultProfile width="100%" height="100%" />
           )}
         </div>
         <div className="flex-1">
