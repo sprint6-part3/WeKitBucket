@@ -1,0 +1,47 @@
+.markdown p {
+  margin: 0 0 1em;
+}
+
+.markdown em {
+  font-style: italic;
+}
+
+.markdown h1,
+.markdown h2,
+.markdown h3,
+.markdown h4,
+.markdown h5,
+.markdown h6 {
+  font-weight: bold;
+  margin: 1em 0 0.5em;
+}
+
+.markdown ul,
+.markdown ol {
+  padding-left: 1.5em;
+}
+
+.markdown ul {
+  list-style: disc;
+}
+
+.markdown ol {
+  list-style: auto;
+}
+
+.markdown li {
+  margin: 0.5em 0;
+}
+
+.markdown img {
+  max-width: 100%;
+  height: auto;
+}
+
+.markdown .text-primary-gray-500 {
+  color: #4a4a4a;
+}
+
+.markdown .sm\:text-base {
+  font-size: 1rem;
+}

@@ -9,7 +9,6 @@ import patchArticlesId from "@/apis/article/patchArticlesId";
 import getArticlesId from "@/apis/article/getArticlesId";
 import getUsersMe from "@/apis/user/getUsersMe";
 import CustomButton from "./CustomButton";
-import turndownService from "./turndownService";
 
 const TITLE_MAX_LEN = 30;
 
@@ -90,10 +89,9 @@ function AddBoardComponent({
 
   const handleSubmit = async () => {
     try {
-      const markdownContent = turndownService.turndown(content);
       const articleInput: ArticleInput = {
         title,
-        content: markdownContent,
+        content,
         image: imageUrl,
       };
 

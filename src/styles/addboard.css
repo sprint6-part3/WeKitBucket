@@ -114,3 +114,15 @@ button:hover .ql-stroke,
     gap: 8px;
   }
 }
+
+.ql-align-center {
+  text-align: center;
+}
+
+.ql-align-right {
+  text-align: right;
+}
+
+.ql-align-left {
+  text-align: left;
+}

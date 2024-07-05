@@ -53,7 +53,7 @@ function CommentList({ list, myId, onChangeApi }: ICommentListProps) {
     setCommentCount(value.length);
   };
 
-  const handleCancleEditMode = () => {
+  const handleCancelEditMode = () => {
     setEditMode(false);
     setCommentValue(content);
   };
@@ -124,7 +124,7 @@ function CommentList({ list, myId, onChangeApi }: ICommentListProps) {
                     수정
                   </button>
                   <button
-                    onClick={handleCancleEditMode}
+                    onClick={handleCancelEditMode}
                     className="text-xs font-semibold leading-[1.7] text-primary-gray-300"
                   >
                     취소

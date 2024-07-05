@@ -1,9 +1,10 @@
 "use client";
 
+import React from "react";
 import dayjs from "dayjs";
 import Link from "next/link";
-import React, { useEffect } from "react";
 import NextImage from "next/image";
+import useImageLoad from "@/hooks/useImageLoad";
 import LikeIcon from "@/assets/icons/like.svg";
 import CameraIcon from "@/assets/icons/camera.svg";
 import { IPostProps } from "../allArticles/PostList";
@@ -11,21 +12,7 @@ import { IPostProps } from "../allArticles/PostList";
 function BestPostCard({ post }: IPostProps) {
   const { id, title, image, createdAt, writer, likeCount } = post;
   const { name } = writer;
-  const [imgError, setImgError] = React.useState<boolean | undefined>();
-
-  useEffect(() => {
-    const imgClass = new Image();
-    imgClass.src = image ?? "";
-
-    imgClass.onload = () => {
-      setImgError(false);
-    };
-
-    imgClass.onerror = () => {
-      setImgError(true);
-    };
-  }, [image]);
-
+  const imageError = useImageLoad(image);
   const formattedDate = dayjs(createdAt).format("YYYY.MM.DD.");
 
   return (
@@ -33,14 +20,14 @@ function BestPostCard({ post }: IPostProps) {
       href={`/boards/${id}`}
       className="block h-[200px] w-[250px] sm:aspect-[1/0.73] sm:h-auto sm:w-full lg:aspect-[1/0.88]"
     >
-      <div className="flex h-full flex-col overflow-visible rounded-[10px] shadow-custom-shadow">
+      <div className="flex h-full flex-col overflow-hidden rounded-[10px] shadow-custom-shadow">
         <div className="flex-1">
-          {imgError === false && image ? (
+          {imageError === false && image ? (
             <div className="relative flex h-full items-center justify-center">
               <NextImage src={image} alt={title} fill priority style={{ objectFit: "cover" }} />
             </div>
           ) : (
-            imgError === true && (
+            imageError === true && (
               <div className="flex h-full items-center justify-center rounded-t-[10px] bg-primary-gray-100">
                 <CameraIcon />
               </div>
