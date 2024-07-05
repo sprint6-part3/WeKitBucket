@@ -2,7 +2,7 @@
 
 import postRefreshToken from "@/apis/auth/postRefreshToken";
 import postSignIn from "@/apis/auth/postSignIn";
-import { UserInput } from "@/types/auth";
+import { UserInput } from "@/types/auth.type";
 
 import React from "react";
 

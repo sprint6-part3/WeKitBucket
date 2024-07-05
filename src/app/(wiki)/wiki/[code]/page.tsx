@@ -15,7 +15,7 @@ import patchProfilesCode from "@/apis/profile/patchProfilesCode";
 import postProfilesCodePing from "@/apis/profile/postProfilesCodePing";
 import getProfilesCode from "@/apis/profile/getProfilesCode";
 import getUsersMe from "@/apis/user/getUsersMe";
-import { IUser } from "@/types/user";
+import { IUser } from "@/types/user.type";
 import UserProfile from "./components/Profile/UserProfile";
 import CommonButton from "./components/Common/CommonButton";
 import QuizModalTemplete from "./components/Profile/QuizModalTemplete";
