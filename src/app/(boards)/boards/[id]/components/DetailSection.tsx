@@ -13,7 +13,7 @@ import deleteArticlesLike, { ArticleDetail } from "@/apis/article/deleteArticles
 import dayjs from "dayjs";
 import { useRouter } from "next/navigation";
 import deleteArticlesId from "@/apis/article/deleteArticlesId";
-import CommonModal from "@/_components/CommonModal";
+import CommonModal from "@/components/CommonModal";
 import DeleteModal from "./DeleteModal";
 
 interface IArticleDetailProps {
