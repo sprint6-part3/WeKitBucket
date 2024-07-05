@@ -5,7 +5,7 @@ import dayjs from "dayjs";
 import Modal from "@/_components/Modal";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
-import postArticles from "@/apis/article/postArticles";
+import postArticles, { ArticleInput } from "@/apis/article/postArticles";
 import patchArticlesId from "@/apis/article/patchArticlesId";
 import getArticlesId from "@/apis/article/getArticlesId";
 import getUsersMe from "@/apis/user/getUsersMe";
@@ -30,12 +30,6 @@ interface ContentLength {
   withoutSpaces: number;
 }
 
-interface ArticleInput {
-  title: string;
-  content: string;
-  image?: string;
-}
-
 function AddBoardComponent({
   articleId,
   initialTitle = "",
@@ -54,6 +48,7 @@ function AddBoardComponent({
   const router = useRouter();
   const [isDraftLoaded, setIsDraftLoaded] = useState(false);
   const [isModalActive, setIsModalActive] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     const fetchArticleData = async () => {
@@ -107,6 +102,7 @@ function AddBoardComponent({
       setTitle(savedTitle);
       setContent(savedContent);
       setImageUrl(savedImageUrl);
+      localStorage.removeItem(STORAGE_KEY);
       setIsDraftLoaded(true);
     }
     setIsModalActive(false);
@@ -120,6 +116,7 @@ function AddBoardComponent({
 
   const handleSubmit = async () => {
     try {
+      setIsSubmitting(true);
       const articleInput: ArticleInput = {
         title,
         content,
@@ -141,18 +138,24 @@ function AddBoardComponent({
       setContent("");
       setImageUrl("");
       setContentLength({ withSpaces: 0, withoutSpaces: 0 });
+
+      setIsDraftLoaded(true);
     } catch (error) {
       console.error("게시물 등록 실패:", error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   const handleSearchItem = (editorContent: string, length: ContentLength) => {
-    setContent(editorContent);
-    setContentLength(length);
-    localStorage.setItem(
-      STORAGE_KEY,
-      JSON.stringify({ savedTitle: title, savedContent: editorContent, savedImageUrl: imageUrl }),
-    );
+    if (!isSubmitting) {
+      setContent(editorContent);
+      setContentLength(length);
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify({ savedTitle: title, savedContent: editorContent, savedImageUrl: imageUrl }),
+      );
+    }
   };
 
   useEffect(() => {
@@ -166,7 +169,12 @@ function AddBoardComponent({
           {articleId ? "게시물 수정하기" : "게시물 등록하기"}
         </h2>
         <div className="flex gap-[8px]">
-          <CustomButton isActive={isValid} disabled={!isValid} onClick={handleSubmit} variant="secondary">
+          <CustomButton
+            isActive={isValid}
+            disabled={!isValid || isSubmitting}
+            onClick={handleSubmit}
+            variant="secondary"
+          >
             {articleId ? "수정하기" : "등록하기"}
           </CustomButton>
         </div>
