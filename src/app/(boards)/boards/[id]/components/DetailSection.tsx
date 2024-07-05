@@ -54,6 +54,9 @@ function DetailSection({ article, articleId, content, myId }: IArticleDetailProp
 
   const handleClickLikeButton = async () => {
     try {
+      if (!myId) {
+        throw new Error("User is not authenticated");
+      }
       let res;
       if (options.isLiked) {
         res = await deleteArticlesLike(articleId);
@@ -66,7 +69,7 @@ function DetailSection({ article, articleId, content, myId }: IArticleDetailProp
       }));
     } catch (error) {
       if (error instanceof Error) {
-        if (error?.message === "Unauthorized: No refresh token available") {
+        if (error?.message === "User is not authenticated") {
           alert("로그인이 필요합니다.");
           router.push("/login");
         } else {

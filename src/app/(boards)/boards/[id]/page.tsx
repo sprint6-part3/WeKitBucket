@@ -58,7 +58,7 @@ function PostDetail({ params }: { params: { id: number } }) {
         <div className="font-semibold leading-[1.7] text-primary-gray-500 sm:text-lg sm:leading-[1.4]">
           댓글 <span className="text-primary-green-200">{commentList?.length}</span>
         </div>
-        <CommentForm articleId={id} onCommentSubmitted={fetchArticleComment} />
+        <CommentForm articleId={id} onCommentSubmitted={fetchArticleComment} myId={user?.id} />
         <ul className="grid gap-[14px] sm:gap-4 lg:gap-6">
           {commentList?.map(comment => (
             <CommentList list={comment} key={comment.id} myId={user?.id} onChangeApi={fetchArticleComment} />
