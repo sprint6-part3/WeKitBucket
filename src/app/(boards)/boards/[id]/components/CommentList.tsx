@@ -12,7 +12,8 @@ import Image from "next/image";
 import useImageLoad from "@/hooks/useImageLoad";
 import deleteComment from "@/apis/comment/deleteComment";
 import patchComment from "@/apis/comment/patchComment";
-import CommonModal from "@/_components/CommonModal";
+
+import CommonModal from "@/components/CommonModal";
 import DeleteModal from "./DeleteModal";
 import { LIMIT } from "./CommentForm";
 
@@ -53,7 +54,7 @@ function CommentList({ list, myId, onChangeApi }: ICommentListProps) {
     setCommentCount(value.length);
   };
 
-  const handleCancleEditMode = () => {
+  const handleCancelEditMode = () => {
     setEditMode(false);
     setCommentValue(content);
   };
@@ -124,7 +125,7 @@ function CommentList({ list, myId, onChangeApi }: ICommentListProps) {
                     수정
                   </button>
                   <button
-                    onClick={handleCancleEditMode}
+                    onClick={handleCancelEditMode}
                     className="text-xs font-semibold leading-[1.7] text-primary-gray-300"
                   >
                     취소

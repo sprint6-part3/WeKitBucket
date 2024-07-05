@@ -26,7 +26,6 @@ function AuthProvider({ children }: { children: ReactNode }) {
   const getUserProfile = async (newUser: IUser | null) => {
     if (newUser?.profile) {
       const newUserProfile = await getProfilesCode(newUser.profile.code);
-      console.log("$$ newUserProfile", newUserProfile);
       setUserProfile(() => {
         if (newUserProfile) return newUserProfile;
         return null;
@@ -39,15 +38,12 @@ function AuthProvider({ children }: { children: ReactNode }) {
   const values = useMemo(() => {
     const getUser = async () => {
       const newUser = await getUsersMe();
-      setUser(() => {
-        if (newUser) {
-          (async () => {
-            await getUserProfile(newUser);
-          })();
-          return newUser;
-        }
-        return null;
-      });
+      if (newUser) {
+        setUser(() => newUser);
+        await getUserProfile(newUser);
+      } else {
+        setUser(() => null);
+      }
     };
 
     return { user, userProfile, getUser };

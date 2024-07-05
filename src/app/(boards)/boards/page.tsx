@@ -1,10 +1,17 @@
-import Link from "next/link";
+"use client";
+
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect, useState } from "react";
 import getArticles from "@/apis/article/getArticles";
-import Button from "./components/Button";
+import { ArticleData } from "@/types/articles.type";
 import BestPostList from "./components/bestArticles/BestPostList";
 import AllArticleSection, { ArticleOption } from "./components/allArticles/AllArticleSection";
+import BestHeader from "./components/bestArticles/BestHeader";
 
-async function Board() {
+function Board() {
+  const [allArticles, setAllArticles] = useState<ArticleData | null>(null);
+  const [bestArticles, setBestArticles] = useState<ArticleData | null>(null);
+
   const allArticlesOption: ArticleOption = {
     page: 1,
     pageSize: 10,
@@ -17,26 +24,26 @@ async function Board() {
     orderBy: "like",
   };
 
-  let allArticles;
-  let bestArticles;
+  useEffect(() => {
+    const fetchGetArticles = async () => {
+      try {
+        const all = await getArticles(allArticlesOption);
+        const best = await getArticles(bestArticlesOption);
+        setAllArticles(all);
+        setBestArticles(best);
+      } catch (error) {
+        console.error("Failed to fetch articles: ", error);
+      }
+    };
 
-  try {
-    [allArticles, bestArticles] = await Promise.all([getArticles(allArticlesOption), getArticles(bestArticlesOption)]);
-  } catch (error) {
-    console.error("Failed to fetch articles: ", error);
-  }
+    fetchGetArticles();
+  }, []);
 
   return (
     <div className="mx-auto mb-[57px] mt-10 grid gap-5">
       {/* 베스트 게시글 */}
       <section className="grid gap-5">
-        <div className="mx-auto flex w-full max-w-[1180px] items-center justify-between px-5 sm:px-[60px]">
-          <h2 className="text-2xl font-semibold leading-[1.3] text-primary-gray-500">베스트 게시글</h2>
-          <Link href="/addboard">
-            <Button variants="md">게시물 등록하기</Button>
-          </Link>
-        </div>
-
+        <BestHeader />
         {bestArticles && <BestPostList article={bestArticles} />}
       </section>
       {allArticles && <AllArticleSection article={allArticles} />}
