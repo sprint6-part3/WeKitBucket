@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import "@/styles/globals.css";
+import Toast from "@/_components/Toast";
+import { ToastProvider } from "@/context/ToastContext";
 import { AuthProvider } from "../context/AuthContext";
 import Header from "./_components/Header";
 
@@ -17,8 +19,11 @@ function RootLayout({
     <html lang="ko">
       <body>
         <AuthProvider>
-          <Header />
-          {children}
+          <ToastProvider>
+            <Header />
+            <Toast />
+            {children}
+          </ToastProvider>
         </AuthProvider>
       </body>
     </html>
