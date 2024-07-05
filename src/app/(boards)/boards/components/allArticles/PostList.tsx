@@ -1,10 +1,10 @@
 "use client";
 
 import React from "react";
-import dayjs from "dayjs";
 import LikeIcon from "@/assets/icons/like.svg";
 import { ArticleList } from "@/types/articles";
 import Link from "next/link";
+import dayjs from "dayjs";
 
 export interface IPostProps {
   post: ArticleList;

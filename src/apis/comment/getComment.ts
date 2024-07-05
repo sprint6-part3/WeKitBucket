@@ -1,20 +1,27 @@
 import fetchInstance from "@/utils/fetchInstance";
 
-interface RequestComment {
-  list: unknown[];
+export interface ICommentList {
+  content: string;
+  createdAt: string;
+  id: number;
+  updatedAt: string;
+  writer: {
+    id: number;
+    image: null | string;
+    name: string;
+  };
+}
+
+export interface RequestComment {
+  list: ICommentList[];
   nextCursor?: null | string;
 }
 
-const getComment = async (
-  articleId: number,
-  options: {
-    limit: number;
-    nextCursor?: number;
-  },
-) => {
+const getComment = async (options?: { articleId: number; limit: number; cursor?: number }) => {
   try {
-    const data = await fetchInstance<RequestComment>(`articles/${articleId}?${options}`, {
+    const data = await fetchInstance<RequestComment>(`articles/${options?.articleId}/comments`, {
       method: "GET",
+      params: options,
     });
 
     return data;

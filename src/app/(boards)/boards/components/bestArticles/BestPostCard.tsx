@@ -1,15 +1,14 @@
 "use client";
 
-import React, { useEffect } from "react";
-import Link from "next/link";
-import NextImage from "next/image";
 import dayjs from "dayjs";
+import Link from "next/link";
+import React, { useEffect } from "react";
+import NextImage from "next/image";
 import LikeIcon from "@/assets/icons/like.svg";
 import CameraIcon from "@/assets/icons/camera.svg";
 import { IPostProps } from "../allArticles/PostList";
 
 function BestPostCard({ post }: IPostProps) {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { id, title, image, createdAt, writer, likeCount } = post;
   const { name } = writer;
   const [imgError, setImgError] = React.useState<boolean | undefined>();
@@ -38,7 +37,7 @@ function BestPostCard({ post }: IPostProps) {
         <div className="flex-1">
           {imgError === false && image ? (
             <div className="relative flex h-full items-center justify-center">
-              <NextImage src={image} alt={title} objectFit="contain" fill />
+              <NextImage src={image} alt={title} fill priority style={{ objectFit: "cover" }} />
             </div>
           ) : (
             imgError === true && (
@@ -57,11 +56,9 @@ function BestPostCard({ post }: IPostProps) {
             </div>
             <div className="flex items-center gap-1">
               <div className="flex h-4 w-4 items-center justify-center px-[2px] py-[2px] sm:h-[18px] sm:w-[18px]">
-                <LikeIcon />
+                <LikeIcon fill="#8f95b2" />
               </div>
-              <span className="text-xs leading-[1.2] text-primary-gray-400 sm:text-sm sm:leading-[1.7]">
-                {likeCount}
-              </span>
+              <span className="text-xs text-primary-gray-400 sm:text-sm">{likeCount}</span>
             </div>
           </div>
         </div>
