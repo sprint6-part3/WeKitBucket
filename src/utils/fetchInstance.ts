@@ -40,10 +40,11 @@ const fetchInstance = async <T>(
   const queryString = createQueryString(url, options.params);
 
   try {
-    const response = await fetch(`${baseUrl}${queryString}`, {
+    const response: Response = await fetch(`${baseUrl}${queryString}`, {
       ...options,
       headers,
     });
+
     // interceptor
     if (!response.ok) {
       if (response.status === 401) {
@@ -52,7 +53,7 @@ const fetchInstance = async <T>(
           try {
             await postRefreshToken();
             const retryHeaders = getDefaultHeaders(options.isMultipart);
-            const retryResponse = await fetch(`${baseUrl}${queryString}`, {
+            const retryResponse: Response = await fetch(`${baseUrl}${queryString}`, {
               ...options,
               headers: new Headers({
                 ...retryHeaders,
