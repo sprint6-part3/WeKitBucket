@@ -12,7 +12,9 @@ function CustomButton({ isActive, variant, children, ...props }: CustomButtonPro
 
   const getVariantClass = () => {
     if (isActive) {
-      return variant === "primary" ? "border border-green-500 bg-white text-green-500" : "bg-green-500 text-white";
+      return variant === "primary"
+        ? "border border-primary-green-200 bg-white text-primary-green-200"
+        : "bg-primary-green-200 text-white";
     }
     return variant === "primary" ? "text-gray-600 border border-gray-300" : "bg-gray-300 text-white";
   };

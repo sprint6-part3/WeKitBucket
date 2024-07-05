@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, HTMLAttributes } from "react";
 import dayjs from "dayjs";
+import Modal from "@/_components/Modal";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import postArticles from "@/apis/article/postArticles";
@@ -9,13 +10,13 @@ import patchArticlesId from "@/apis/article/patchArticlesId";
 import getArticlesId from "@/apis/article/getArticlesId";
 import getUsersMe from "@/apis/user/getUsersMe";
 import CustomButton from "./CustomButton";
-import turndownService from "./turndownService";
-
-const TITLE_MAX_LEN = 30;
 
 const QuillEditor = dynamic(() => import("./QuillEditor"), {
   ssr: false,
 });
+
+const TITLE_MAX_LEN = 30;
+const STORAGE_KEY = "draftArticle";
 
 interface AddBoardClientProps extends HTMLAttributes<HTMLDivElement> {
   articleId?: number;
@@ -51,6 +52,8 @@ function AddBoardComponent({
   const [authorName, setAuthorName] = useState<string>("");
   const [currentDate, setCurrentDate] = useState<string>("");
   const router = useRouter();
+  const [isDraftLoaded, setIsDraftLoaded] = useState(false);
+  const [isModalActive, setIsModalActive] = useState(false);
 
   useEffect(() => {
     const fetchArticleData = async () => {
@@ -82,29 +85,55 @@ function AddBoardComponent({
 
         fetchAuthorName();
         setCurrentDate(`${dayjs().format("YYYY.MM.DD")}.`);
+
+        const loadDraft = () => {
+          const savedDraft = localStorage.getItem(STORAGE_KEY);
+          if (savedDraft && !isDraftLoaded) {
+            setIsModalActive(true);
+          }
+        };
+
+        loadDraft();
       }
     };
 
     fetchArticleData();
-  }, [articleId]);
+  }, [articleId, isDraftLoaded]);
+
+  const handleLoadDraft = () => {
+    const savedDraft = localStorage.getItem(STORAGE_KEY);
+    if (savedDraft) {
+      const { savedTitle, savedContent, savedImageUrl } = JSON.parse(savedDraft);
+      setTitle(savedTitle);
+      setContent(savedContent);
+      setImageUrl(savedImageUrl);
+      setIsDraftLoaded(true);
+    }
+    setIsModalActive(false);
+  };
+
+  const handleDiscardDraft = () => {
+    localStorage.removeItem(STORAGE_KEY);
+    setIsDraftLoaded(true);
+    setIsModalActive(false);
+  };
 
   const handleSubmit = async () => {
     try {
-      const markdownContent = turndownService.turndown(content);
       const articleInput: ArticleInput = {
         title,
-        content: markdownContent,
+        content,
         image: imageUrl,
       };
 
-      console.log("Sending data:", articleInput);
-
       if (articleId) {
         await patchArticlesId(articleInput, articleId);
+        localStorage.removeItem(STORAGE_KEY);
         router.push(`/boards/${articleId}`);
       } else {
         const response = await postArticles(articleInput);
         const newArticleId = response.id;
+        localStorage.removeItem(STORAGE_KEY);
         router.push(`/boards/${newArticleId}`);
       }
 
@@ -120,6 +149,10 @@ function AddBoardComponent({
   const handleSearchItem = (editorContent: string, length: ContentLength) => {
     setContent(editorContent);
     setContentLength(length);
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify({ savedTitle: title, savedContent: editorContent, savedImageUrl: imageUrl }),
+    );
   };
 
   useEffect(() => {
@@ -145,7 +178,7 @@ function AddBoardComponent({
         <input
           onChange={e => setTitle(e.target.value)}
           value={title}
-          className="md:text-xl-medium flex flex-1 items-center justify-between gap-2 text-gray-600 md:text-md-medium"
+          className="md:text-xl-medium flex flex-1 items-center justify-between gap-2 text-gray-600 outline-none md:text-md-medium"
           placeholder="제목을 입력해주세요"
           maxLength={TITLE_MAX_LEN}
         />
@@ -162,6 +195,19 @@ function AddBoardComponent({
           <QuillEditor setContent={handleSearchItem} content={content} setImageUrl={setImageUrl} />
         </div>
       </div>
+      <Modal active={isModalActive} close={() => setIsModalActive(false)}>
+        <div className="w-[600px] rounded-lg bg-white p-4 shadow-lg">
+          <h3 className="text-xl-medium">임시 저장된 게시글이 있습니다. 불러오시겠습니까?</h3>
+          <div className="mt-4 flex justify-end gap-4">
+            <button className="rounded bg-primary-green-200 px-4 py-2 text-white" onClick={handleLoadDraft}>
+              예
+            </button>
+            <button className="rounded bg-primary-gray-500 px-4 py-2 text-white" onClick={handleDiscardDraft}>
+              아니오
+            </button>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 }

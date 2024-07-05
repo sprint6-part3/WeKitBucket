@@ -1,6 +1,7 @@
 "use client";
 
 /* eslint-disable react-hooks/exhaustive-deps */
+
 import React, { useMemo, useRef, useState } from "react";
 import ReactQuill, { UnprivilegedEditor, Quill } from "react-quill";
 import "react-quill/dist/quill.snow.css";
@@ -45,7 +46,7 @@ function QuillEditor({ content, setContent, setImageUrl }: QuillEditorProps) {
       const editor = QuillRef.current?.getEditor();
       if (file && editor) {
         const response = await postImage(file);
-        const imageUrl = response.url; // 응답에서 URL 추출
+        const imageUrl = response.url;
         const range = editor.getSelection(true);
         editor.insertEmbed(range.index, "image", imageUrl);
         editor.setSelection(range.index + 1, 0);
