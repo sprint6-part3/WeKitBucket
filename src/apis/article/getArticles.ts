@@ -12,7 +12,9 @@ const getArticles = async (options?: {
     const data = await fetchInstance<ArticleData>("articles", {
       method: "GET",
       params: options,
-      
+
+    });
+    
     return data;
   } catch (error) {
     if (error instanceof Error) {
