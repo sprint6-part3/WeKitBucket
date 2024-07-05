@@ -3,23 +3,25 @@
 import fetchInstance from "@/utils/fetchInstance";
 import { RequestProfileCode } from "./getProfilesCode";
 
+export type ImageType = string | null;
+
 export interface PatchProfileOption {
   securityAnswer?: string;
   securityQuestion?: string;
-  nationality?: string;
-  family?: string;
-  bloodType?: string;
-  nickname?: string;
-  birthday?: string;
-  sns?: string;
-  job?: string;
-  mbti?: string;
-  city?: string;
-  image?: string;
-  content?: string;
+  nationality: string;
+  family: string;
+  bloodType: string;
+  nickname: string;
+  birthday: string;
+  sns: string;
+  job: string;
+  mbti: string;
+  city: string;
+  image: string | File | ImageType;
+  content: string;
 }
 
-const patchProfilesCode = async (profileCode: string, options: PatchProfileOption) => {
+const patchProfilesCode = async (profileCode: string | undefined, options: PatchProfileOption) => {
   try {
     const data = await fetchInstance<RequestProfileCode>(`profiles/${profileCode}`, {
       method: "PATCH",

@@ -16,6 +16,7 @@
     "@types/quill": "^2.0.14",
     "@typescript-eslint/eslint-plugin": "^7.13.1",
     "@typescript-eslint/parser": "^7.13.1",
+    "@uiw/react-md-editor": "^4.0.4",
     "@xeger/quill-image-actions": "^0.7.2",
     "busboy": "^1.6.0",
     "compressorjs": "^1.2.1",
@@ -29,6 +30,8 @@
     "framer-motion": "^11.2.12",
     "intellisense": "^0.0.1",
     "lodash": "^4.17.21",
+    "marked": "^13.0.2",
+    "lottie-react": "^2.4.0",
     "next": "14.2.4",
     "postcss-loader": "^8.1.1",
     "quill": "^2.0.2",
@@ -40,11 +43,14 @@
     "react-hook-form": "^7.52.0",
     "react-quill": "^2.0.0",
     "react-responsive": "^10.0.0",
+    "react-toastify": "^10.0.5",
     "style-loader": "^4.0.0",
+    "styled-components": "^6.1.11",
     "swiper": "^11.1.4",
     "tailwind": "^4.0.0",
     "turndown": "^7.2.0",
-    "yarn": "^1.22.22"
+    "yarn": "^1.22.22",
+    "zustand": "^4.5.4"
   },
   "devDependencies": {
     "@types/lodash": "^4.17.5",
