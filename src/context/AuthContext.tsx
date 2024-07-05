@@ -1,7 +1,9 @@
 "use client";
 
-import { createContext, useContext, useState, ReactNode, useMemo, useEffect } from "react";
+import { createContext, useContext, useState, ReactNode, useMemo } from "react";
+
 import getUsersMe from "@/apis/user/getUsersMe";
+
 import getProfilesCode, { RequestProfileCode } from "@/apis/profile/getProfilesCode";
 import { IUser } from "@/types/user.type";
 
@@ -21,35 +23,35 @@ function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<IUser | null>(null);
   const [userProfile, setUserProfile] = useState<RequestProfileCode | null>(null);
 
-  useEffect(() => {
-    const getUserProfile = async (newUser: IUser | null) => {
-      if (newUser?.profile) {
-        const newUserProfile = await getProfilesCode(newUser.profile.code);
-        setUserProfile(newUserProfile);
-      } else {
-        setUserProfile(null);
-      }
-    };
+  const getUserProfile = async (newUser: IUser | null) => {
+    if (newUser?.profile) {
+      const newUserProfile = await getProfilesCode(newUser.profile.code);
+      console.log("$$ newUserProfile", newUserProfile);
+      setUserProfile(() => {
+        if (newUserProfile) return newUserProfile;
+        return null;
+      });
+    } else {
+      setUserProfile(() => null);
+    }
+  };
 
+  const values = useMemo(() => {
     const getUser = async () => {
       const newUser = await getUsersMe();
-      setUser(newUser);
-      if (newUser) {
-        await getUserProfile(newUser);
-      }
+      setUser(() => {
+        if (newUser) {
+          (async () => {
+            await getUserProfile(newUser);
+          })();
+          return newUser;
+        }
+        return null;
+      });
     };
 
-    getUser();
-  }, []); // 빈 배열을 두어 컴포넌트가 마운트될 때 한 번만 실행되도록 한다
-
-  const values = useMemo(
-    () => ({
-      user,
-      userProfile,
-      getUser: () => {},
-    }),
-    [user, userProfile],
-  );
+    return { user, userProfile, getUser };
+  }, [user, userProfile]);
 
   return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>;
 }
