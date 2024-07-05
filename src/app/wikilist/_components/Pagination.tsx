@@ -19,7 +19,7 @@ function Pagination({ totalCount, pageSize, keyword, page = 1 }: PaginationProps
     <div className="mt-14 flex items-center justify-center gap-2 rounded-xl border p-2 md:mt-20 xl:mt-[120px]">
       <Link
         href={`/wikilist?${keyword ? `keyword=${keyword}` : ""}&number=${page > 1 ? Number(page) - 1 : 1}`}
-        className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-xl text-primary-gray-400 shadow-[0_4px_20px_rgba(0,0,0,0.08)]"
+        className={`${Number(page) === 1 && "invisible"} flex h-11 w-11 cursor-pointer items-center justify-center rounded-xl text-primary-gray-400 shadow-[0_4px_20px_rgba(0,0,0,0.08)]`}
       >
         <LeftArrow />
       </Link>
@@ -30,7 +30,7 @@ function Pagination({ totalCount, pageSize, keyword, page = 1 }: PaginationProps
       ))}
       <Link
         href={`/wikilist?${keyword ? `keyword=${keyword}` : ""}&number=${page < pageItemCount ? Number(page) + 1 : page}`}
-        className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-xl text-primary-gray-400 shadow-[0_4px_20px_rgba(0,0,0,0.08)]"
+        className={`${Number(page) === pageItemCount && "invisible"} flex h-11 w-11 cursor-pointer items-center justify-center rounded-xl text-primary-gray-400 shadow-[0_4px_20px_rgba(0,0,0,0.08)]`}
       >
         <RightArrow />
       </Link>
