@@ -1,46 +1,39 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import Link from "next/link";
 import { useRouter, useSelectedLayoutSegment } from "next/navigation";
 
-import postSignOut from "@/apis/auth/postSignout";
+import postSignout from "@/apis/auth/postSignout";
 import { useAuth } from "@/context/AuthContext";
 
+import useToggle from "@/hooks/useToggle";
 import HamburgerMenu from "@/assets/icons/hamburgerMenu.svg";
 import ModalComponent from "./ModalComponent";
 import MenuModalHeader from "./MenuModalHeader";
 import AlarmModal from "./AlarmModal";
 
 export default function UserDropDown() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [isAlarmOpen, setIsAlarmOpen] = useState(false);
+  const [isOpen, setIsOpen] = useToggle(false);
+  const [alarmToggle, setAlarmToggle] = useToggle(false);
   const { getUser } = useAuth();
   const router = useRouter();
 
   const segment = useSelectedLayoutSegment();
 
-  const onAlarmOpen = () => {
-    setIsAlarmOpen(true);
-  };
-
-  const onAlarmClose = () => {
-    setIsAlarmOpen(false);
-  };
-
   const onOpen = () => {
-    setIsOpen(true);
+    setIsOpen();
     document.body.style.overflow = "hidden";
   };
 
   const onClose = () => {
-    setIsOpen(false);
+    setIsOpen();
     document.body.style.overflow = "scroll";
   };
 
   const handleLogout = async () => {
     try {
-      await postSignOut(); // 쿠키 삭제
+      await postSignout(); // 쿠키 삭제
       await getUser();
     } catch (error) {
       console.error(error);
@@ -80,7 +73,7 @@ export default function UserDropDown() {
               </Link>
             )}
             <hr className="h-[1px] w-[95dvw] px-[3px]" />
-            <button onClick={onAlarmOpen} className="flex items-center text-primary-gray-400">
+            <button onClick={setAlarmToggle} className="flex items-center text-primary-gray-400">
               알람
             </button>
             <Link onClick={onClose} href="/mypage" className="flex items-center text-primary-gray-400">
@@ -92,7 +85,7 @@ export default function UserDropDown() {
           </div>
         </ModalComponent>
       )}
-      {isAlarmOpen && <AlarmModal onClose={onAlarmClose} />}
+      {alarmToggle && <AlarmModal onClose={setAlarmToggle} />}
     </div>
   );
 }
