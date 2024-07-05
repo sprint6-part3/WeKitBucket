@@ -27,7 +27,6 @@ function Board() {
   useEffect(() => {
     const fetchGetArticles = async () => {
       try {
-        // getArticles(allArticlesOption), getArticles(bestArticlesOption);
         const all = await getArticles(allArticlesOption);
         const best = await getArticles(bestArticlesOption);
         setAllArticles(all);
