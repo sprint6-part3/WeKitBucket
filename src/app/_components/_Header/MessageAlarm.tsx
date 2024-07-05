@@ -1,71 +1,64 @@
 "use client";
 
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React, { useEffect } from "react";
 
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import "dayjs/locale/ko";
 
+import useToggle from "@/hooks/useToggle";
+import { useAlarm } from "@/context/AlarmContext";
 import Alarm from "@/assets/icons/alarmIcon.svg";
 import NoAlarmMessage from "./NoAlarmMessage";
 
 dayjs.locale("ko");
 dayjs.extend(relativeTime);
 
-/** 더미 데이터 시작 */
-const pushAlarm = {
-  totalCount: 3,
-  list: [
-    {
-      createdAt: "2024-06-27T17:54:16.963Z",
-      content: "민재 업고 튀어",
-      id: 1,
-    },
-    {
-      createdAt: "2024-06-27T17:54:16.963Z",
-      content:
-        "전 대체 무엇을 하고 있을까요? 지금 예하님의 뒤에 있을지도 모릅니다. 이런 민재님이 뒤에서 쳐다보고 계시네요.",
-      id: 2,
-    },
-
-    {
-      createdAt: "2024-06-27T17:54:16.963Z",
-      content: "우리 강산 푸르게 푸르게",
-      id: 3,
-    },
-  ],
-};
-/** 더미 데이터 끝 */
-
 export default function MessageAlarm({
   toggle,
+  oppositeToggle,
   setToggle,
+  setOppositeToggle,
 }: {
   toggle: boolean;
-  setToggle: Dispatch<SetStateAction<boolean[]>>;
+  oppositeToggle: boolean;
+  setToggle: () => void;
+  setOppositeToggle: () => void;
 }) {
-  const [messages, setMessages] = useState(pushAlarm.list);
+  // const { alarmMessages, getAlarmMessages, removeAlarmMessage, removeAllMessages } = useAlarm();
 
-  const removeMessage = (id: number) => {
-    // e.stopPropagation();
-    setMessages(messages.filter(m => m.id !== id));
-  };
+  const { alarmMessages, getAlarmMessages, removeAlarmMessage, removeAllMessages } = useAlarm();
+  const [isShowCount, setIsShowCount] = useToggle(true);
 
-  const removeAllMessage = () => {
-    // e.stopPropagation();
-    setMessages([]);
+  const closeToggle = () => {
+    if (toggle) {
+      setToggle();
+      if (isShowCount) setIsShowCount();
+    }
   };
 
   const toggleDropdown = () => {
-    setToggle([!toggle, false]);
+    setToggle();
+    if (oppositeToggle) setOppositeToggle();
   };
+
+  useEffect(() => {
+    getAlarmMessages();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="relative">
-      <button onClick={toggleDropdown} aria-label="Alarm Button" className="relative flex">
-        {messages.length > 0 && (
+      <button
+        onClick={toggleDropdown}
+        onBlur={closeToggle}
+        aria-label="Alarm Button"
+        className="relative flex"
+        name="alarmModal"
+      >
+        {isShowCount && alarmMessages.length > 0 && (
           <div className="absolute bottom-auto top-[1%] h-[16px] w-[16px] rounded-[50%] bg-[red] text-center text-[8px] leading-[16px] text-[white]">
-            {messages.length}
+            {alarmMessages.length}
           </div>
         )}
         <Alarm width={32} height={32} />
@@ -73,31 +66,49 @@ export default function MessageAlarm({
       {toggle && (
         <ul
           style={{ zIndex: 3 }}
+          role="presentation"
           className="absolute right-[-170%] top-[150%] flex w-[368px] max-w-[30em] flex-col gap-y-5 rounded-2xl bg-primary-gray-100 px-[1.5em] py-[1.125em] text-[1.25em] shadow-[0_0.125rem_0.5rem_rgba(0,0,0,0.3),0_0.0625rem_0.125rem_rgba(0,0,0,0.2)] before:absolute before:bottom-full before:right-[60px] before:h-0 before:w-0 before:border-[0.75rem] before:border-solid before:border-transparent before:border-b-primary-gray-100 before:border-t-[none] before:drop-shadow-[0_-0.0625rem_0.0625rem_rgba(0,0,0,0.1)]"
+          onMouseDown={e => {
+            e.preventDefault();
+          }}
         >
-          <div className="space-between flex pb-[10px]">
-            <h3 className="flex flex-1 justify-start text-xl font-bold leading-7 text-primary-black-200">{`알림 ${messages.length}개`}</h3>
-            {messages.length > 0 && (
-              <button onClickCapture={removeAllMessage} className="text-xl font-bold leading-7 text-primary-black-200">
-                X
-              </button>
-            )}
+          <div className="space-between sticky top-0 flex pb-[10px]">
+            <h3 className="flex flex-1 justify-start text-xl font-bold leading-7 text-primary-black-200">{`알림 ${alarmMessages.length}개`}</h3>
+            <button onClickCapture={closeToggle} className="text-xl font-bold leading-7 text-primary-black-200">
+              X
+            </button>
           </div>
-          {messages.length > 0 ? (
-            <>
-              {messages.map(m => (
+          {/* {alarmMessages.length > 0 && (
+            <div className="flex">
+              <button onClickCapture={removeAllMessages} name="delete">
+                전체 삭제
+              </button>
+            </div>
+          )} */}
+          <div className="flex">
+            <button onClick={removeAllMessages}>전체 삭제</button>
+          </div>
+          {alarmMessages.length > 0 ? (
+            <div className="flex max-h-[400px] w-[3] flex-col gap-y-5 overflow-y-scroll scroll-smooth px-[5px] py-[5px]">
+              {alarmMessages.map(m => (
                 <li
                   key={m.id}
                   className="flex flex-col rounded-[8px] bg-white p-5 shadow-[0_0.125rem_0.5rem_rgba(0,0,0,0.3),0_0.0625rem_0.125rem_rgba(0,0,0,0.2)]"
                 >
-                  <button
-                    onClickCapture={() => {
-                      removeMessage(m.id);
-                    }}
-                    className="flex justify-end text-primary-gray-900"
-                  >
-                    X
-                  </button>
+                  <div className="flex justify-between">
+                    <h2 className="relative top-[-4px] items-stretch justify-start text-4xl leading-4 text-primary-red-200">
+                      .
+                    </h2>
+                    <button
+                      onClickCapture={() => {
+                        removeAlarmMessage(m.id);
+                      }}
+                      className="flex justify-end text-primary-gray-900"
+                      name="delete"
+                    >
+                      X
+                    </button>
+                  </div>
                   <div className="flex flex-col items-start justify-stretch text-left">
                     <h3 className="flex max-w-[250px] flex-1 text-sm font-normal leading-6 text-primary-black-100">
                       {m.content}
@@ -108,7 +119,7 @@ export default function MessageAlarm({
                   </div>
                 </li>
               ))}
-            </>
+            </div>
           ) : (
             <NoAlarmMessage />
           )}
