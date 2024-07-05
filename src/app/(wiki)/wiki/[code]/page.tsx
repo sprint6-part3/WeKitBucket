@@ -39,7 +39,7 @@ function Wiki({ params }: { params: { code: string } }) {
   const [isEditing, setIsEditing] = useState(false);
 
   const { value, handleOff, handleOn } = useBoolean();
-  const [userProfile, setUserProfile] = useState<DetailProfileResponse | undefined>(undefined);
+  const [userProfile, setUserProfile] = useState<DetailProfileResponse | undefined>();
   const [userData, setUserData] = useState<string | undefined>();
 
   const getUserData = async () => {
@@ -77,7 +77,7 @@ function Wiki({ params }: { params: { code: string } }) {
     }));
   }, []);
 
-  const getUserProfile = async (code: CodeType) => {
+  const getUserProfile = async (code: string) => {
     const res = await getProfilesCode(code);
     setUserProfile(res);
     setEditorInitialValue(res.content);
