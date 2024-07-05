@@ -3,7 +3,7 @@
 import useWindowSize from "@/hooks/useWindowSize";
 import React, { useEffect, useState } from "react";
 import getArticles from "@/apis/article/getArticles";
-import { IArticleProps } from "@/types/articles";
+import { IArticleProps } from "@/types/articles.type";
 import BestSwiper from "./BestSwiper";
 import BestFlex from "./BestFlex";
 
