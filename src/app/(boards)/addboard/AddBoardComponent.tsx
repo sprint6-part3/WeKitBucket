@@ -1,15 +1,15 @@
 "use client";
 
 import React, { useState, useEffect, HTMLAttributes } from "react";
-import TurndownService from "turndown";
 import dayjs from "dayjs";
 import { useRouter } from "next/navigation";
+import dynamic from "next/dynamic";
 import postArticles from "@/apis/article/postArticles";
 import patchArticlesId from "@/apis/article/patchArticlesId";
 import getArticlesId from "@/apis/article/getArticlesId";
 import getUsersMe from "@/apis/user/getUsersMe";
-import dynamic from "next/dynamic";
 import CustomButton from "./CustomButton";
+import turndownService from "./turndownService"; // TurndownService import 추가
 
 const TITLE_MAX_LEN = 30;
 
@@ -90,7 +90,6 @@ function AddBoardComponent({
 
   const handleSubmit = async () => {
     try {
-      const turndownService = new TurndownService();
       const markdownContent = turndownService.turndown(content);
       const articleInput: ArticleInput = {
         title,
