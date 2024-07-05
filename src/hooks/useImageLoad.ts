@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const useImageLoad = (imageUrl: string | null | undefined) => {
+const useImageLoad = (imageUrl?: string | null) => {
   const [imgError, setImgError] = useState<boolean | undefined>();
 
   useEffect(() => {
