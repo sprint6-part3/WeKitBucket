@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, HTMLAttributes } from "react";
+import TurndownService from "turndown";
 import dayjs from "dayjs";
 import postArticles from "@/apis/article/postArticles";
 import getUsersMe from "@/apis/user/getUsersMe";
@@ -64,18 +65,15 @@ function AddBoardComponent({
     setCurrentDate(`${dayjs().format("YYYY.MM.DD")}.`);
   }, []);
 
-  const stripHtmlTags = (html: string): string => {
-    const doc = new DOMParser().parseFromString(html, "text/html");
-    return doc.body.textContent || "";
-  };
-
   const handleSubmit = async () => {
     try {
-      const strippedContent = stripHtmlTags(content);
+      const turndownService = new TurndownService();
+      const markdownContent = turndownService.turndown(content);
+      console.log("Current imageUrl:", imageUrl); // 이미지 URL 로그 출력
       const articleInput: ArticleInput = {
         title,
-        content: strippedContent,
-        image: imageUrl,
+        content: markdownContent,
+        image: imageUrl, // 이미지 URL을 포함
       };
 
       console.log("Sending data:", articleInput);
@@ -109,7 +107,7 @@ function AddBoardComponent({
           </CustomButton>
         </div>
       </div>
-      <span className="text-sm-regular-12 mt-[23px] text-gray-400 md:text-sm-regular">
+      <span className="mt-[23px] text-sm-regular-12 text-gray-400 md:text-sm-regular">
         {authorName} {currentDate}
       </span>
       <div className="mt-[18px] flex w-full items-center justify-between gap-2 border-y border-b border-gray-200 py-3 text-sm-regular md:mt-[25px]">
@@ -130,7 +128,7 @@ function AddBoardComponent({
       </p>
       <div className="relative">
         <div className="w-full">
-          <QuillEditor setContent={handleSearchItem} content={content} />
+          <QuillEditor setContent={handleSearchItem} content={content} setImageUrl={setImageUrl} />
         </div>
       </div>
     </div>
