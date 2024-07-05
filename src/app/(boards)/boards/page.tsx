@@ -1,3 +1,5 @@
+"use server";
+
 import Link from "next/link";
 import getArticles from "@/apis/article/getArticles";
 import Button from "./components/Button";
