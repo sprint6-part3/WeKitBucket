@@ -3,7 +3,7 @@
 import fetchInstance from "@/utils/fetchInstance";
 import { ProfilesInput } from "./postProfiles";
 
-const postProfilesCodePing = async (profileCode: string, securityAnswer: ProfilesInput) => {
+const postProfilesCodePing = async (profileCode: string | undefined, securityAnswer: ProfilesInput) => {
   try {
     const data = await fetchInstance<ProfilesInput>(`profiles/${profileCode}/ping`, {
       method: "POST",
