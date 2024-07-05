@@ -46,7 +46,7 @@ const fetchInstance = async <T>(
         const refreshTokenCookie = cookies().get("refreshToken");
         if (refreshTokenCookie) {
           try {
-            await postRefreshToken(); 
+            await postRefreshToken();
             const retryHeaders = getDefaultHeaders();
             const retryResponse = await fetch(`${baseUrl}${queryString}`, {
               ...options,
@@ -76,4 +76,3 @@ const fetchInstance = async <T>(
 };
 
 export default fetchInstance;
-
