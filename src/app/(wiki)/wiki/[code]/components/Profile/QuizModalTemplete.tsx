@@ -8,8 +8,8 @@ import CommonButton from "../Common/CommonButton";
 import Input from "../Common/Input";
 import Label from "../Common/Label";
 
-const modalFirstText = `text-md-regular text-grayscale-400`;
-const modalSecondText = `text-xs-regular text-grayscale-400`;
+const modalFirstText = `text-md-regular2 text-grayscale-400`;
+const modalSecondText = `text-xs-regular2 text-grayscale-400`;
 
 type QuizModalProps = {
   question: string;
@@ -72,7 +72,7 @@ function QuizModalTemplete({ question, onClose, setEditingMode, code, setAnswer 
         />
 
         {errors.securityAnswer && (
-          <p className="text-secondary-red-200 text-xs-regular">{errors.securityAnswer.message}</p>
+          <p className="text-secondary-red-200 text-xs-regular2">{errors.securityAnswer.message}</p>
         )}
 
         <CommonButton variant="primary" className="mt-8 w-full" type="submit">

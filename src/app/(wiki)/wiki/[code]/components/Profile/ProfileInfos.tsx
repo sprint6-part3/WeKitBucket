@@ -29,7 +29,7 @@ const ProfileInfos = memo(
           <>
             <label
               htmlFor={id}
-              className="text-grayscale-400 min-w-14 flex-none text-xs-regular md:text-md-regular xl:min-w-16"
+              className="text-grayscale-400 text-xs-regular2 md:text-md-regular2 min-w-14 flex-none xl:min-w-16"
             >
               {label}
             </label>
@@ -37,17 +37,17 @@ const ProfileInfos = memo(
               name="profileInput"
               id={id}
               maxLength={13}
-              className="rounded-10 bg-grayscale-100 text-grayscale-400 flex-none py-2 pl-3 text-xs-regular outline-none focus:border-2 focus:border-primary-green-200 sm:w-[70%] md:ml-2 md:w-[70%] md:text-md-regular lg:ml-0 lg:w-3/4 xl:w-[68%] xl:min-w-16"
+              className="rounded-10 bg-grayscale-100 text-grayscale-400 text-xs-regular2 md:text-md-regular2 flex-none py-2 pl-3 outline-none focus:border-2 focus:border-primary-green-200 sm:w-[70%] md:ml-2 md:w-[70%] lg:ml-0 lg:w-3/4 xl:w-[68%] xl:min-w-16"
               placeholder={value}
               onChange={handleChange}
             />
           </>
         ) : (
           <>
-            <p className="text-grayscale-400 min-w-14 flex-none text-xs-regular md:text-md-regular xl:min-w-16">
+            <p className="text-grayscale-400 text-xs-regular2 md:text-md-regular2 min-w-14 flex-none xl:min-w-16">
               {label}
             </p>
-            <p className="text-grayscale-500 text-xs-regular md:text-md-regular">{value}</p>
+            <p className="text-grayscale-500 text-xs-regular2 md:text-md-regular2">{value}</p>
           </>
         )}
       </div>

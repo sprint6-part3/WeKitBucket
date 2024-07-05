@@ -10,7 +10,7 @@ interface CommonButtonProps extends ComponentProps<"button"> {
 
 function CommonButton({ variant = "primary", isActive = true, className = "", children, ...props }: CommonButtonProps) {
   // 버튼 기본 스타일링
-  const baseClassName = `h-11 rounded-lg text-md-semibold px-5 py-2.5 max-w-[400px]`;
+  const baseClassName = `h-11 rounded-lg text-md-semibold2 px-5 py-2.5 max-w-[400px]`;
   let variantClassName = "";
 
   // eslint-disable-next-line default-case

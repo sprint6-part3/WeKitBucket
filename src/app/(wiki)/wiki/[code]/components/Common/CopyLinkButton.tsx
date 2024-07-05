@@ -12,7 +12,7 @@ interface CopyLinkButtonProps {
 }
 
 const LinkContainer = "inline-flex items-center gap-2 rounded-10 px-3 py-2 sm:h-6.5 cursor-pointer";
-const LinkText = "text-md-regular sm:text-xs-regular text-primary-green-200";
+const LinkText = "text-md-regular2 sm:text-xs-regular2 text-primary-green-200";
 
 function CopyLinkButton({ url }: CopyLinkButtonProps) {
   const handleCopyToClipboard = () => {
