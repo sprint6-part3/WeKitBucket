@@ -50,7 +50,7 @@ export default function HeaderRight() {
               <UserProfileDropdown
                 toggle={isDropdownVisible[1]}
                 setToggle={setIsDropdownVisible}
-                code={user?.profile.code}
+                code={userProfile?.code}
                 profileImage={userProfile?.image}
               />
             </div>

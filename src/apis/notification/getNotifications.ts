@@ -1,7 +1,7 @@
 import { RequestNotifications } from "@/types/alarm";
 import fetchInstance from "@/utils/fetchInstance";
 
-const GetNotificationOptions = async (options: { page?: number; pageSize?: number }) => {
+const getNotificationOptions = async (options: { page?: number; pageSize?: number }) => {
   try {
     const data = await fetchInstance<RequestNotifications>(`notifications`, {
       method: "GET",
@@ -18,4 +18,4 @@ const GetNotificationOptions = async (options: { page?: number; pageSize?: numbe
   }
 };
 
-export default GetNotificationOptions;
+export default getNotificationOptions;

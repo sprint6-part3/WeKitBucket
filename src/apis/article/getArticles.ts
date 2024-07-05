@@ -1,16 +1,5 @@
-"use server";
-
 import { ArticleData } from "@/types/articles";
 import fetchInstance from "@/utils/fetchInstance";
-
-export interface ArticleOption {
-  page?: number;
-  pageSize?: number;
-  orderBy?: "recent" | "like";
-  keyword?: string;
-}
-
-// 자유게시판 페이지
 
 const getArticles = async (options?: {
   page?: number;
@@ -23,6 +12,7 @@ const getArticles = async (options?: {
       method: "GET",
       params: options,
     });
+
     return data;
   } catch (error) {
     if (error instanceof Error) {

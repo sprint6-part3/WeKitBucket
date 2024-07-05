@@ -8,7 +8,9 @@ export interface ArticleInput {
   title: string;
 }
 
-const postArticles = async (articleInput: ArticleInput) => {
+const postArticles = async (
+  articleInput: ArticleInput = { image: "https://example.com/", content: "headers", title: "fd" },
+) => {
   try {
     await fetchInstance("articles", {
       method: "POST",

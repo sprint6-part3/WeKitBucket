@@ -1,15 +1,20 @@
 "use server";
 
 import { cookies } from "next/headers";
+import postRefreshToken from "@/apis/auth/postRefreshToken";
 import createParams from "./createParams";
 
 const baseUrl = process.env.BASE_URL;
 
-const getDefaultHeaders = (): HeadersInit => {
+const getDefaultHeaders = (isMultipart: boolean = false): HeadersInit => {
   const headers: HeadersInit = {
     Accept: "application/json",
-    "Content-Type": "application/json",
   };
+
+  if (!isMultipart) {
+    headers["Content-Type"] = "application/json";
+  }
+
   const token = cookies().get("accessToken");
   if (token) {
     headers.Authorization = `Bearer ${token.value}`;
@@ -23,9 +28,9 @@ const createQueryString = (url: string, params?: Record<string, string | number>
 
 const fetchInstance = async <T>(
   url: string,
-  options: RequestInit & { params?: Record<string, string | number> } = {},
+  options: RequestInit & { params?: Record<string, string | number>; isMultipart?: boolean } = {},
 ): Promise<T> => {
-  const defaultHeaders = getDefaultHeaders();
+  const defaultHeaders = getDefaultHeaders(options.isMultipart);
 
   const headers = new Headers({
     ...defaultHeaders,
@@ -34,17 +39,44 @@ const fetchInstance = async <T>(
 
   const queryString = createQueryString(url, options.params);
 
-  const response = await fetch(`${baseUrl}${queryString}`, {
-    ...options,
-    headers,
-  });
+  try {
+    const response = await fetch(`${baseUrl}${queryString}`, {
+      ...options,
+      headers,
+    });
+    // interceptor
+    if (!response.ok) {
+      if (response.status === 401) {
+        const refreshTokenCookie = cookies().get("refreshToken");
+        if (refreshTokenCookie) {
+          try {
+            await postRefreshToken();
+            const retryHeaders = getDefaultHeaders(options.isMultipart);
+            const retryResponse = await fetch(`${baseUrl}${queryString}`, {
+              ...options,
+              headers: new Headers({
+                ...retryHeaders,
+                ...options.headers,
+              }),
+            });
+            if (retryResponse.ok) {
+              return retryResponse.json();
+            }
+          } catch (error) {
+            throw new Error(error instanceof Error ? error.message : "Failed to refresh token");
+          }
+        }
+        throw new Error("Unauthorized: No refresh token available");
+      } else {
+        const error = await response.json().catch(() => ({ message: "Unknown error" }));
+        throw new Error(error.message || "Request failed");
+      }
+    }
 
-  if (!response.ok) {
-    const error = await response.json().catch(() => ({ message: "Unknown error" }));
-    throw new Error(error.message || "Request failed");
+    return response.json();
+  } catch (error) {
+    throw new Error(error instanceof Error ? error.message : "Request failed");
   }
-
-  return response.json();
 };
 
 export default fetchInstance;

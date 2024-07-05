@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 @import "./reset.css";
+@import "./addboard.css";
 
 @layer base {
   .board-tr {
@@ -74,4 +75,12 @@
   src: url("../assets/fonts/pretendard/PretendardGOV-Black.woff2") format("woff2");
   font-weight: 900;
   font-style: normal;
+}
+
+.ql-editor em,
+.ql-editor i {
+  font-style: italic;
+  input:focus {
+    outline: none;
+  }
 }

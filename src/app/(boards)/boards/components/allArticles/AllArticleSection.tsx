@@ -2,15 +2,23 @@
 
 import React, { useEffect, useState } from "react";
 import { IArticleProps } from "@/types/articles";
-import getArticles, { ArticleOption } from "@/apis/article/getArticles";
+import getArticles from "@/apis/article/getArticles";
 import SearchForm from "../search/SearchForm";
 import Dropdown, { ISortValue } from "../Dropdown";
 import PostHeader from "./PostHeader";
 import PostList from "./PostList";
 import Pagination from "../Pagination";
 
+export interface ArticleOption {
+  page?: number;
+  pageSize?: number;
+  orderBy?: "recent" | "like";
+  keyword?: string;
+}
+
 function AllArticleSection({ article }: IArticleProps) {
   const { totalCount } = article;
+  const [total, setTotal] = useState(totalCount);
   const [articles, setArticles] = useState(article?.list || []);
   const [keyword, setKeyword] = useState("");
   const [options, setOptions] = useState<ArticleOption>({
@@ -64,6 +72,7 @@ function AllArticleSection({ article }: IArticleProps) {
       try {
         const res = await getArticles(options);
         setArticles(res?.list);
+        setTotal(res?.totalCount);
       } catch (error) {
         console.error("Failed to fetch getArticles: ", error);
       }
@@ -89,7 +98,7 @@ function AllArticleSection({ article }: IArticleProps) {
       {/* 페이지네이션 영역 */}
       {options.page && options.pageSize && (
         <Pagination
-          totalCount={totalCount}
+          totalCount={total}
           currentPage={options.page}
           pageSize={options.pageSize}
           onClick={handlePaginationClick}

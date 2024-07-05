@@ -14,7 +14,7 @@ export interface ArticleList {
 }
 
 export interface ArticleData {
-  list: ArticleList[] | [];
+  list: ArticleList[];
   totalCount: number;
 }
 
