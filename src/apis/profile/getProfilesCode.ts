@@ -3,7 +3,7 @@ import fetchInstance from "@/utils/fetchInstance";
 export interface RequestProfileCode {
   id: number;
   code: string;
-  image?: null | string;
+  image?: string | null;
   city: string;
   mbti: string;
   job: string;

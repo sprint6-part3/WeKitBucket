@@ -26,7 +26,7 @@ export default function AlarmModal({ onClose }: { onClose: () => void }) {
       <AlarmModalHeader onClose={onClose} removeAll={removeAllMessages} count={alarmMessages.length} />
       <ul style={{ zIndex: 2 }} className="flex flex-col gap-y-5 px-[1.5em] pt-[1.125em] text-[1.25em]">
         {alarmMessages.length > 0 ? (
-          <>
+          <div className="flex max-h-[90dvh] flex-col gap-y-5 overflow-y-scroll scroll-smooth px-[5px] py-[5px]">
             {alarmMessages.map(m => (
               <li
                 key={m.id}
@@ -55,7 +55,7 @@ export default function AlarmModal({ onClose }: { onClose: () => void }) {
                 </div>
               </li>
             ))}
-          </>
+          </div>
         ) : (
           <NoAlarmMessage />
         )}

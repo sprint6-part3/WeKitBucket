@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter, useSelectedLayoutSegments } from "next/navigation";
-
+import useImageLoad from "@/hooks/useImageLoad";
 import UserProfile from "@/assets/icons/userProfileIcon.svg";
 import postSignout from "@/apis/auth/postSignout";
 import { useAuth } from "@/context/AuthContext";
@@ -26,6 +26,7 @@ export default function UserProfileDropdown({
 }) {
   const [windowWidth, setWindowWidth] = useState(0);
   const segments = useSelectedLayoutSegments();
+  const imageError = useImageLoad(profileImage);
   const { getUser } = useAuth();
   const router = useRouter();
 
@@ -63,13 +64,13 @@ export default function UserProfileDropdown({
     <div className="flex">
       <button onClick={toggleDropdown} onBlur={closeToggle} aria-label="User Profile">
         {/* <Image src={UserProfile} alt="프로필 이미지" /> */}
-        {profileImage ? (
-          <div className="relative aspect-[1/1] h-[32px] w-[32px] border-none">
-            <Image fill src={profileImage} alt="프로필 이미지" className="rounded-full" />
-          </div>
-        ) : (
-          <UserProfile width="32" height="32" />
-        )}
+        <div className="relative aspect-[1/1] h-[32px] w-[32px] border-none">
+          {imageError === false && profileImage ? (
+            <Image fill src={profileImage} alt="프로필 이미지" className="rounded-full" /> // 프로필 있을 경우 보일 이미지
+          ) : (
+            imageError === true && <UserProfile width="32" height="32" /> // 프로필 없을 경우 보여주는 디폴트 이미지
+          )}
+        </div>
       </button>
 
       {toggle && (
