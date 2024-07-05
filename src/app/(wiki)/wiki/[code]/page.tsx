@@ -40,11 +40,12 @@ function Wiki({ params }: { params: { code: string } }) {
 
   const { value, handleOff, handleOn } = useBoolean();
   const [userProfile, setUserProfile] = useState<DetailProfileResponse | undefined>(undefined);
-  const [userData, setUserData] = useState("");
+  const [userData, setUserData] = useState<string | undefined>();
 
   const getUserData = async () => {
-    const userDatas: IUser = await getUsersMe();
-    setUserData(userDatas?.profile?.code);
+    const userDatas = await getUsersMe();
+    const loginUserCode: string | undefined = userDatas?.profile?.code;
+    setUserData(loginUserCode);
   };
 
   getUserData();

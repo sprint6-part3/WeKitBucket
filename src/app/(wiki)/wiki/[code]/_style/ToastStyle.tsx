@@ -1,3 +1,4 @@
+/* eslint-disable import/prefer-default-export */
 import { ToastContainer } from "react-toastify";
 import { styled } from "styled-components";
 
