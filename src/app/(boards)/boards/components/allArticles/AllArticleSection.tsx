@@ -18,6 +18,7 @@ export interface ArticleOption {
 
 function AllArticleSection({ article }: IArticleProps) {
   const { totalCount } = article;
+  const [total, setTotal] = useState(totalCount);
   const [articles, setArticles] = useState(article?.list || []);
   const [keyword, setKeyword] = useState("");
   const [options, setOptions] = useState<ArticleOption>({
@@ -71,6 +72,7 @@ function AllArticleSection({ article }: IArticleProps) {
       try {
         const res = await getArticles(options);
         setArticles(res?.list);
+        setTotal(res?.totalCount);
       } catch (error) {
         console.error("Failed to fetch getArticles: ", error);
       }
@@ -96,7 +98,7 @@ function AllArticleSection({ article }: IArticleProps) {
       {/* 페이지네이션 영역 */}
       {options.page && options.pageSize && (
         <Pagination
-          totalCount={totalCount}
+          totalCount={total}
           currentPage={options.page}
           pageSize={options.pageSize}
           onClick={handlePaginationClick}

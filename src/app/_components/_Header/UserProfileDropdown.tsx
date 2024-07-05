@@ -17,7 +17,7 @@ export default function UserProfileDropdown({
 }: {
   toggle: boolean;
   setToggle: Dispatch<SetStateAction<boolean[]>>;
-  code: string;
+  code: string | undefined;
   profileImage?: string | null;
 }) {
   const [windowWidth, setWindowWidth] = useState(0);
@@ -79,7 +79,7 @@ export default function UserProfileDropdown({
               내 위키
             </Link>
           ) : (
-            <Link href={`/wiki/${code}`} className="flex items-center text-primary-gray-400">
+            <Link href={code ? `/wiki/${code}` : "/not-found-code"} className="flex items-center text-primary-gray-400">
               내 위키
             </Link>
           )}

@@ -13,7 +13,6 @@ const getArticles = async (options?: {
       method: "GET",
       params: options, // 'params' should be handled correctly in fetchInstance function
     });
-
     return data;
   } catch (error) {
     if (error instanceof Error) {
