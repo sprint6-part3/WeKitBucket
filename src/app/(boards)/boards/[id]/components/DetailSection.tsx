@@ -5,6 +5,7 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
 import React, { useEffect, useState } from "react";
 import NextImage from "next/image";
+import Link from "next/link";
 import EditIcon from "@/assets/icons/pencilIcon.svg";
 import DeleteIcon from "@/assets/icons/trashIcon.svg";
 import LikeIcon from "@/assets/icons/like.svg";
@@ -51,7 +52,6 @@ function DetailSection({ article, articleId, myId }: IArticleDetailProps) {
     handleViewModal();
   };
 
-  // 좋아요 버튼 클릭 함수
   const handleClickLikeButton = async () => {
     try {
       let res;
@@ -99,18 +99,22 @@ function DetailSection({ article, articleId, myId }: IArticleDetailProps) {
             </h1>
             {isMyPost && (
               <div className="ml-auto flex items-center justify-between gap-[12px] lg:gap-[14px]">
-                <button className="flex h-[22px] w-[22px] items-center justify-center px-[3.21px] py-[3.21px] sm:hidden">
-                  <EditIcon />
-                </button>
+                <Link href={`/addboard/${articleId}`}>
+                  <button className="flex h-[22px] w-[22px] items-center justify-center px-[3.21px] py-[3.21px] sm:hidden">
+                    <EditIcon />
+                  </button>
+                </Link>
                 <button
                   onClick={handleViewModal}
                   className="flex h-6 w-6 items-center justify-center px-[4.5px] py-[3.5px] sm:hidden"
                 >
                   <DeleteIcon />
                 </button>
-                <button className="hidden h-[45px] w-[120px] items-center justify-center rounded-[10px] bg-primary-green-200 text-sm font-semibold text-white sm:flex lg:w-[140px]">
-                  수정하기
-                </button>
+                <Link href={`/addboard/${articleId}`}>
+                  <button className="hidden h-[45px] w-[120px] items-center justify-center rounded-[10px] bg-primary-green-200 text-sm font-semibold text-white sm:flex lg:w-[140px]">
+                    수정하기
+                  </button>
+                </Link>
                 <button
                   onClick={handleViewModal}
                   className="hidden h-[45px] w-[120px] items-center justify-center rounded-[10px] bg-primary-green-200 text-sm font-semibold text-white sm:flex lg:w-[140px]"

@@ -5,6 +5,8 @@ import TurndownService from "turndown";
 import dayjs from "dayjs";
 import { useRouter } from "next/navigation";
 import postArticles from "@/apis/article/postArticles";
+import patchArticlesId from "@/apis/article/patchArticlesId";
+import getArticlesId from "@/apis/article/getArticlesId";
 import getUsersMe from "@/apis/user/getUsersMe";
 import dynamic from "next/dynamic";
 import CustomButton from "./CustomButton";
@@ -16,6 +18,7 @@ const QuillEditor = dynamic(() => import("./QuillEditor"), {
 });
 
 interface AddBoardClientProps extends HTMLAttributes<HTMLDivElement> {
+  articleId?: number;
   initialTitle?: string;
   initialContent?: string;
   initialImageUrl?: string;
@@ -33,6 +36,7 @@ interface ArticleInput {
 }
 
 function AddBoardComponent({
+  articleId,
   initialTitle = "",
   initialContent = "",
   initialImageUrl = undefined,
@@ -49,23 +53,40 @@ function AddBoardComponent({
   const router = useRouter();
 
   useEffect(() => {
-    const fetchAuthorName = async () => {
-      try {
-        const userData = await getUsersMe();
-        if (userData && userData.name) {
-          setAuthorName(userData.name);
-        } else {
-          setAuthorName("Unknown");
+    const fetchArticleData = async () => {
+      if (articleId) {
+        try {
+          const article = await getArticlesId(articleId);
+          setTitle(article.title);
+          setContent(article.content);
+          setImageUrl(article.image);
+          setAuthorName(article.writer.name);
+          setCurrentDate(dayjs(article.createdAt).format("YYYY.MM.DD."));
+        } catch (error) {
+          console.error("Failed to fetch article data:", error);
         }
-      } catch (error) {
-        console.error("Failed to fetch author name:", error);
-        setAuthorName("Unknown");
+      } else {
+        const fetchAuthorName = async () => {
+          try {
+            const userData = await getUsersMe();
+            if (userData && userData.name) {
+              setAuthorName(userData.name);
+            } else {
+              setAuthorName("Unknown");
+            }
+          } catch (error) {
+            console.error("Failed to fetch author name:", error);
+            setAuthorName("Unknown");
+          }
+        };
+
+        fetchAuthorName();
+        setCurrentDate(`${dayjs().format("YYYY.MM.DD")}.`);
       }
     };
 
-    fetchAuthorName();
-    setCurrentDate(`${dayjs().format("YYYY.MM.DD")}.`);
-  }, []);
+    fetchArticleData();
+  }, [articleId]);
 
   const handleSubmit = async () => {
     try {
@@ -79,10 +100,14 @@ function AddBoardComponent({
 
       console.log("Sending data:", articleInput);
 
-      const response = await postArticles(articleInput);
-      const articleId = response.id;
-
-      router.push(`/boards/${articleId}`);
+      if (articleId) {
+        await patchArticlesId(articleInput, articleId);
+        router.push(`/boards/${articleId}`);
+      } else {
+        const response = await postArticles(articleInput);
+        const newArticleId = response.id;
+        router.push(`/boards/${newArticleId}`);
+      }
 
       setTitle("");
       setContent("");
@@ -105,10 +130,12 @@ function AddBoardComponent({
   return (
     <div className={className} {...rest}>
       <div className="flex items-center justify-between md:mb-[25px]">
-        <h2 className="sm-bold text-gray-500 md:text-md-semibold xl:text-lg-semibold">게시물 등록하기</h2>
+        <h2 className="sm-bold text-gray-500 md:text-md-semibold xl:text-lg-semibold">
+          {articleId ? "게시물 수정하기" : "게시물 등록하기"}
+        </h2>
         <div className="flex gap-[8px]">
           <CustomButton isActive={isValid} disabled={!isValid} onClick={handleSubmit} variant="secondary">
-            등록하기
+            {articleId ? "수정하기" : "등록하기"}
           </CustomButton>
         </div>
       </div>
