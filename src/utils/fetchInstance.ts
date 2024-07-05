@@ -6,11 +6,15 @@ import createParams from "./createParams";
 
 const baseUrl = process.env.BASE_URL;
 
-const getDefaultHeaders = (): HeadersInit => {
+const getDefaultHeaders = (isMultipart: boolean = false): HeadersInit => {
   const headers: HeadersInit = {
     Accept: "application/json",
-    "Content-Type": "application/json",
   };
+
+  if (!isMultipart) {
+    headers["Content-Type"] = "application/json";
+  }
+
   const token = cookies().get("accessToken");
   if (token) {
     headers.Authorization = `Bearer ${token.value}`;
@@ -24,9 +28,9 @@ const createQueryString = (url: string, params?: Record<string, string | number>
 
 const fetchInstance = async <T>(
   url: string,
-  options: RequestInit & { params?: Record<string, string | number> } = {},
+  options: RequestInit & { params?: Record<string, string | number>; isMultipart?: boolean } = {},
 ): Promise<T> => {
-  const defaultHeaders = getDefaultHeaders();
+  const defaultHeaders = getDefaultHeaders(options.isMultipart);
 
   const headers = new Headers({
     ...defaultHeaders,
@@ -47,7 +51,7 @@ const fetchInstance = async <T>(
         if (refreshTokenCookie) {
           try {
             await postRefreshToken();
-            const retryHeaders = getDefaultHeaders();
+            const retryHeaders = getDefaultHeaders(options.isMultipart);
             const retryResponse = await fetch(`${baseUrl}${queryString}`, {
               ...options,
               headers: new Headers({

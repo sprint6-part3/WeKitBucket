@@ -1,15 +1,14 @@
 "use client";
 
-import React, { useEffect } from "react";
-import Link from "next/link";
-import NextImage from "next/image";
 import dayjs from "dayjs";
+import Link from "next/link";
+import React, { useEffect } from "react";
+import NextImage from "next/image";
 import LikeIcon from "@/assets/icons/like.svg";
 import CameraIcon from "@/assets/icons/camera.svg";
 import { IPostProps } from "../allArticles/PostList";
 
 function BestPostCard({ post }: IPostProps) {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { id, title, image, createdAt, writer, likeCount } = post;
   const { name } = writer;
   const [imgError, setImgError] = React.useState<boolean | undefined>();

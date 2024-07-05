@@ -11,7 +11,7 @@ const getArticles = async (options?: {
   try {
     const data = await fetchInstance<ArticleData>("articles", {
       method: "GET",
-      params: options,
+      params: options, // 'params' should be handled correctly in fetchInstance function
     });
     return data;
   } catch (error) {
