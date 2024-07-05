@@ -1,9 +1,17 @@
+"use client";
+
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect, useState } from "react";
+import { ArticleData } from "@/types/articles";
 import getArticles from "@/apis/article/getArticles";
 import BestPostList from "./components/bestArticles/BestPostList";
 import AllArticleSection, { ArticleOption } from "./components/allArticles/AllArticleSection";
 import BestHeader from "./components/bestArticles/BestHeader";
 
-async function Board() {
+function Board() {
+  const [allArticles, setAllArticles] = useState<ArticleData | null>(null);
+  const [bestArticles, setBestArticles] = useState<ArticleData | null>(null);
+
   const allArticlesOption: ArticleOption = {
     page: 1,
     pageSize: 10,
@@ -16,14 +24,21 @@ async function Board() {
     orderBy: "like",
   };
 
-  let allArticles;
-  let bestArticles;
+  useEffect(() => {
+    const fetchGetArticles = async () => {
+      try {
+        // getArticles(allArticlesOption), getArticles(bestArticlesOption);
+        const all = await getArticles(allArticlesOption);
+        const best = await getArticles(bestArticlesOption);
+        setAllArticles(all);
+        setBestArticles(best);
+      } catch (error) {
+        console.error("Failed to fetch articles: ", error);
+      }
+    };
 
-  try {
-    [allArticles, bestArticles] = await Promise.all([getArticles(allArticlesOption), getArticles(bestArticlesOption)]);
-  } catch (error) {
-    console.error("Failed to fetch articles: ", error);
-  }
+    fetchGetArticles();
+  }, []);
 
   return (
     <div className="mx-auto mb-[57px] mt-10 grid gap-5">

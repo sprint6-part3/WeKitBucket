@@ -66,6 +66,7 @@ function DetailSection({ article, articleId, content, myId }: IArticleDetailProp
       }));
     } catch (error) {
       if (error instanceof Error) {
+        console.log(error?.message);
         if (error?.message === "Unauthorized: No refresh token available") {
           alert("로그인이 필요합니다.");
           router.push("/login");
