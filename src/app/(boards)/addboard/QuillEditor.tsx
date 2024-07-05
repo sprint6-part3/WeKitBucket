@@ -119,7 +119,11 @@ function QuillEditor({ content, setContent, setImageUrl }: QuillEditorProps) {
           ) : (
             <div className="relative flex h-40 items-center justify-center rounded-[10px] bg-primary-gray-100">
               <CameraIcon width="28.5" height="25.5" />
-              <input type="file" onChange={handleChangeImage} className="absolute h-full w-full opacity-0" />
+              <input
+                type="file"
+                onChange={handleChangeImage}
+                className="absolute h-full w-full cursor-pointer opacity-0"
+              />
             </div>
           )}
 
@@ -127,7 +131,11 @@ function QuillEditor({ content, setContent, setImageUrl }: QuillEditorProps) {
             type="submit"
             onClick={handleSubmit}
             disabled={disabled}
-            className={`ml-auto h-10 w-[90px] rounded-[10px] ${!disabled ? "bg-primary-green-200" : "bg-primary-gray-300"} text-sm font-semibold leading-[1.7] text-white`}
+            className={`ml-auto h-10 w-[90px] rounded-[10px] ${
+              !disabled
+                ? "cursor-pointer bg-primary-green-200 hover:bg-primary-green-300"
+                : "cursor-not-allowed bg-primary-gray-300"
+            } text-sm font-semibold leading-[1.7] text-white`}
           >
             삽입하기
           </button>
