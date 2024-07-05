@@ -1,7 +1,6 @@
 import { ArticleData } from "@/types/articles";
 import fetchInstance from "@/utils/fetchInstance";
 
-// 자유게시판 페이지
 const getArticles = async (options?: {
   page?: number;
   pageSize?: number;
@@ -11,8 +10,9 @@ const getArticles = async (options?: {
   try {
     const data = await fetchInstance<ArticleData>("articles", {
       method: "GET",
-      params: options, // 'params' should be handled correctly in fetchInstance function
+      params: options,
     });
+
     return data;
   } catch (error) {
     if (error instanceof Error) {
