@@ -2,9 +2,10 @@
 
 import React from "react";
 import LikeIcon from "@/assets/icons/like.svg";
-import { ArticleList } from "@/types/articles";
+
 import Link from "next/link";
 import dayjs from "dayjs";
+import { ArticleList } from "@/types/articles.type";
 
 export interface IPostProps {
   post: ArticleList;

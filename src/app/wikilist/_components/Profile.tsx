@@ -1,11 +1,11 @@
 "use client";
 
 import React from "react";
-import { ProfileCatalog } from "@/types/profiles";
 import NoProfilePicture from "@/assets/icons/noProfilePicture.svg";
 import LinkIcon from "@/assets/icons/link.svg";
 import Link from "next/link";
 import Image from "next/image";
+import { ProfileCatalog } from "@/types/profiles.type";
 
 function Profile({ item }: { item: ProfileCatalog }) {
   const { code, city, nationality, job, name, image } = item;
