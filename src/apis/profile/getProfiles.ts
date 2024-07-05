@@ -1,6 +1,7 @@
 import { ProfileData } from "@/types/profiles";
 import fetchInstance from "@/utils/fetchInstance";
 
+
 export interface ProfilesOption {
   page: number;
   pageSize: number;
