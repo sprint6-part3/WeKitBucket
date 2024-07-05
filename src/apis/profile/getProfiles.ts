@@ -1,13 +1,13 @@
 import { ProfileData } from "@/types/profiles";
 import fetchInstance from "@/utils/fetchInstance";
 
-interface ProfilesOption {
+export interface ProfilesOption {
   page?: number;
   pageSize?: number;
   name?: string;
 }
 
-const getProfiles = async ({ page = 1, pageSize = 3, name = "" }: ProfilesOption = {}) => {
+const getProfiles = async ({ page = 1, pageSize = 3, name = "" }: ProfilesOption) => {
   try {
     const data = await fetchInstance<ProfileData>("profiles", {
       method: "GET",
