@@ -33,7 +33,7 @@ function BestPostCard({ post }: IPostProps) {
       href={`/boards/${id}`}
       className="block h-[200px] w-[250px] sm:aspect-[1/0.73] sm:h-auto sm:w-full lg:aspect-[1/0.88]"
     >
-      <div className="flex h-full flex-col overflow-visible rounded-[10px] shadow-custom-shadow">
+      <div className="flex h-full flex-col overflow-hidden rounded-[10px] shadow-custom-shadow">
         <div className="flex-1">
           {imgError === false && image ? (
             <div className="relative flex h-full items-center justify-center">
