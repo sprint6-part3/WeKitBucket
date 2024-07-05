@@ -2,7 +2,7 @@
 
 import { cookies } from "next/headers";
 
-const postSignOut = async () => {
+const postSignout = async () => {
   try {
     if (cookies().get("refreshToken") && cookies().get("refreshToken")) {
       cookies().delete("accessToken");
@@ -19,4 +19,4 @@ const postSignOut = async () => {
   }
 };
 
-export default postSignOut;
+export default postSignout;

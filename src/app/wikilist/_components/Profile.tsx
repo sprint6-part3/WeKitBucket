@@ -1,14 +1,16 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { ProfileCatalog } from "@/types/profiles";
 import NoProfilePicture from "@/assets/icons/noProfilePicture.svg";
 import LinkIcon from "@/assets/icons/link.svg";
+import ProfileIcon from "@/assets/icons/userProfileIcon.svg";
 import Link from "next/link";
 import Image from "next/image";
 
 function Profile({ item }: { item: ProfileCatalog }) {
   const { code, city, nationality, job, name, image } = item;
+  const [isImgError, setIsImgError] = useState<boolean>(false);
   const copyLinkUrl = `${process.env.VERCEL_URL}/wiki/${code}`;
 
   const handleCopyLink = () => {
@@ -29,7 +31,14 @@ function Profile({ item }: { item: ProfileCatalog }) {
     >
       {image ? (
         <div className="relative h-[60px] w-[60px] rounded-full md:h-[85px] md:w-[85px]">
-          <Image src={image} alt={`${name}'s profile`} fill className="rounded-full" style={{ objectFit: "cover" }} />
+          <Image
+            src={isImgError ? ProfileIcon : image}
+            alt={`${name}'s profile`}
+            fill
+            className="rounded-full"
+            style={{ objectFit: "cover" }}
+            onError={() => setIsImgError(true)}
+          />
         </div>
       ) : (
         <NoProfilePicture className="min-h-[60px] min-w-[60px] md:min-h-[85px] md:min-w-[85px]" />

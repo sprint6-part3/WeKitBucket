@@ -7,6 +7,7 @@ import debounce from "@/utils/debounce";
 
 import { useAuth } from "@/context/AuthContext";
 import { AlarmProvider } from "@/context/AlarmContext";
+import useToggle from "@/hooks/useToggle";
 import MessageAlarm from "./MessageAlarm";
 import UserDropDown from "./UserDropDown";
 import NotUserDropDown from "./NotUserDropDown";
@@ -16,7 +17,8 @@ export default function HeaderRight() {
   const { user, userProfile, getUser } = useAuth();
 
   const [windowWidth, setWindowWidth] = useState(0);
-  const [isDropdownVisible, setIsDropdownVisible] = useState<boolean[]>([false, false]);
+  const [alarmToggle, setAlarmToggle] = useToggle(false);
+  const [menuToggle, setMenuToggle] = useToggle(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -46,10 +48,17 @@ export default function HeaderRight() {
         <div className="z-3">
           {windowWidth > 450 ? (
             <div className="flex items-center gap-x-5 text-primary-gray-400">
-              <MessageAlarm toggle={isDropdownVisible[0]} setToggle={setIsDropdownVisible} />
+              <MessageAlarm
+                toggle={alarmToggle}
+                oppositeToggle={menuToggle}
+                setToggle={setAlarmToggle}
+                setOppositeToggle={setMenuToggle}
+              />
               <UserProfileDropdown
-                toggle={isDropdownVisible[1]}
-                setToggle={setIsDropdownVisible}
+                toggle={menuToggle}
+                oppositeToggle={alarmToggle}
+                setToggle={setMenuToggle}
+                setOppositeToggle={setAlarmToggle}
                 code={userProfile?.code}
                 profileImage={userProfile?.image}
               />
