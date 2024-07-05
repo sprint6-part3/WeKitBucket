@@ -3,6 +3,7 @@
 import React, { useState, useEffect, HTMLAttributes } from "react";
 import TurndownService from "turndown";
 import dayjs from "dayjs";
+import { useRouter } from "next/navigation";
 import postArticles from "@/apis/article/postArticles";
 import getUsersMe from "@/apis/user/getUsersMe";
 import dynamic from "next/dynamic";
@@ -45,6 +46,7 @@ function AddBoardComponent({
   const [isValid, setIsValid] = useState(false);
   const [authorName, setAuthorName] = useState<string>("");
   const [currentDate, setCurrentDate] = useState<string>("");
+  const router = useRouter();
 
   useEffect(() => {
     const fetchAuthorName = async () => {
@@ -69,21 +71,24 @@ function AddBoardComponent({
     try {
       const turndownService = new TurndownService();
       const markdownContent = turndownService.turndown(content);
-      console.log("Current imageUrl:", imageUrl); // 이미지 URL 로그 출력
       const articleInput: ArticleInput = {
         title,
         content: markdownContent,
-        image: imageUrl, // 이미지 URL을 포함
+        image: imageUrl,
       };
 
       console.log("Sending data:", articleInput);
 
-      await postArticles(articleInput);
+      const response = await postArticles(articleInput);
+      const articleId = response.id;
+
+      router.push(`/boards/${articleId}`);
+
       setTitle("");
       setContent("");
       setImageUrl("");
       setContentLength({ withSpaces: 0, withoutSpaces: 0 });
-    } catch (error: unknown) {
+    } catch (error) {
       console.error("게시물 등록 실패:", error);
     }
   };
