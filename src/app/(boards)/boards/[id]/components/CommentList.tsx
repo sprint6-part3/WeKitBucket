@@ -112,7 +112,7 @@ function CommentList({ list, myId, onChangeApi }: ICommentListProps) {
                 placeholder="댓글을 입력해 주세요"
                 className="w-full resize-none bg-transparent text-sm leading-[1.7] text-primary-gray-500 outline-none placeholder:text-primary-gray-400"
               />
-              <div className="flex items-end justify-between gap-1">
+              <div className="flex flex-wrap items-end justify-between gap-1">
                 <p className="text-sm leading-[1.7] text-primary-gray-300">
                   <span>{commentCount}</span> / <span>{LIMIT}</span>
                 </p>
