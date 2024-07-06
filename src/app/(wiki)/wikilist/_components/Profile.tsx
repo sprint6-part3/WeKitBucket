@@ -10,7 +10,7 @@ import useImageLoad from "@/hooks/useImageLoad";
 
 function Profile({ item }: { item: ProfileCatalog }) {
   const { code, city, nationality, job, name, image } = item;
-  const copyLinkUrl = `${process.env.VERCEL_URL}/wiki/${code}`;
+  const copyLinkUrl = `${process.env.MINCEL_URL}/wiki/${code}`;
   const imageError = useImageLoad(image);
 
   const handleCopyLink = () => {

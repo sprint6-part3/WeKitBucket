@@ -2,7 +2,7 @@
 const nextConfig = {
   env: {
     BASE_URL: process.env.BASE_URL,
-    VERCEL_URL: process.env.VERCEL_URL || "https://wekit-bucket.vercel.app",
+    MINCEL_URL: process.env.VERCEL_URL || "https://wekit-bucket.vercel.app",
   },
   reactStrictMode: true,
   swcMinify: true,
