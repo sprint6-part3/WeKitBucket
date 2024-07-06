@@ -2,13 +2,14 @@
 
 import React, { useState, useEffect, HTMLAttributes } from "react";
 import dayjs from "dayjs";
-import Modal from "@/_components/Modal";
+
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import postArticles, { ArticleInput } from "@/apis/article/postArticles";
 import patchArticlesId from "@/apis/article/patchArticlesId";
 import getArticlesId from "@/apis/article/getArticlesId";
 import getUsersMe from "@/apis/user/getUsersMe";
+import Modal from "@/components/Modal";
 import CustomButton from "./CustomButton";
 
 const QuillEditor = dynamic(() => import("./QuillEditor"), {
@@ -186,7 +187,7 @@ function AddBoardComponent({
         <input
           onChange={e => setTitle(e.target.value)}
           value={title}
-          className="md:text-xl-medium flex flex-1 items-center justify-between gap-2 text-gray-600 outline-none md:text-md-medium"
+          className="flex flex-1 items-center justify-between gap-2 text-gray-600 outline-none md:text-md-medium md:text-xl-medium"
           placeholder="제목을 입력해주세요"
           maxLength={TITLE_MAX_LEN}
         />
