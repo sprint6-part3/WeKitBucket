@@ -1,7 +1,7 @@
 "use server";
 
+import { UserInput } from "@/types/auth.type";
 import fetchInstance from "@/utils/fetchInstance";
-import { UserInput } from "@/types/auth";
 
 const postSignUp = async (userInput: UserInput) => {
   try {

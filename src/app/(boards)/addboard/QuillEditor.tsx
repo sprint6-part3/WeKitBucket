@@ -7,7 +7,7 @@ import "react-quill/dist/quill.snow.css";
 import CameraIcon from "@/assets/icons/camera.svg";
 import Image from "next/image";
 import postImage from "@/apis/image/postImage";
-import CommonModal from "@/_components/CommonModal";
+import CommonModal from "@/components/CommonModal";
 import { ImageActions } from "@xeger/quill-image-actions";
 
 Quill.register("modules/imageActions", ImageActions);

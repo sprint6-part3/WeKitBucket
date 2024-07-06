@@ -1,6 +1,6 @@
 "use server";
 
-import { ProfileCatalog } from "@/types/profiles";
+import { ProfileCatalog } from "@/types/profiles.type";
 import Profile from "./Profile";
 
 function ProfileList({ list }: { list: ProfileCatalog[] }) {

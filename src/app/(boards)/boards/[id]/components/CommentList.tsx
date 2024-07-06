@@ -12,7 +12,8 @@ import Image from "next/image";
 import useImageLoad from "@/hooks/useImageLoad";
 import deleteComment from "@/apis/comment/deleteComment";
 import patchComment from "@/apis/comment/patchComment";
-import CommonModal from "@/_components/CommonModal";
+
+import CommonModal from "@/components/CommonModal";
 import DeleteModal from "./DeleteModal";
 import { LIMIT } from "./CommentForm";
 

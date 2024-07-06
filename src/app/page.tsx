@@ -10,7 +10,7 @@ import {
   bottomSectionItem3,
   backgroundImage,
 } from "@/assets/index";
-import RedirectButton from "@/_components/RedirectButton";
+import RedirectButton from "@/components/RedirectButton";
 
 function HomePage() {
   return (
@@ -101,4 +101,3 @@ function HomePage() {
 }
 
 export default HomePage;
-
