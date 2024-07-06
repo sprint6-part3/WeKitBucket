@@ -124,7 +124,7 @@ function DetailSection({ article, articleId, content, myId }: IArticleDetailProp
             <div className="flex items-center gap-1">
               <button
                 onClick={handleClickLikeButton}
-                className="flex h-4 w-4 items-center justify-center px-[1.6px] py-[2.5px] sm:h-[18px] sm:w-[18px] sm:px-[1.87px] sm:pb-[3.22px] sm:pt-[2.36px]"
+                className="flex h-4 w-4 items-center justify-center px-[1.5px] py-[2.5px] sm:h-[18px] sm:w-[18px] sm:px-[1.87px] sm:pb-[3.22px] sm:pt-[2.36px]"
               >
                 {options.isLiked ? (
                   <LikeIcon width="100%" height="100%" fill="#4cbfa4" />

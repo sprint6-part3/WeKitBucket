@@ -1,7 +1,8 @@
 "use client";
 
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
-
+import { useRouter, useSearchParams } from "next/navigation";
 import { IArticleProps } from "@/types/articles.type";
 import getArticles from "@/apis/article/getArticles";
 import SearchForm from "../search/SearchForm";
@@ -11,62 +12,65 @@ import PostList from "./PostList";
 import Pagination from "../Pagination";
 
 export interface ArticleOption {
-  page?: number;
-  pageSize?: number;
-  orderBy?: "recent" | "like";
+  page: number;
+  pageSize: number;
+  orderBy: "recent" | "like";
   keyword?: string;
 }
 
 function AllArticleSection({ article }: IArticleProps) {
-  const { totalCount } = article;
-  const [total, setTotal] = useState(totalCount);
-  const [articles, setArticles] = useState(article?.list || []);
-  const [keyword, setKeyword] = useState("");
-  const [options, setOptions] = useState<ArticleOption>({
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const defaultOptions: ArticleOption = {
     page: 1,
     pageSize: 10,
     orderBy: "recent",
     keyword: "",
+  };
+
+  const { totalCount } = article;
+  const [total, setTotal] = useState(totalCount);
+  const [articles, setArticles] = useState(article?.list || []);
+  const [keyword, setKeyword] = useState(searchParams.get("keyword") || "");
+  const [options, setOptions] = useState<ArticleOption>({
+    page: parseInt(searchParams.get("page") || defaultOptions.page.toString(), 10),
+    pageSize: parseInt(searchParams.get("pageSize") || defaultOptions.pageSize.toString(), 10),
+    orderBy: (searchParams.get("orderBy") as "recent" | "like") || defaultOptions.orderBy,
+    keyword: searchParams.get("keyword") || defaultOptions.keyword,
   });
+
   const sortValue: ISortValue[] = [
-    {
-      text: "최신순",
-      id: "recent",
-    },
-    {
-      text: "좋아요순",
-      id: "like",
-    },
+    { text: "최신순", id: "recent" },
+    { text: "좋아요순", id: "like" },
   ];
 
   const handleSort = (id: "recent" | "like") => {
-    setOptions(prev => ({
-      ...prev,
-      page: 1,
-      orderBy: `${id}`,
-    }));
+    setOptions(prev => ({ ...prev, page: 1, orderBy: id }));
   };
 
   const handleSearchSubmit: React.FormEventHandler<HTMLFormElement> = e => {
     e.preventDefault();
-    setOptions(prev => ({
-      ...prev,
-      page: 1,
-      keyword: `${keyword}`,
-    }));
+    setOptions(prev => ({ ...prev, page: 1, keyword }));
   };
 
   const handleChangeSearchInput: React.ChangeEventHandler<HTMLInputElement> = e => {
-    const { value } = e.target;
-    setKeyword(value);
+    setKeyword(e.target.value);
   };
 
-  const handlePaginationClick: (number: number) => void = pageNum => {
-    setOptions(prev => ({
-      ...prev,
-      page: pageNum,
-    }));
+  const handlePaginationClick = (pageNum: number) => {
+    setOptions(prev => ({ ...prev, page: pageNum }));
   };
+
+  useEffect(() => {
+    const newQuery = new URLSearchParams();
+    if (options.page !== defaultOptions.page) newQuery.set("page", options.page.toString());
+    if (options.pageSize !== defaultOptions.pageSize) newQuery.set("pageSize", options.pageSize.toString());
+    if (options.orderBy !== defaultOptions.orderBy) newQuery.set("orderBy", options.orderBy);
+    if (options.keyword && options.keyword !== defaultOptions.keyword) newQuery.set("keyword", options.keyword);
+
+    router.replace(`?${newQuery.toString()}`);
+  }, [options, router]);
 
   useEffect(() => {
     const getArticlesWithOptions = async () => {

@@ -45,7 +45,7 @@ function PostDetail({ params }: { params: { id: number } }) {
   }, [id]);
 
   return (
-    <main className="mx-auto grid min-w-[300px] max-w-[1060px] gap-10 px-5 py-5 sm:px-[60px] sm:pb-[46px] sm:pt-10 lg:gap-[60px] lg:pb-[130px] lg:pt-[60px]">
+    <main className="mx-auto grid max-w-[1060px] gap-10 px-5 py-5 sm:px-[60px] sm:pb-[46px] sm:pt-10 lg:gap-[60px] lg:pb-[130px] lg:pt-[60px]">
       {articleDetail && (
         <DetailSection article={articleDetail} content={articleContent} articleId={id} myId={user?.id} />
       )}
