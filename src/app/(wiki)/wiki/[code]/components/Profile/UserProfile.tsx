@@ -8,7 +8,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { StaticImport } from "next/dist/shared/lib/get-img-props";
 import ExpandIcon from "@/assets/icons/arrowdown.svg";
 import CameraIcon from "@/assets/icons/camera.svg";
-import useIsMobile from "../../_hook/useIsMobile";
+import DefaultProfile from "@/assets/icons/defaultProfile.svg";
+import useImageLoad from "@/hooks/useImageLoad";
 import ProfileInfos from "./ProfileInfos";
 
 export interface UserProfileProps {
@@ -56,6 +57,7 @@ const UserProfile: React.FC<UserProfileProps> = ({
   ];
   const [isExpanded, setIsExpanded] = useState(false);
   const [preview, setPreview] = useState<string | StaticImport | null>(image);
+  const imageError = useImageLoad(image);
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const nextImg = e.target.files?.[0];
@@ -88,14 +90,15 @@ const UserProfile: React.FC<UserProfileProps> = ({
   };
 
   const profileHeight = isExpanded ? `h-fit` : `h-[70px] md:h-[85px] xl:h-fit`;
-  const mobileSize = useIsMobile();
 
   return (
     <AnimatePresence>
       <section
-        className={`profile-shadow ${editMyPage ? "sm:mt-4 sm:h-[580px] md:h-[580px] lg:h-[354px] xl:flex-col xl:justify-between" : ""} rounded-10 w-full flex-col justify-start bg-white p-5 sm:mb-8 xl:relative xl:ml-auto xl:flex xl:h-[671px] xl:w-[320px] xl:p-10 ${isEditing ? "md:mt-[35px]" : "bottom-[130px]"}`}
+        className={`profile-shadow ${editMyPage ? "sm:mt-4 sm:h-[580px] md:h-[580px] lg:h-[354px] xl:flex-col xl:justify-between" : ""} rounded-10 w-full flex-col justify-start bg-white sm:mb-8 xl:relative xl:ml-auto xl:flex xl:h-[671px] xl:w-[320px] xl:p-10 ${isEditing ? "md:mt-[35px]" : "bottom-[130px]"}`}
       >
-        <div className={`flex w-full ${editMyPage ? "flex-col gap-5" : ""} relative xl:flex-col`}>
+        <div
+          className={`flex w-full rounded-[10px] border px-5 py-5 shadow-[0px_4px_20px_-24px_black] ${editMyPage ? "flex-col" : ""} relative gap-5 xl:flex-col`}
+        >
           {isEditing && isMyPage ? (
             <>
               <label
@@ -127,26 +130,24 @@ const UserProfile: React.FC<UserProfileProps> = ({
             </>
           ) : (
             <div className="border-grayscale-200 relative mr-4 size-[71px] rounded-full md:mr-10 md:size-[81px] xl:mx-auto xl:mb-10 xl:size-[200px]">
-              <Image
-                src={image || "/images/basic_profile.png"}
-                sizes="(max-width: 768px) 62px, (max-width: 1200px) 81px, 200px"
-                fill
-                priority
-                className="ml-3 mt-1 rounded-full object-cover sm:ml-0 xl:ml-0 xl:mt-0"
-                alt="위키 페이지 개인 프로필 이미지"
-              />
+              {imageError === false && image ? (
+                <Image
+                  src={image || "@/assets/icons/defaultProfile.svg"}
+                  sizes="(max-width: 768px) 62px, (max-width: 1200px) 81px, 200px"
+                  fill
+                  priority
+                  className="ml-3 mt-1 rounded-full object-cover sm:ml-0 xl:ml-0 xl:mt-0"
+                  alt="위키 페이지 개인 프로필 이미지"
+                />
+              ) : (
+                imageError === true && <DefaultProfile width="100%" height="100%" />
+              )}
             </div>
           )}
 
-          <motion.div
-            className="xl:mb-[210px]"
-            animate={{
-              height: isExpanded ? (mobileSize ? `280px` : `290px`) : mobileSize ? `85px` : "100px",
-            }}
-            transition={{ duration: 0.15 }}
-          >
+          <motion.div className="xl:mb-[210px]" transition={{ duration: 0.15 }}>
             <div
-              className={`mb-5 ${editMyPage ? "flex flex-col gap-y-7 text-center lg:grid lg:grid-cols-2 lg:items-center xl:flex xl:flex-col xl:gap-[18px]" : "flex flex-col gap-2"} overflow-hidden xl:gap-4 xl:py-2 ${editMyPage ? "h-fit py-3" : profileHeight} `}
+              className={`${editMyPage ? "flex flex-col gap-y-2 text-center lg:grid lg:grid-cols-2 lg:items-center xl:flex xl:flex-col xl:gap-[18px]" : "flex flex-col gap-2"} overflow-hidden xl:gap-4 xl:py-2 ${editMyPage ? "h-fit" : profileHeight} `}
             >
               {profileFields.map(field => (
                 <ProfileInfos editMyPage={editMyPage} key={field.label} onChange={onChange} {...field} />

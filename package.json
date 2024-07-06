@@ -50,8 +50,7 @@
     "swiper": "^11.1.4",
     "tailwind": "^4.0.0",
     "turndown": "^7.2.0",
-    "yarn": "^1.22.22",
-    "zustand": "^4.5.4"
+    "yarn": "^1.22.22"
   },
   "devDependencies": {
     "@types/lodash": "^4.17.5",
