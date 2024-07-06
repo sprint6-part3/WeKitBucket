@@ -15,6 +15,7 @@ import UserProfileDropdown from "./UserProfileDropdown";
 
 export default function HeaderRight() {
   const { user, userProfile, getUser } = useAuth();
+
   // const { popupToast } = useToast();
 
   const [windowWidth, setWindowWidth] = useState(0);

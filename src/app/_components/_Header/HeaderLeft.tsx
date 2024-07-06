@@ -30,7 +30,7 @@ export default function HeaderLeft() {
   }, [windowWidth]);
 
   return (
-    <div className="flex items-center gap-x-5">
+    <div className="flex items-center gap-x-[40px]">
       <Link href="/" className="">
         <WikidLogo width="107px" height="30px" />
       </Link>
@@ -39,7 +39,7 @@ export default function HeaderLeft() {
           <WikidLogo width="107px" height="30px" />
         </button> */}
       {windowWidth > 450 && (
-        <div className="flex-shrink-1 flex items-center gap-x-5">
+        <div className="flex-shrink-1 flex items-center gap-x-[40px]">
           {segment === "wikilist" ? (
             <Link href="/wikilist" className="w-[60px] text-sm font-normal leading-6 text-primary-green-200">
               위키목록
@@ -49,7 +49,7 @@ export default function HeaderLeft() {
               위키목록
             </Link>
           )}
-          {segment === "boards" ? (
+          {segment === "(boards)" ? (
             <Link href="/boards" className="w-[70px] text-sm font-normal leading-6 text-primary-green-200">
               자유게시판
             </Link>

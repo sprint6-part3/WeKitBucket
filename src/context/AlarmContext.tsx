@@ -11,6 +11,8 @@ interface AlarmContextType {
   getAlarmMessages: () => void;
   removeAlarmMessage: (id: number) => void;
   removeAllMessages: () => void;
+  count: number;
+  hasMore: boolean;
 }
 
 const AlarmContext = createContext<AlarmContextType>({
@@ -18,24 +20,33 @@ const AlarmContext = createContext<AlarmContextType>({
   getAlarmMessages: () => {},
   removeAlarmMessage: () => {},
   removeAllMessages: () => {},
+  count: 0,
+  hasMore: true,
 });
 
 function AlarmProvider({ children }: { children: ReactNode }) {
-  // const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [alarmMessages, setAlarmMessages] = useState<IAlarmMessage[]>([]);
-  const [page, setPage] = useState<number>(1);
+  const [page, setPage] = useState<number>(0);
+  const [count, setCount] = useState<number>(0);
+  const [hasMore, setHasMore] = useState<boolean>(true);
 
   const getAlarmMessages = async () => {
     const { totalCount, list } = await GetNotificationOptions({ page, pageSize: 10 });
-    if (list) setAlarmMessages(() => list);
-    if (totalCount && totalCount / page > page + 1) setPage(() => page + 1);
-    console.log(`${totalCount} ${list} ${alarmMessages}`);
+    console.log(totalCount);
+    console.log(list);
+    if (list?.length === 0) {
+      setHasMore(false);
+    } else if (list) {
+      setAlarmMessages(prev => [...prev, ...list]);
+      setPage(prev => prev + 1);
+    }
+
+    if (totalCount) setCount(() => totalCount);
   };
 
   const removeAlarmMessage = async (id: number) => {
     await deleteNotifications(id);
     setAlarmMessages(alarmMessages.filter(m => m.id !== id));
-    console.log(`${id} ${alarmMessages}`);
   };
 
   const removeAllMessages = () => {
@@ -46,7 +57,7 @@ function AlarmProvider({ children }: { children: ReactNode }) {
   };
 
   const values = useMemo(
-    () => ({ alarmMessages, getAlarmMessages, removeAlarmMessage, removeAllMessages }),
+    () => ({ alarmMessages, getAlarmMessages, removeAlarmMessage, removeAllMessages, count, hasMore }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [alarmMessages],
   );

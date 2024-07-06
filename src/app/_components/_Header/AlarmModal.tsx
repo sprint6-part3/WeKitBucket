@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
@@ -14,12 +14,34 @@ dayjs.locale("ko");
 dayjs.extend(relativeTime);
 
 export default function AlarmModal({ onClose }: { onClose: () => void }) {
-  const { alarmMessages, getAlarmMessages, removeAlarmMessage, removeAllMessages } = useAlarm();
+  const { alarmMessages, removeAlarmMessage, removeAllMessages } = useAlarm();
+  const { getAlarmMessages, hasMore } = useAlarm();
+
+  const elementRef = useRef<HTMLDivElement>(null);
+
+  const onIntersection = (entries: IntersectionObserverEntry[]) => {
+    const firstEntry = entries[0];
+
+    if (firstEntry.isIntersecting && hasMore) {
+      getAlarmMessages();
+    }
+  };
 
   useEffect(() => {
-    getAlarmMessages();
+    const observer = new IntersectionObserver(onIntersection);
+
+    if (elementRef.current) {
+      observer.observe(elementRef.current);
+    }
+
+    return () => {
+      if (elementRef.current) {
+        observer.unobserve(elementRef.current);
+        elementRef.current = null;
+      }
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [hasMore]);
 
   return (
     <ModalComponent>
@@ -55,6 +77,11 @@ export default function AlarmModal({ onClose }: { onClose: () => void }) {
                 </div>
               </li>
             ))}
+            {hasMore && (
+              <div ref={elementRef} style={{ textAlign: "center" }}>
+                Load More Items
+              </div>
+            )}
           </div>
         ) : (
           <NoAlarmMessage />

@@ -63,7 +63,7 @@ export default function UserDropDown() {
                 위키목록
               </Link>
             )}
-            {segment === "boards" ? (
+            {segment === "(boards)" ? (
               <Link onClick={onClose} className="flex items-center text-primary-green-200" href="/boards">
                 자유게시판
               </Link>
