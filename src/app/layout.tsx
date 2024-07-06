@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "@/styles/globals.css";
-import Toast from "@/_components/Toast";
+import Toast from "@/components/Toast";
 import { ToastProvider } from "@/context/ToastContext";
 import { AuthProvider } from "../context/AuthContext";
 import Header from "./_components/Header";

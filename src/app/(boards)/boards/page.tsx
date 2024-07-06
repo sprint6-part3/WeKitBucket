@@ -2,8 +2,8 @@
 
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
-import { ArticleData } from "@/types/articles";
 import getArticles from "@/apis/article/getArticles";
+import { ArticleData } from "@/types/articles.type";
 import BestPostList from "./components/bestArticles/BestPostList";
 import AllArticleSection, { ArticleOption } from "./components/allArticles/AllArticleSection";
 import BestHeader from "./components/bestArticles/BestHeader";

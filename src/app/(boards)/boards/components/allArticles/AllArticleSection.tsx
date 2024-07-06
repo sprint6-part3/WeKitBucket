@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { IArticleProps } from "@/types/articles";
+
+import { IArticleProps } from "@/types/articles.type";
 import getArticles from "@/apis/article/getArticles";
 import SearchForm from "../search/SearchForm";
 import Dropdown, { ISortValue } from "../Dropdown";

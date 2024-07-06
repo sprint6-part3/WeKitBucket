@@ -3,7 +3,7 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import React from "react";
-import { IArticleProps } from "@/types/articles";
+import { IArticleProps } from "@/types/articles.type";
 import BestPostCard from "./BestPostCard";
 
 function BestSwiper({ article }: IArticleProps) {
