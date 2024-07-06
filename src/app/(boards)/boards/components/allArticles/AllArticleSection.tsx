@@ -15,7 +15,7 @@ export interface ArticleOption {
   page: number;
   pageSize: number;
   orderBy: "recent" | "like";
-  keyword: string;
+  keyword?: string;
 }
 
 function AllArticleSection({ article }: IArticleProps) {
