@@ -27,7 +27,7 @@ function Profile({ item }: { item: ProfileCatalog }) {
   return (
     <Link
       href={`/wiki/${code}`}
-      className="flex w-full gap-5 px-5 py-6 shadow-[0_4px_20px_rgba(0,0,0,0.08)] md:gap-8 md:px-9 md:py-6"
+      className="flex w-full gap-5 rounded-xl px-5 py-6 shadow-[0_4px_20px_rgba(0,0,0,0.08)] md:gap-8 md:px-9 md:py-6"
     >
       {!imageError && image ? (
         <div className="relative h-[60px] w-[60px] rounded-full md:h-[85px] md:w-[85px]">
