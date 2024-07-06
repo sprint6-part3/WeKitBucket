@@ -10,7 +10,6 @@ import ExpandIcon from "@/assets/icons/arrowdown.svg";
 import CameraIcon from "@/assets/icons/camera.svg";
 import DefaultProfile from "@/assets/icons/defaultProfile.svg";
 import useImageLoad from "@/hooks/useImageLoad";
-import useIsMobile from "../../_hook/useIsMobile";
 import ProfileInfos from "./ProfileInfos";
 
 export interface UserProfileProps {
