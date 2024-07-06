@@ -1,4 +1,4 @@
-import { ArticleData } from "@/types/articles";
+import { ArticleData } from "@/types/articles.type";
 import fetchInstance from "@/utils/fetchInstance";
 
 const getArticles = async (options?: {

@@ -2,7 +2,8 @@
 
 import { useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { UserInput } from "@/types/auth";
+import { UserInput } from "@/types/auth.type.ts";
+import { useToast } from "@/context/ToastContext";
 import postSignUp from "@/apis/auth/postSignUp.ts";
 import Button from "./Button.tsx";
 import ErrorText from "./ErrorText.tsx";
@@ -13,16 +14,32 @@ const EMAIL_REGEX = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
 
 function SignUpForm() {
   const router = useRouter();
+  const { popupToast } = useToast();
   const {
     register,
+    setError,
     watch,
     handleSubmit,
     formState: { isSubmitting, errors, isValid },
   } = useForm<UserInput>({ mode: "onChange" });
 
   const onSubmit: SubmitHandler<UserInput> = async data => {
-    await postSignUp(data);
-    router.push("/login");
+    try {
+      await postSignUp(data);
+      popupToast({ color: "green", pos: "top", message: "회원가입이 완료되었습니다! 환영합니다.", width: 320 });
+      router.push("/login");
+    } catch (error) {
+      if (error instanceof Error) {
+        if (error?.message === "이미 사용중인 이메일입니다.") {
+          setError("email", {
+            type: "email already in use",
+            message: error?.message,
+          });
+        } else {
+          popupToast({ color: "red", pos: "top", message: "회원가입에 실패했습니다.", width: 320 });
+        }
+      }
+    }
   };
 
   return (

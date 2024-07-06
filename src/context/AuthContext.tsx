@@ -3,8 +3,9 @@
 import { createContext, useContext, useState, ReactNode, useMemo } from "react";
 
 import getUsersMe from "@/apis/user/getUsersMe";
-import { IUser } from "@/types/user";
+
 import getProfilesCode, { RequestProfileCode } from "@/apis/profile/getProfilesCode";
+import { IUser } from "@/types/user.type";
 
 interface AuthContextType {
   user: IUser | null;
@@ -12,7 +13,6 @@ interface AuthContextType {
   getUser: () => void;
 }
 
-// const AuthContext = createContext<AuthContextType | undefined>(undefined);
 const AuthContext = createContext<AuthContextType>({
   user: null,
   userProfile: null,

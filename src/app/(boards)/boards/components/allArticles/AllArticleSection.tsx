@@ -3,7 +3,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { IArticleProps } from "@/types/articles";
+import { IArticleProps } from "@/types/articles.type";
 import getArticles from "@/apis/article/getArticles";
 import SearchForm from "../search/SearchForm";
 import Dropdown, { ISortValue } from "../Dropdown";

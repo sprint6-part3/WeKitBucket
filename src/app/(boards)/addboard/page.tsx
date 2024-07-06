@@ -11,7 +11,7 @@ function AddBoard() {
       <div className="center flex justify-center">
         <Link
           href="/boards"
-          className="mb-[50px] mt-[32px] rounded-[10px] border border-green-500 px-[45px] py-[10px] text-sm-regular-14 text-green-500"
+          className="mb-[50px] mt-[32px] rounded-[10px] border border-primary-green-200 px-[45px] py-[10px] text-sm-regular-14 text-primary-green-200"
         >
           목록으로
         </Link>

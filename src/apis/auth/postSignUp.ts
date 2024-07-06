@@ -1,11 +1,12 @@
 "use server";
 
 import fetchInstance from "@/utils/fetchInstance";
-import { UserInput } from "@/types/auth";
+import { UserInput } from "@/types/auth.type";
+import { RequestUserInfo } from "./postSignIn";
 
 const postSignUp = async (userInput: UserInput) => {
   try {
-    const data = await fetchInstance("auth/signUp", {
+    const data = await fetchInstance<RequestUserInfo>("auth/signUp", {
       method: "POST",
       body: JSON.stringify(userInput),
     });

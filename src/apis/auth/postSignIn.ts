@@ -1,7 +1,8 @@
 "use server";
 
+import { UserInput } from "@/types/auth.type";
 import fetchInstance from "@/utils/fetchInstance";
-import { UserInput } from "@/types/auth";
+
 import { cookies } from "next/headers";
 
 export interface Profile {
