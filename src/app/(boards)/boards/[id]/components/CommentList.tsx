@@ -73,18 +73,16 @@ function CommentList({ list, myId, onChangeApi }: ICommentListProps) {
   return (
     <>
       <li className="flex gap-[15px] rounded-[10px] px-5 py-4 shadow-custom-shadow sm:gap-5 sm:px-[30px] sm:py-5 lg:py-[22px]">
-        <div className="flex h-10 w-10 overflow-hidden rounded-full sm:h-[50px] sm:w-[50px]">
+        <div className="relative flex h-10 w-10 overflow-hidden rounded-full sm:h-[50px] sm:w-[50px]">
           {imageError === false && image ? (
-            <Image src={image} alt={name} style={{ objectFit: "cover" }} />
+            <Image fill sizes="max-width:100%" src={image} alt={name} style={{ objectFit: "cover" }} />
           ) : (
             imageError === true && <DefaultProfile width="100%" height="100%" />
           )}
         </div>
         <div className="flex-1">
           <div className="flex justify-between gap-1">
-            <span className="font-semibold leading-[1.7] text-primary-gray-500 sm:text-lg sm:leading-[1.4]">
-              {name}
-            </span>
+            <h6 className="font-semibold leading-[1.7] text-primary-gray-500 sm:text-lg sm:leading-[1.4]">{name}</h6>
             {isMyComment && (
               <div className="flex gap-[15px] sm:gap-5">
                 <button
@@ -134,7 +132,7 @@ function CommentList({ list, myId, onChangeApi }: ICommentListProps) {
               </div>
             </form>
           ) : (
-            <p className="mb-1 text-sm leading-[1.7] text-primary-gray-500 sm:mb-[10px] sm:mt-[6px] sm:text-base">
+            <p className="mb-1 whitespace-pre-line text-sm leading-[1.7] text-primary-gray-500 sm:mb-[10px] sm:mt-[6px] sm:text-base">
               {content}
             </p>
           )}
