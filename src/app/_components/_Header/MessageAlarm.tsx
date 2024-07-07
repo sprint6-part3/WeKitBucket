@@ -61,7 +61,7 @@ export default function MessageAlarm({
             {alarmMessages.length}
           </div>
         )}
-        <Alarm width={32} height={32} />
+        <Alarm width={24} height={24} />
       </button>
       {toggle && (
         <ul

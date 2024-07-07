@@ -64,11 +64,11 @@ export default function UserProfileDropdown({
     <div className="flex">
       <button onClick={toggleDropdown} onBlur={closeToggle} aria-label="User Profile">
         {/* <Image src={UserProfile} alt="프로필 이미지" /> */}
-        <div className="relative aspect-[1/1] h-[32px] w-[32px] border-none">
+        <div className="relative aspect-[1/1] h-[24px] w-[24px] border-none">
           {imageError === false && profileImage ? (
             <Image fill src={profileImage} alt="프로필 이미지" className="rounded-full" /> // 프로필 있을 경우 보일 이미지
           ) : (
-            imageError === true && <UserProfile width="32" height="32" /> // 프로필 없을 경우 보여주는 디폴트 이미지
+            imageError === true && <UserProfile width="24" height="24" /> // 프로필 없을 경우 보여주는 디폴트 이미지
           )}
         </div>
       </button>
