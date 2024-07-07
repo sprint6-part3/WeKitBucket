@@ -106,8 +106,8 @@ export default function MessageAlarm({
                       .
                     </h2>
                     <button
-                      onClickCapture={() => {
-                        removeAlarmMessage(m.id);
+                      onClick={async () => {
+                        await removeAlarmMessage(m.id);
                       }}
                       className="flex justify-end text-primary-gray-900"
                       name="delete"

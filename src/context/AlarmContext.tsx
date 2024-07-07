@@ -42,6 +42,7 @@ function AlarmProvider({ children }: { children: ReactNode }) {
   const removeAlarmMessage = async (id: number) => {
     await deleteNotifications(id);
     setAlarmMessages(alarmMessages.filter(m => m.id !== id));
+    setCount(prev => prev - 1);
   };
 
   const removeAllMessages = () => {
