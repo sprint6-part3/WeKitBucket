@@ -1,6 +1,11 @@
 import React from "react";
+import { Metadata } from "next";
 import dynamic from "next/dynamic";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "WeKitBucket | 게시물 수정하기",
+};
 
 const AddBoardComponent = dynamic(() => import("../AddBoardComponent"), {
   ssr: false,
