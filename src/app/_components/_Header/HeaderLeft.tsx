@@ -6,10 +6,10 @@ import Link from "next/link";
 import debounce from "@/utils/debounce";
 
 import Logo from "@/assets/icons/logo.svg";
-import { useSelectedLayoutSegment } from "next/navigation";
+import { useSelectedLayoutSegments } from "next/navigation";
 
 export default function HeaderLeft() {
-  const segment = useSelectedLayoutSegment();
+  const segments = useSelectedLayoutSegments();
   const [windowWidth, setWindowWidth] = useState(0);
 
   useEffect(() => {
@@ -40,7 +40,7 @@ export default function HeaderLeft() {
         </button> */}
       {windowWidth > 450 && (
         <div className="flex-shrink-1 flex items-center gap-x-[40px]">
-          {segment === "wikilist" ? (
+          {segments.includes("wikilist") ? (
             <Link href="/wikilist" className="text-sm font-normal leading-6 text-primary-green-200">
               위키목록
             </Link>
@@ -49,7 +49,7 @@ export default function HeaderLeft() {
               위키목록
             </Link>
           )}
-          {segment === "(boards)" ? (
+          {segments.includes("boards") ? (
             <Link href="/boards" className="w-[70px] text-sm font-normal leading-6 text-primary-green-200">
               자유게시판
             </Link>
