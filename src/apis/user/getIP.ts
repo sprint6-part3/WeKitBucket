@@ -1,4 +1,4 @@
-import { ipInfo } from "@/types/user";
+import { ipInfo } from "@/types/user.type";
 
 const getIP = async (): Promise<ipInfo | null> => {
   try {
