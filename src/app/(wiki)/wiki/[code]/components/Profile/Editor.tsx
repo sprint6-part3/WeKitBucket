@@ -2,7 +2,7 @@ import { memo } from "react";
 import { MDEditorProps } from "@uiw/react-md-editor";
 import dynamic from "next/dynamic";
 
-const MDEditor = dynamic<MDEditorProps>(() => import("@uiw/react-md-editor"), {
+const MDEditor = dynamic<MDEditorProps>(() => import("@uiw/react-md-editor").then(mod => mod.default), {
   ssr: false,
 });
 

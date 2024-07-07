@@ -94,18 +94,16 @@ const UserProfile: React.FC<UserProfileProps> = ({
   return (
     <AnimatePresence>
       <section
-        className={`profile-shadow ${editMyPage ? "sm:mt-4 sm:h-[580px] md:h-[580px] lg:h-[354px] xl:flex-col xl:justify-between" : ""} rounded-10 w-full flex-col justify-start bg-white sm:mb-8 xl:relative xl:ml-auto xl:flex xl:h-[671px] xl:w-[320px] xl:p-10 ${isEditing ? "md:mt-[35px]" : "bottom-[130px]"}`}
+        className={`mb-5 w-full rounded-[10px] border shadow-[0px_4px_20px_-24px_black] ${editMyPage ? "sm:mt-4 lg:h-[354px] xl:flex-col xl:justify-between" : ""} flex-col justify-start bg-white sm:mb-8 xl:relative xl:ml-auto xl:flex xl:h-[671px] xl:w-[320px] xl:p-10 ${isEditing ? "md:mt-[35px]" : "bottom-[130px]"}`}
       >
-        <div
-          className={`flex w-full rounded-[10px] border px-5 py-5 shadow-[0px_4px_20px_-24px_black] ${editMyPage ? "flex-col" : ""} relative gap-5 xl:flex-col`}
-        >
+        <div className={`flex w-full px-3 py-3 ${editMyPage ? "flex-col" : ""} relative gap-5 xl:flex-col`}>
           {isEditing && isMyPage ? (
             <>
               <label
                 htmlFor="fileInput"
-                className="center border-grayscale-100 group relative mx-auto size-[71px] cursor-pointer rounded-full border-2 hover:bg-black hover:bg-opacity-20 xl:size-[200px]"
+                className="group relative mx-auto flex size-[71px] cursor-pointer items-center justify-center rounded-full border-2 border-gray-100 hover:bg-black hover:bg-opacity-20 xl:size-[200px]"
               >
-                <CameraIcon className="z-10 text-white group-hover:brightness-50" />
+                <CameraIcon width={20} height={20} className="z-2 text-white group-hover:brightness-50" />
                 {preview && (
                   <Image
                     className="rounded-full group-hover:brightness-50"
@@ -145,7 +143,7 @@ const UserProfile: React.FC<UserProfileProps> = ({
             </div>
           )}
 
-          <motion.div className="xl:mb-[210px]" transition={{ duration: 0.15 }}>
+          <motion.div transition={{ duration: 0.15 }}>
             <div
               className={`${editMyPage ? "flex flex-col gap-y-2 text-center lg:grid lg:grid-cols-2 lg:items-center xl:flex xl:flex-col xl:gap-[18px]" : "flex flex-col gap-2"} overflow-hidden xl:gap-4 xl:py-2 ${editMyPage ? "h-fit" : profileHeight} `}
             >
@@ -163,7 +161,7 @@ const UserProfile: React.FC<UserProfileProps> = ({
             animate={{ rotate: isExpanded ? 180 : 0 }}
             transition={{ duration: 0.2 }}
           >
-            <ExpandIcon />
+            <ExpandIcon width={24} height={24} />
           </motion.div>
         )}
       </section>

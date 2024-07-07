@@ -58,13 +58,13 @@ function QuizModalTemplete({ question, onClose, setEditingMode, code, setAnswer 
         <p className={modalFirstText}>위키를 작성해보세요.</p>
       </div>
 
-      <Label htmlFor="quizInput" className="text-2lg-semibold text-grayscale-500 mb-3" label={question} />
+      <Label htmlFor="quizInput" className="text-grayscale-500 mb-3 text-2lg-semibold" label={question} />
 
       <form onSubmit={handleSubmit(handleSubmitData)}>
         <Input
           type="text"
           id="quizInput"
-          className={`rounded-10 bg-grayscale-100 mb-2 h-[45px] w-full pl-4 ${
+          className={`rounded-10 mb-2 h-[45px] w-full bg-gray-100 pl-4 ${
             errors.securityAnswer ? "bg-secondary-red-100 focus:border-secondary-red-200" : ""
           } outline-none focus:border-2 focus:border-primary-green-200`}
           placeholder="답안을 입력해주세요"

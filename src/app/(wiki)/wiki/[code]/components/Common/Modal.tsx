@@ -38,7 +38,7 @@ const Modal = ({ children, isOpen, onClose }: ModalProps) => {
     <AnimatePresence>
       {isOpen && (
         <motion.aside
-          className="bg-grayscale-500/30 fixed inset-0 z-20 flex items-center justify-center"
+          className="fixed inset-0 z-20 flex items-center justify-center bg-gray-500/30"
           ref={modalRef}
           onClick={handleClickOutside}
           initial={{ opacity: 0 }}
