@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import "swiper/css";
@@ -12,6 +12,8 @@ import "swiper/css/autoplay";
 import Image from "next/image";
 
 function SwiperSection() {
+  const [toggle, setToggle] = useState(false);
+
   return (
     <div className="mt-10 md:mt-20 xl:mt-[160px]">
       <Swiper
@@ -24,6 +26,9 @@ function SwiperSection() {
         slidesPerView={3.5}
         spaceBetween={10}
         centeredSlides
+        onSlideChange={() => {
+          setToggle(!toggle);
+        }}
         breakpoints={{
           768: {
             spaceBetween: 20,
@@ -41,7 +46,9 @@ function SwiperSection() {
       >
         {Array.from({ length: 8 }).map((_, index) => (
           <SwiperSlide key={String(index + 1)}>
-            <div className="aspect-square h-full">
+            <div
+              className={`aspect-square h-full ${index % 2 === (toggle ? 1 : 0) ? "opacity-15" : "opacity-100"} transition-opacity duration-700`}
+            >
               <Image
                 src={`/images/landingSwiper${(index % 4) + 1}.svg`}
                 alt="슬라이드 이미지"
