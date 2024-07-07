@@ -5,7 +5,6 @@ import {
   topSectionItem1,
   landingWrite,
   bottomSectionItem1,
-  bottomSectionItem2,
   bottomSectionItem3,
   backgroundImage,
 } from "@/assets/index";
@@ -60,7 +59,6 @@ function HomePage() {
             친구에게 공유해요
           </p>
         </div>
-        {/* <Image className="mt-[40px] h-auto w-full md:mt-[80px]" src={middleSectionItem1} alt="test" /> */}
         <SwiperSection />
       </section>
       <section className="mx-auto flex h-[512px] w-full flex-col justify-center bg-[#ECF0FA] md:h-[933px] xl:h-[1291px]">
@@ -77,7 +75,7 @@ function HomePage() {
         <div className="mx-auto mt-[40px] flex flex-col gap-[10px] md:mt-[80px] md:gap-[22px] xl:gap-[40px]">
           <Image className="w-[335px] md:w-[648px] xl:w-[924px]" src={bottomSectionItem1} alt="test" />
           <div className="flex gap-[10px] md:gap-[22px] xl:gap-[40px]">
-            <Image className="w-[102px] md:w-[198px] xl:w-[280px]" src={bottomSectionItem2} alt="test" />
+            <div className="w-[102px] overflow-hidden rounded-[20px] bg-[#adedde] bg-[url('/images/loading.gif')] bg-[length:200%] bg-[center_calc(50%-9px)] bg-no-repeat md:w-[198px] md:bg-[center_calc(50%-17px)] xl:w-[280px]" />
             <Image className="w-[223px] md:w-[428px] xl:w-[604px]" src={bottomSectionItem3} alt="test" />
           </div>
         </div>
