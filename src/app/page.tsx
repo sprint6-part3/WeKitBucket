@@ -4,7 +4,6 @@ import {
   landingKeyboard,
   topSectionItem1,
   landingWrite,
-  // middleSectionItem1,
   bottomSectionItem1,
   bottomSectionItem2,
   bottomSectionItem3,
@@ -16,7 +15,10 @@ import SwiperSection from "./_components/Landing/SwiperSection";
 function HomePage() {
   return (
     <div className="flex flex-col">
-      <section className="relative flex h-[1276px] flex-col items-center md:h-[1903px] xl:h-[2205px]">
+      <section
+        className="relative flex h-[1276px] flex-col items-center bg-[#ecf0fa] md:h-[1903px] xl:h-[2205px]"
+        style={{ zIndex: -1 }}
+      >
         <Image
           className="xl: absolute bottom-0 left-0 h-[714px] w-full md:h-[1059px] xl:h-[1412px]"
           src={backgroundImage}
@@ -48,7 +50,7 @@ function HomePage() {
         </div>
       </section>
 
-      <section className="flex h-[374px] w-full flex-col justify-center md:h-[676px] xl:h-[1051px]">
+      <section className="flex h-[374px] w-full flex-col justify-center bg-[#ecf0fa] md:h-[676px] xl:h-[1051px]">
         <div className="mx-auto flex w-[336px] flex-col items-end md:w-[648px] xl:w-[924px]">
           <p className="text-xs-bold-10 text-primary-green-200 md:text-lg-semibold xl:text-xl-bold-32">SHARE</p>
           <p className="item-end xl:2xl-regular-50 mt-[10px] flex flex-col text-sm-regular text-primary-gray-500 md:text-xl-regular-32 xl:text-2xl-regular-50">
