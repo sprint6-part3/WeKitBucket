@@ -38,14 +38,14 @@ const Modal = ({ children, isOpen, onClose }: ModalProps) => {
     <AnimatePresence>
       {isOpen && (
         <motion.aside
-          className="bg-grayscale-500/30 fixed inset-0 z-20 flex items-center justify-center"
+          className="fixed inset-0 z-20 flex items-center justify-center bg-gray-500/30"
           ref={modalRef}
           onClick={handleClickOutside}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
         >
-          <div className="rounded-10 mx-2 flex h-auto w-[335px] flex-col bg-white p-[20px] shadow-lg md:w-[395px]">
+          <div className="mx-2 flex h-auto w-[335px] flex-col rounded-[10px] bg-white p-[20px] shadow-lg md:w-[395px]">
             <div className="flex justify-end">
               <CloseIcon className="cursor-pointer" onClick={onClose} />
             </div>

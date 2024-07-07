@@ -1,21 +1,19 @@
+/* eslint-disable no-use-before-define */
 /* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-debugger */
 
 "use client";
 
-/* eslint-disable no-use-before-define */
 /* eslint-disable no-shadow */
 /* eslint-disable consistent-return */
 import React, { useCallback, useEffect, useState, useRef } from "react";
-import { DetailProfileResponse, CodeType, ChangeProfilesFormData, PingFormData } from "@/types/apiType";
+import { DetailProfileResponse, ChangeProfilesFormData, PingFormData } from "@/types/apiType";
 import throttle from "@/utils/throttle";
 import postImage from "@/apis/image/postImage";
 import patchProfilesCode from "@/apis/profile/patchProfilesCode";
 import postProfilesCodePing from "@/apis/profile/postProfilesCodePing";
 import getProfilesCode from "@/apis/profile/getProfilesCode";
 import getUsersMe from "@/apis/user/getUsersMe";
-import { IUser } from "@/types/user.type";
 import UserProfile from "./components/Profile/UserProfile";
 import CommonButton from "./components/Common/CommonButton";
 import QuizModalTemplete from "./components/Profile/QuizModalTemplete";
@@ -30,6 +28,7 @@ import BasicWikiSection from "./components/Profile/BasicWikiSection";
 import { FORM_DATA_INIT } from "./_constants/formDataInitialValue";
 import ToastSelect from "./components/Common/ToastSelect";
 import useIsMobile from "./_hook/useIsMobile";
+import MessageModal from "./components/Common/MessageModal";
 
 const noContentClassName = `text-lg-regular2 text-grayscale-400`;
 
@@ -39,6 +38,8 @@ function Wiki({ params }: { params: { code: string } }) {
   const [isEditing, setIsEditing] = useState(false);
 
   const { value, handleOff, handleOn } = useBoolean();
+  const { value: confirmModal, handleOff: confirmModalOff, handleOn: confirmModalOn } = useBoolean();
+  const { value: cancelModal, handleOff: cancelModalOff, handleOn: cancelModalOn } = useBoolean();
   const [userProfile, setUserProfile] = useState<DetailProfileResponse | undefined>();
   const [userData, setUserData] = useState<string | undefined>();
 
@@ -121,9 +122,13 @@ function Wiki({ params }: { params: { code: string } }) {
 
   const handleCancelClick = () => {
     setIsEditing(false);
+    setRenewalTime(!renewalTime);
+    cancelModalOff();
+    updateFormData();
   };
 
   const handleSaveClick = async () => {
+    confirmModalOff();
     let updatedFormData = { ...formData };
 
     if (formData.image instanceof File) {
@@ -143,7 +148,7 @@ function Wiki({ params }: { params: { code: string } }) {
     setIsEditing(false);
   };
 
-  useEffect(() => {
+  const updateFormData = useCallback(() => {
     if (userProfile) {
       const { nationality, family, bloodType, nickname, birthday, sns, job, mbti, city, image, content } = userProfile;
 
@@ -165,6 +170,10 @@ function Wiki({ params }: { params: { code: string } }) {
       setFormData(newFormData);
     }
   }, [userProfile]);
+
+  useEffect(() => {
+    updateFormData();
+  }, [updateFormData]);
 
   useEffect(() => {
     if (code) {
@@ -202,9 +211,9 @@ function Wiki({ params }: { params: { code: string } }) {
   }
 
   return (
-    <div className="m-auto max-w-[1350px] overflow-auto">
+    <div className="px-5 py-5">
       <title>{`WeKitBucket | ${userProfile?.name}`}</title>
-      <div className="center grid flex-col gap-3 px-6 py-5 sm:flex-col sm:pt-10 md:px-14 xl:relative xl:py-5">
+      <div className="center m-auto grid max-h-[75dvh] w-full max-w-[1350px] flex-col overflow-auto px-5 pt-5 sm:flex-col sm:pt-10 md:max-h-[1130px] md:px-14 xl:relative xl:max-h-[1080px] xl:py-5">
         <StyledToastContainer limit={1} />
         {isEditing || (
           <BasicWikiSection name={userProfile.name} content={userProfile.content} onClick={handleOn} url={URL} />
@@ -221,7 +230,7 @@ function Wiki({ params }: { params: { code: string } }) {
 
         <div className={contentClassName}>
           {!userProfile.content && !isEditing && (
-            <div className="rounded-10 bg-grayscale-100 flex h-[184px] w-full flex-col items-center justify-center md:mt-5 md:h-[192px]">
+            <div className="flex h-[184px] w-full flex-col items-center justify-center rounded-[10px] bg-gray-100 md:mt-5 md:h-[192px]">
               <p className={noContentClassName}>아직 작성된 내용이 없네요.</p>
               <p className={noContentClassName}>위키에 참여해보세요!</p>
               <CommonButton variant="primary" className="mt-4" onClick={handleWikiButtonClick}>
@@ -234,7 +243,7 @@ function Wiki({ params }: { params: { code: string } }) {
               preview="live"
               value={md}
               onChange={handleEditorChange}
-              height={740}
+              height={650}
               hideToolbar={isMobile && true}
               autoFocus
             />
@@ -244,11 +253,11 @@ function Wiki({ params }: { params: { code: string } }) {
         </div>
 
         {isEditing && (
-          <div className="ml-auto flex gap-3 sm:absolute sm:right-[60px] sm:top-[75px] md:absolute md:right-[90px] md:top-[75px] lg:top-[95px] xl:mt-[30px]">
-            <CommonButton variant="secondary" onClick={handleCancelClick} className="bg-white">
+          <div className="ml-auto mt-2 flex gap-3 sm:absolute sm:right-[60px] sm:top-[75px] md:absolute md:right-[90px] md:top-[75px] lg:top-[95px] xl:mt-[640px]">
+            <CommonButton variant="secondary" onClick={cancelModalOn} className="bg-white">
               취소
             </CommonButton>
-            <CommonButton variant="primary" onClick={handleSaveClick}>
+            <CommonButton variant="primary" onClick={confirmModalOn}>
               저장
             </CommonButton>
           </div>
@@ -263,6 +272,20 @@ function Wiki({ params }: { params: { code: string } }) {
             setAnswer={setAnswerValue}
           />
         </Modal>
+        <MessageModal
+          title="저장"
+          message="저장하나요?"
+          isOpen={confirmModal}
+          onCancel={confirmModalOff}
+          onConfirm={handleSaveClick}
+        />
+        <MessageModal
+          title="취소"
+          message="취소하나요?"
+          isOpen={cancelModal}
+          onCancel={cancelModalOff}
+          onConfirm={handleCancelClick}
+        />
       </div>
     </div>
   );
