@@ -2,7 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import { useRouter, useSelectedLayoutSegment } from "next/navigation";
+import { useRouter, useSelectedLayoutSegments } from "next/navigation";
 
 import postSignout from "@/apis/auth/postSignout";
 import { useAuth } from "@/context/AuthContext";
@@ -20,7 +20,7 @@ export default function UserDropDown() {
   const { user, getUser } = useAuth();
   const router = useRouter();
 
-  const segment = useSelectedLayoutSegment();
+  const segments = useSelectedLayoutSegments();
 
   const onOpen = () => {
     setIsOpen();
@@ -60,7 +60,7 @@ export default function UserDropDown() {
           </div>
           <hr className="h-[1px] w-[95dvw] px-[3px]" />
           <div className="mt-2.5 flex flex-col items-center gap-y-10 rounded-lg bg-white pb-2.5 pt-2.5">
-            {segment === "wikilist" ? (
+            {segments.includes("wikilist") ? (
               <Link onClick={onClose} href="/wikilist" className="flex items-center text-primary-green-200">
                 위키목록
               </Link>
@@ -69,7 +69,7 @@ export default function UserDropDown() {
                 위키목록
               </Link>
             )}
-            {segment === "(boards)" ? (
+            {segments.includes("boards") ? (
               <Link onClick={onClose} className="flex items-center text-primary-green-200" href="/boards">
                 자유게시판
               </Link>
