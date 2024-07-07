@@ -1,6 +1,8 @@
 "use client";
 
 import { SubmitHandler, useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
+import { useToast } from "@/context/ToastContext.tsx";
 import patchUsersMe from "@/apis/user/patchUsersMe.ts";
 import Button from "./Button.tsx";
 import ErrorText from "./ErrorText.tsx";
@@ -21,8 +23,19 @@ function PasswordChangeForm() {
     formState: { isSubmitting, errors, isValid },
   } = useForm<PassWordChangeValue>({ mode: "onChange" });
 
+  const { popupToast } = useToast();
+  const router = useRouter();
+
   const onSubmit: SubmitHandler<PassWordChangeValue> = async data => {
-    await patchUsersMe(data);
+    try {
+      await patchUsersMe(data);
+      popupToast({ color: "green", pos: "top", message: "비밀번호가 정상적으로 변경되었습니다.", width: 860 });
+      setTimeout(() => {
+        router.push("/");
+      }, 3000);
+    } catch (error) {
+      popupToast({ color: "red", pos: "top", message: "비밀번호 변경에 실패하였습니다.", width: 860 });
+    }
   };
 
   return (

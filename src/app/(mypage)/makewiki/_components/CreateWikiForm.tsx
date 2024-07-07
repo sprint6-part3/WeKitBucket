@@ -1,6 +1,7 @@
 "use client";
 
 import { SubmitHandler, useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
 import postProfiles from "@/apis/profile/postProfiles.ts";
 import Button from "./Button.tsx";
 import ErrorText from "./ErrorText.tsx";
@@ -18,9 +19,11 @@ function CreateWikiForm() {
     handleSubmit,
     formState: { isSubmitting, errors, isValid },
   } = useForm<WikiCreateValue>({ mode: "onChange" });
+  const router = useRouter();
 
   const onSubmit: SubmitHandler<WikiCreateValue> = async data => {
     await postProfiles(data);
+    router.push("/wikilist");
   };
 
   return (

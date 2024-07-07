@@ -274,14 +274,14 @@ function Wiki({ params }: { params: { code: string } }) {
         </Modal>
         <MessageModal
           title="저장"
-          message="저장하나요?"
+          message="저장시겠습니까?"
           isOpen={confirmModal}
           onCancel={confirmModalOff}
           onConfirm={handleSaveClick}
         />
         <MessageModal
           title="취소"
-          message="취소하나요?"
+          message="취소하시겠습니까?"
           isOpen={cancelModal}
           onCancel={cancelModalOff}
           onConfirm={handleCancelClick}

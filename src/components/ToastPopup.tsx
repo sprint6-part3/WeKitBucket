@@ -21,7 +21,7 @@ export default function ToastPopup({
         initial={{ opacity: 0, y: -100 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: 100 }}
-        className="absolute top-10 flex h-[100dvh] w-[100dvw] justify-center py-[30px] xl:py-[50px]"
+        className="absolute top-10 flex h-[99dvh] w-[99dvw] justify-center py-[30px] xl:py-[50px]"
       >
         <div
           className={`absolute flex h-[42px] w-[${width}px] max-w-[860px] items-center justify-start gap-x-[15px] rounded-[1rem] px-[15px] py-[12px] md:h-[50px] md:px-[20px] md:py-[13px] ${`bg-primary-${color}-200`} shadow-[0px_2px_8px_rgba(0,0,0,0.25)] backdrop-opacity-5 ${
@@ -31,7 +31,7 @@ export default function ToastPopup({
           {color === "red" && <AlertIcon width={20} height={20} />}
           {color === "green" && <CheckIcon width={20} height={20} />}
           {color === "gray" && <InfoIcon width={20} height={20} />}
-          <p className="text-body text-sm font-normal leading-6 text-primary-black-200">{message}</p>
+          <p className={`text-body text-sm font-normal leading-6 text-primary-${color}-300`}>{message}</p>
         </div>
       </motion.aside>
     </AnimatePresence>,

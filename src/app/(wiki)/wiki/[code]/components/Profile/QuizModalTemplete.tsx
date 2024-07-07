@@ -58,7 +58,7 @@ function QuizModalTemplete({ question, onClose, setEditingMode, code, setAnswer 
         <p className={modalFirstText}>위키를 작성해보세요.</p>
       </div>
 
-      <Label htmlFor="quizInput" className="text-grayscale-500 mb-3 text-2lg-semibold" label={question} />
+      <Label htmlFor="quizInput" className="text-grayscale-500 text-2lg-semibold mb-3" label={question} />
 
       <form onSubmit={handleSubmit(handleSubmitData)}>
         <Input
@@ -79,8 +79,8 @@ function QuizModalTemplete({ question, onClose, setEditingMode, code, setAnswer 
       </form>
 
       <div className="mx-auto mt-5 text-center">
-        <p className={modalSecondText}>위키비키는 지인들과 함께하는 즐거운 공간입니다.</p>
-        <p className={modalSecondText}>지인에게 상처를 주지 않도록 작성해주세요.</p>
+        <p className={modalSecondText}>위킷버킷은 사용자의 의견을 존중합니다.</p>
+        <p className={modalSecondText}>사용자 간의 에티킷을 지킵시다.</p>
       </div>
     </>
   );

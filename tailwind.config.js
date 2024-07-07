@@ -104,6 +104,7 @@ module.exports = {
         "primary-red": {
           100: "#FBEBED",
           200: "#D14343",
+          300: "#cf0422",
         },
         "primary-purple": {
           100: "#8E66FF",
