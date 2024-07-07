@@ -1,6 +1,11 @@
 import React from "react";
+import { Metadata } from "next";
 import Link from "next/link";
 import SignUpForm from "./_components/SignUpForm.tsx";
+
+export const metadata: Metadata = {
+  title: "WeKitBucket | 회원가입",
+};
 
 function SignUp() {
   return (

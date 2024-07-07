@@ -1,5 +1,10 @@
+import type { Metadata } from "next";
 import PasswordChangeForm from "./components/PasswordChangeForm.tsx";
 import CreateWikiForm from "./components/CreateWikiForm.tsx";
+
+export const metadata: Metadata = {
+  title: "WeKitBucket | 마이페이지",
+};
 
 function MyPage() {
   return (

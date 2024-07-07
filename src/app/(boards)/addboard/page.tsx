@@ -1,6 +1,11 @@
 import React from "react";
+import { Metadata } from "next";
 import Link from "next/link";
 import AddBoardComponent from "./AddBoardComponent";
+
+export const metadata: Metadata = {
+  title: "WeKitBucket | 게시물 등록하기",
+};
 
 function AddBoard() {
   return (

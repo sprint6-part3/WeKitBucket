@@ -32,7 +32,7 @@ export default function HeaderLeft() {
   return (
     <div className="flex items-center gap-x-5">
       <Link href="/" className="">
-        <Logo className="aspect-[171/30] w-[130px]" width="auto" height="auto" />
+        <Logo width="130" height="23" />
       </Link>
 
       {/* <button onClick={dummyData}>
