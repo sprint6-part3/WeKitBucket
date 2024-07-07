@@ -1,10 +1,10 @@
 "use client";
 
 /* eslint-disable no-alert */
+/* eslint-disable react/no-danger */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/control-has-associated-label */
-import React, { useEffect, useState } from "react";
-import NextImage from "next/image";
+import React, { useState } from "react";
 import Link from "next/link";
 import EditIcon from "@/assets/icons/pencilIcon.svg";
 import DeleteIcon from "@/assets/icons/trashIcon.svg";
@@ -14,18 +14,19 @@ import deleteArticlesLike, { ArticleDetail } from "@/apis/article/deleteArticles
 import dayjs from "dayjs";
 import { useRouter } from "next/navigation";
 import deleteArticlesId from "@/apis/article/deleteArticlesId";
-import CommonModal from "@/_components/CommonModal";
+import CommonModal from "@/components/CommonModal";
 import DeleteModal from "./DeleteModal";
+import Content from "./Content";
 
 interface IArticleDetailProps {
   article: ArticleDetail;
   articleId: number;
+  content: string | Promise<string>;
   myId: number | undefined;
 }
 
-function DetailSection({ article, articleId, myId }: IArticleDetailProps) {
+function DetailSection({ article, articleId, content, myId }: IArticleDetailProps) {
   const router = useRouter();
-  const [imgError, setImgError] = useState<boolean | undefined>();
   const [options, setOptions] = useState<ArticleDetail>(article);
   const [viewModal, setViewModal] = useState(false);
   const formattedDate = dayjs(options.createdAt).format("YYYY.MM.DD.");
@@ -42,7 +43,6 @@ function DetailSection({ article, articleId, myId }: IArticleDetailProps) {
     } catch (error) {
       if (error instanceof Error) {
         if (error?.message === "Error: 게시글을 찾을 수 없습니다.") {
-          console.log(error.message);
           router.push("/boards");
         } else {
           console.error("Failed to fetch Delete Articles: ", error);
@@ -54,6 +54,9 @@ function DetailSection({ article, articleId, myId }: IArticleDetailProps) {
 
   const handleClickLikeButton = async () => {
     try {
+      if (!myId) {
+        throw new Error("User is not authenticated");
+      }
       let res;
       if (options.isLiked) {
         res = await deleteArticlesLike(articleId);
@@ -66,7 +69,7 @@ function DetailSection({ article, articleId, myId }: IArticleDetailProps) {
       }));
     } catch (error) {
       if (error instanceof Error) {
-        if (error?.message === "Unauthorized: No refresh token available") {
+        if (error?.message === "User is not authenticated") {
           alert("로그인이 필요합니다.");
           router.push("/login");
         } else {
@@ -75,19 +78,6 @@ function DetailSection({ article, articleId, myId }: IArticleDetailProps) {
       }
     }
   };
-
-  useEffect(() => {
-    const imgClass = new Image();
-    imgClass.src = options.image ?? "";
-
-    imgClass.onload = () => {
-      setImgError(false);
-    };
-
-    imgClass.onerror = () => {
-      setImgError(true);
-    };
-  }, [options.image]);
 
   return (
     <>
@@ -134,7 +124,7 @@ function DetailSection({ article, articleId, myId }: IArticleDetailProps) {
             <div className="flex items-center gap-1">
               <button
                 onClick={handleClickLikeButton}
-                className="flex h-4 w-4 items-center justify-center px-[1.6px] py-[2.5px] sm:h-[18px] sm:w-[18px] sm:px-[1.87px] sm:pb-[3.22px] sm:pt-[2.36px]"
+                className="flex h-4 w-4 items-center justify-center px-[1.5px] py-[2.5px] sm:h-[18px] sm:w-[18px] sm:px-[1.87px] sm:pb-[3.22px] sm:pt-[2.36px]"
               >
                 {options.isLiked ? (
                   <LikeIcon width="100%" height="100%" fill="#4cbfa4" />
@@ -149,12 +139,9 @@ function DetailSection({ article, articleId, myId }: IArticleDetailProps) {
           </div>
         </div>
         <div className="grid gap-[15px] pt-[15px] sm:gap-5 sm:pt-[30px]">
-          {options.image && imgError === false && (
-            <div>
-              <NextImage width={500} height={100} src={options.image} alt={options.title} />
-            </div>
-          )}
-          <div className="text-sm leading-[1.7] text-primary-gray-500 sm:text-base">{options.content}</div>
+          <div className="text-sm leading-[1.7] text-primary-gray-500 sm:text-base">
+            <Content content={content} />
+          </div>
         </div>
       </section>
       <CommonModal active={viewModal} close={handleViewModal}>

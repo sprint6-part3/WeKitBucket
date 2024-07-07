@@ -7,7 +7,13 @@ import React, { useState } from "react";
 
 export const LIMIT = 500;
 
-function CommentForm({ articleId, onCommentSubmitted }: { articleId: number; onCommentSubmitted: () => void }) {
+interface CommentFormProps {
+  articleId: number;
+  onCommentSubmitted: () => void;
+  myId: number | undefined;
+}
+
+function CommentForm({ articleId, onCommentSubmitted, myId }: CommentFormProps) {
   const router = useRouter();
   const [commentValue, setCommentValue] = useState("");
   const [commentCount, setCommentCount] = useState(0);
@@ -15,11 +21,14 @@ function CommentForm({ articleId, onCommentSubmitted }: { articleId: number; onC
   const handleSubmitComment: React.FormEventHandler<HTMLFormElement> = async e => {
     e.preventDefault();
     try {
+      if (!myId) {
+        throw new Error("User is not authenticated");
+      }
       await postComment(articleId, commentValue);
       onCommentSubmitted();
     } catch (error) {
       if (error instanceof Error) {
-        if (error?.message === "Unauthorized: No refresh token available") {
+        if (error?.message === "User is not authenticated") {
           alert("로그인이 필요합니다.");
           router.push("/login");
         } else {
@@ -50,7 +59,7 @@ function CommentForm({ articleId, onCommentSubmitted }: { articleId: number; onC
         placeholder="댓글을 입력해 주세요"
         className="w-full resize-none bg-transparent text-sm leading-[1.7] text-primary-gray-500 outline-none placeholder:text-primary-gray-400"
       />
-      <div className="flex items-end justify-between gap-1">
+      <div className="flex flex-wrap items-end justify-between gap-1">
         <p className="text-sm leading-[1.7] text-primary-gray-300">
           <span>{commentCount}</span> / <span>{LIMIT}</span>
         </p>

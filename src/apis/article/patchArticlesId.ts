@@ -5,15 +5,18 @@ import { ArticleInput } from "./postArticles";
 
 const patchArticlesId = async (articleInput: ArticleInput, articleId: number) => {
   try {
+    const { image, ...restInput } = articleInput;
+    const body = image ? articleInput : restInput;
+
     await fetchInstance(`articles/${articleId}`, {
       method: "PATCH",
-      body: JSON.stringify(articleInput),
+      body: JSON.stringify(body),
     });
   } catch (error) {
     if (error instanceof Error) {
       throw new Error(error.message || "Patch article failed");
     } else {
-      throw new Error("patch article failed");
+      throw new Error("Patch article failed");
     }
   }
 };

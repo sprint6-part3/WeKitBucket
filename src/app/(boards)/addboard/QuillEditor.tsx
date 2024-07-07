@@ -1,13 +1,14 @@
 "use client";
 
 /* eslint-disable react-hooks/exhaustive-deps */
+
 import React, { useMemo, useRef, useState } from "react";
 import ReactQuill, { UnprivilegedEditor, Quill } from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import CameraIcon from "@/assets/icons/camera.svg";
 import Image from "next/image";
 import postImage from "@/apis/image/postImage";
-import CommonModal from "@/_components/CommonModal";
+import CommonModal from "@/components/CommonModal";
 import { ImageActions } from "@xeger/quill-image-actions";
 
 Quill.register("modules/imageActions", ImageActions);
@@ -45,7 +46,7 @@ function QuillEditor({ content, setContent, setImageUrl }: QuillEditorProps) {
       const editor = QuillRef.current?.getEditor();
       if (file && editor) {
         const response = await postImage(file);
-        const imageUrl = response.url; // 응답에서 URL 추출
+        const imageUrl = response.url;
         const range = editor.getSelection(true);
         editor.insertEmbed(range.index, "image", imageUrl);
         editor.setSelection(range.index + 1, 0);
@@ -118,7 +119,11 @@ function QuillEditor({ content, setContent, setImageUrl }: QuillEditorProps) {
           ) : (
             <div className="relative flex h-40 items-center justify-center rounded-[10px] bg-primary-gray-100">
               <CameraIcon width="28.5" height="25.5" />
-              <input type="file" onChange={handleChangeImage} className="absolute h-full w-full opacity-0" />
+              <input
+                type="file"
+                onChange={handleChangeImage}
+                className="absolute h-full w-full cursor-pointer opacity-0"
+              />
             </div>
           )}
 
@@ -126,7 +131,11 @@ function QuillEditor({ content, setContent, setImageUrl }: QuillEditorProps) {
             type="submit"
             onClick={handleSubmit}
             disabled={disabled}
-            className={`ml-auto h-10 w-[90px] rounded-[10px] ${!disabled ? "bg-primary-green-200" : "bg-primary-gray-300"} text-sm font-semibold leading-[1.7] text-white`}
+            className={`ml-auto h-10 w-[90px] rounded-[10px] ${
+              !disabled
+                ? "cursor-pointer bg-primary-green-200 hover:bg-primary-green-300"
+                : "cursor-not-allowed bg-primary-gray-300"
+            } text-sm font-semibold leading-[1.7] text-white`}
           >
             삽입하기
           </button>

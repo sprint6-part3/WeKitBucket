@@ -4,7 +4,7 @@ import fetchInstance from "@/utils/fetchInstance";
 
 export interface ProfilesInput {
   securityAnswer?: string;
-  securityQuestion: string;
+  securityQuestion?: string;
 }
 
 const postProfiles = async (profilesInput: ProfilesInput) => {

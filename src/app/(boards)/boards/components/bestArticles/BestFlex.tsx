@@ -1,7 +1,8 @@
 "use client";
 
 import React from "react";
-import { IArticleProps } from "@/types/articles";
+
+import { IArticleProps } from "@/types/articles.type";
 import BestPostCard from "./BestPostCard";
 
 function BestFlex({ article }: IArticleProps) {

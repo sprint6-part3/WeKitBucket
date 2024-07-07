@@ -1,6 +1,6 @@
 "use server";
 
-import { IUser } from "@/types/user";
+import { IUser } from "@/types/user.type";
 import fetchInstance from "@/utils/fetchInstance";
 import { cookies } from "next/headers";
 

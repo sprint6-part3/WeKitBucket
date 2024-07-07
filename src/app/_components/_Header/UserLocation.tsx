@@ -1,7 +1,7 @@
 "use client";
 
 import getIP from "@/apis/user/getIP";
-import { ipInfo } from "@/types/user";
+import { ipInfo } from "@/types/user.type";
 import React, { useEffect, useState } from "react";
 
 export default function UserLocation() {

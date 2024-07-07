@@ -2,9 +2,10 @@
 
 import React from "react";
 import LikeIcon from "@/assets/icons/like.svg";
-import { ArticleList } from "@/types/articles";
+
 import Link from "next/link";
 import dayjs from "dayjs";
+import { ArticleList } from "@/types/articles.type";
 
 export interface IPostProps {
   post: ArticleList;
@@ -35,7 +36,7 @@ function PostList({ post }: IPostProps) {
           </p>
         </div>
         <div className="flex items-center gap-[7px] sm:hidden">
-          <LikeIcon width="14.25" height="12.42" />
+          <LikeIcon width="14.25" height="12.42" fill="#8f95b2" />
           <span className="leading-[1.7] text-primary-gray-400 sm:text-primary-gray-500">{likeCount}</span>
         </div>
       </div>
