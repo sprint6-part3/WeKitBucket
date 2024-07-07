@@ -26,7 +26,7 @@ function Form() {
     register,
     setError,
     handleSubmit,
-    formState: { errors },
+    formState: { isSubmitting, errors, isValid },
   } = useForm<ISignInValue>({ mode: "onChange" });
 
   const router = useRouter();
@@ -94,7 +94,9 @@ function Form() {
           {errors.password && <ErrorText>{errors.password?.message}</ErrorText>}
         </div>
       </div>
-      <Button type="submit">로그인</Button>
+      <Button disabled={!isValid || isSubmitting} type="submit">
+        로그인
+      </Button>
     </form>
   );
 }
