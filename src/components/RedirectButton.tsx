@@ -11,7 +11,7 @@ interface RedirectButtonProps {
 function RedirectButton({ text, variant }: RedirectButtonProps) {
   const { user, userProfile } = useAuth();
 
-  const userProfileCheck = `${userProfile ? `/wiki/${userProfile.code}` : "/not-found-code"}`;
+  const userProfileCheck = `${userProfile ? `/wiki/${userProfile.code}` : "/makewiki"}`;
 
   const buttonClass =
     variant === "primary"

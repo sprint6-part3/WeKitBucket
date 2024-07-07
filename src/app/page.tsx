@@ -16,7 +16,7 @@ function HomePage() {
     <div className="flex flex-col">
       <section
         className="relative flex h-[1276px] flex-col items-center bg-[#ecf0fa] md:h-[1903px] xl:h-[2205px]"
-        style={{ zIndex: -1 }}
+        // style={{ zIndex: -1 }}
       >
         <Image
           className="xl: absolute bottom-0 left-0 h-[714px] w-full md:h-[1059px] xl:h-[1412px]"

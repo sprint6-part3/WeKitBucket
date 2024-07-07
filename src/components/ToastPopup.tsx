@@ -31,7 +31,7 @@ export default function ToastPopup({
           {color === "red" && <AlertIcon width={20} height={20} />}
           {color === "green" && <CheckIcon width={20} height={20} />}
           {color === "gray" && <InfoIcon width={20} height={20} />}
-          <p className={`text-Body text-sm font-normal leading-6 text-primary-${color}-100`}>{message}</p>
+          <p className="text-body text-sm font-normal leading-6 text-primary-black-200">{message}</p>
         </div>
       </motion.aside>
     </AnimatePresence>,

@@ -14,5 +14,11 @@ export default function UserLocation() {
     getLocale();
   }, []);
 
-  return <div>{info && <h3>{`현재 접속 IP : ${info?.query}`}</h3>}</div>;
+  return (
+    <div>
+      {info && (
+        <h3 className="text-sm font-normal leading-6 text-primary-gray-500">{`현재 접속 IP : ${info?.query}`}</h3>
+      )}
+    </div>
+  );
 }
