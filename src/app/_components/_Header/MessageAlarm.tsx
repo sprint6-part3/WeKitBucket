@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect } from "react";
+import { useInView } from "react-intersection-observer";
 
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
@@ -27,8 +28,10 @@ export default function MessageAlarm({
 }) {
   // const { alarmMessages, getAlarmMessages, removeAlarmMessage, removeAllMessages } = useAlarm();
 
-  const { alarmMessages, getAlarmMessages, removeAlarmMessage, removeAllMessages } = useAlarm();
+  const { getAlarmMessages, count, alarmMessages, removeAlarmMessage, removeAllMessages } = useAlarm();
   const [isShowCount, setIsShowCount] = useToggle(true);
+  const [hasMore, setHasMore] = useToggle(true);
+  const { ref, inView } = useInView();
 
   const closeToggle = () => {
     if (toggle) {
@@ -43,9 +46,18 @@ export default function MessageAlarm({
   };
 
   useEffect(() => {
-    getAlarmMessages();
+    if (alarmMessages.length < 10) getAlarmMessages();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (inView) {
+      getAlarmMessages();
+    } else if (alarmMessages.length === count) setHasMore();
+
+    console.log(alarmMessages.length);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [inView]);
 
   return (
     <div className="relative">
@@ -56,9 +68,9 @@ export default function MessageAlarm({
         className="relative flex"
         name="alarmModal"
       >
-        {isShowCount && alarmMessages.length > 0 && (
+        {isShowCount && count > 0 && (
           <div className="absolute bottom-auto top-[1%] h-[16px] w-[16px] rounded-[50%] bg-[red] text-center text-[8px] leading-[16px] text-[white]">
-            {alarmMessages.length}
+            {count}
           </div>
         )}
         <Alarm width={24} height={24} />
@@ -73,23 +85,17 @@ export default function MessageAlarm({
           }}
         >
           <div className="space-between sticky top-0 flex pb-[10px]">
-            <h3 className="flex flex-1 justify-start text-xl font-bold leading-7 text-primary-black-200">{`알림 ${alarmMessages.length}개`}</h3>
+            {/* <h3 className="flex flex-1 justify-start text-xl font-bold leading-7 text-primary-black-200">{`알림 ${count}개`}</h3> */}
+            <h3 className="flex flex-1 justify-start text-xl font-bold leading-7 text-primary-black-200">{`알림 ${count}개`}</h3>
             <button onClickCapture={closeToggle} className="text-xl font-bold leading-7 text-primary-black-200">
               X
             </button>
           </div>
-          {/* {alarmMessages.length > 0 && (
-            <div className="flex">
-              <button onClickCapture={removeAllMessages} name="delete">
-                전체 삭제
-              </button>
-            </div>
-          )} */}
           <div className="flex">
             <button onClick={removeAllMessages}>전체 삭제</button>
           </div>
-          {alarmMessages.length > 0 ? (
-            <div className="flex max-h-[400px] w-[3] flex-col gap-y-5 overflow-y-scroll scroll-smooth px-[5px] py-[5px]">
+          {count > 0 ? (
+            <div className="[&::-webkit-scrollbar]:none flex max-h-[400px] w-[3] flex-col gap-y-5 overflow-y-scroll scroll-smooth px-[5px] py-[5px]">
               {alarmMessages.map(m => (
                 <li
                   key={m.id}
@@ -119,6 +125,7 @@ export default function MessageAlarm({
                   </div>
                 </li>
               ))}
+              {hasMore && <div ref={ref}>loading ...</div>}
             </div>
           ) : (
             <NoAlarmMessage />

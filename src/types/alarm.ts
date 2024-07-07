@@ -5,6 +5,6 @@ export interface IAlarmMessage {
 }
 
 export interface RequestNotifications {
-  list?: IAlarmMessage[];
+  list?: Array<IAlarmMessage>;
   totalCount?: number;
 }
