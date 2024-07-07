@@ -1,9 +1,7 @@
 "use client";
 
 import { createContext, useContext, useState, ReactNode, useMemo } from "react";
-
 import getUsersMe from "@/apis/user/getUsersMe";
-
 import getProfilesCode, { RequestProfileCode } from "@/apis/profile/getProfilesCode";
 import { IUser } from "@/types/user.type";
 
@@ -37,11 +35,11 @@ function AuthProvider({ children }: { children: ReactNode }) {
 
   const values = useMemo(() => {
     const getUser = async () => {
-      const newUser = await getUsersMe();
-      if (newUser) {
+      try {
+        const newUser = await getUsersMe();
         setUser(() => newUser);
         await getUserProfile(newUser);
-      } else {
+      } catch (error) {
         setUser(() => null);
       }
     };
