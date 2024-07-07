@@ -203,6 +203,7 @@ function Wiki({ params }: { params: { code: string } }) {
 
   return (
     <div className="m-auto max-w-[1350px] overflow-auto">
+      <title>{`WeKitBucket | ${userProfile?.name}`}</title>
       <div className="center grid flex-col gap-3 px-6 py-5 sm:flex-col sm:pt-10 md:px-14 xl:relative xl:py-5">
         <StyledToastContainer limit={1} />
         {isEditing || (

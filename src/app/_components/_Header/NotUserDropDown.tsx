@@ -26,7 +26,7 @@ export default function NotUserDropDown() {
     <div>
       <button onClick={onOpen} aria-label="User Profile">
         {/* <Image src={UserProfile} alt="프로필 이미지" /> */}
-        <HamburgerMenu width="32" height="32" />
+        <HamburgerMenu width="17" height="11" />
       </button>
 
       {isOpen && (

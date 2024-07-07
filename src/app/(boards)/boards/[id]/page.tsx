@@ -49,6 +49,7 @@ function PostDetail({ params }: { params: { id: number } }) {
       {articleDetail && (
         <DetailSection article={articleDetail} content={articleContent} articleId={id} myId={user?.id} />
       )}
+      <title>{`WiKitBucket | ${articleDetail?.title || "제목없음"}`}</title>
       <Link href="/boards" className="mx-auto">
         <button className="w-[140px] rounded-[10px] border border-solid border-primary-green-200 py-[10.5px] text-center text-sm font-semibold leading-[1.7] text-primary-green-200">
           목록으로

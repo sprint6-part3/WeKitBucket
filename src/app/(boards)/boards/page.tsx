@@ -41,6 +41,7 @@ function Board() {
 
   return (
     <div className="mx-auto mb-[57px] mt-10 grid gap-5">
+      <title>WeKitBucket | 자유게시판</title>
       {/* 베스트 게시글 */}
       <section className="grid gap-5">
         <BestHeader />

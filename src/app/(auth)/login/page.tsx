@@ -1,6 +1,11 @@
 import React from "react";
+import { Metadata } from "next";
 import Link from "next/link";
 import Form from "./_components/Form.tsx";
+
+export const metadata: Metadata = {
+  title: "WeKitBucket | 로그인",
+};
 
 function Login() {
   return (

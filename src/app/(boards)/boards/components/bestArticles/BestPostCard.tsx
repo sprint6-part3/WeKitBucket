@@ -24,7 +24,7 @@ function BestPostCard({ post }: IPostProps) {
         <div className="flex-1">
           {imageError === false && image ? (
             <div className="relative flex h-full items-center justify-center">
-              <NextImage src={image} alt={title} fill priority style={{ objectFit: "cover" }} />
+              <NextImage src={image} alt={title} fill sizes="max-width:100%" priority style={{ objectFit: "cover" }} />
             </div>
           ) : (
             imageError === true && (

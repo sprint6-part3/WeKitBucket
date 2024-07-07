@@ -1,10 +1,13 @@
 import React from "react";
 
-function Button({ type, children }: React.ButtonHTMLAttributes<HTMLButtonElement>) {
+function Button({ type, disabled, children }: React.ButtonHTMLAttributes<HTMLButtonElement>) {
+  const disabledClass = disabled ? "bg-primary-gray-200" : "bg-primary-green-200";
+
   return (
     <button
       type={type}
-      className="mt-8 w-full max-w-[400px] rounded-[10px] bg-primary-green-200 py-[10.5px] text-sm font-semibold leading-[1.7] text-white"
+      disabled={disabled}
+      className={`mt-8 w-full max-w-[400px] rounded-[10px] py-[10.5px] text-sm font-semibold leading-[1.7] text-white ${disabledClass}`}
     >
       {children}
     </button>

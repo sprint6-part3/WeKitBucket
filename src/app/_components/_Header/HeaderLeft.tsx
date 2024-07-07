@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import debounce from "@/utils/debounce";
 
-import WikidLogo from "@/assets/icons/wikidLogo.svg";
+import Logo from "@/assets/icons/logo.svg";
 import { useSelectedLayoutSegment } from "next/navigation";
 
 export default function HeaderLeft() {
@@ -32,7 +32,7 @@ export default function HeaderLeft() {
   return (
     <div className="flex items-center gap-x-5">
       <Link href="/" className="">
-        <WikidLogo width="107px" height="30px" />
+        <Logo width="130" height="23" />
       </Link>
 
       {/* <button onClick={dummyData}>
@@ -41,20 +41,20 @@ export default function HeaderLeft() {
       {windowWidth > 450 && (
         <div className="flex-shrink-1 flex items-center gap-x-5">
           {segment === "wikilist" ? (
-            <Link href="/wikilist" className="w-[60px] text-sm font-normal leading-6 text-primary-green-200">
+            <Link href="/wikilist" className="text-sm font-normal leading-6 text-primary-green-200">
               위키목록
             </Link>
           ) : (
-            <Link href="/wikilist" className="w-[60px] text-sm font-normal leading-6 text-primary-gray-500">
+            <Link href="/wikilist" className="text-sm font-normal leading-6 text-primary-gray-500">
               위키목록
             </Link>
           )}
           {segment === "boards" ? (
-            <Link href="/boards" className="w-[70px] text-sm font-normal leading-6 text-primary-green-200">
+            <Link href="/boards" className="text-sm font-normal leading-6 text-primary-green-200">
               자유게시판
             </Link>
           ) : (
-            <Link href="/boards" className="w-[70px] text-sm font-normal leading-6 text-primary-gray-500">
+            <Link href="/boards" className="text-sm font-normal leading-6 text-primary-gray-500">
               자유게시판
             </Link>
           )}

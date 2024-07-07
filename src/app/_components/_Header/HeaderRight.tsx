@@ -51,7 +51,7 @@ export default function HeaderRight() {
       {user ? (
         <div className="z-3">
           {windowWidth > 450 ? (
-            <div className="flex items-center gap-x-5 text-primary-gray-400">
+            <div className="flex items-center gap-4 text-primary-gray-400">
               <MessageAlarm
                 toggle={alarmToggle}
                 oppositeToggle={menuToggle}

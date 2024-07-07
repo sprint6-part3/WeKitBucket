@@ -1,9 +1,16 @@
 "use server";
 
+import type { Metadata } from "next";
 import getProfiles from "@/apis/profile/getProfiles";
 import Input from "./_components/Input";
 import ProfileList from "./_components/ProfileList";
 import Pagination from "./_components/Pagination";
+
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    title: "WeKitBucket | 위키리스트",
+  };
+}
 
 async function WikiList({ searchParams }: { searchParams: { keyword: string; number: number } }) {
   const { keyword, number } = searchParams;
