@@ -28,6 +28,7 @@ import BasicWikiSection from "./components/Profile/BasicWikiSection";
 import { FORM_DATA_INIT } from "./_constants/formDataInitialValue";
 import ToastSelect from "./components/Common/ToastSelect";
 import useIsMobile from "./_hook/useIsMobile";
+import MessageModal from "./components/Common/MessageModal";
 
 const noContentClassName = `text-lg-regular2 text-grayscale-400`;
 
@@ -37,6 +38,8 @@ function Wiki({ params }: { params: { code: string } }) {
   const [isEditing, setIsEditing] = useState(false);
 
   const { value, handleOff, handleOn } = useBoolean();
+  const { value: confirmModal, handleOff: confirmModalOff, handleOn: confirmModalOn } = useBoolean();
+  const { value: cancelModal, handleOff: cancelModalOff, handleOn: cancelModalOn } = useBoolean();
   const [userProfile, setUserProfile] = useState<DetailProfileResponse | undefined>();
   const [userData, setUserData] = useState<string | undefined>();
 
@@ -119,9 +122,13 @@ function Wiki({ params }: { params: { code: string } }) {
 
   const handleCancelClick = () => {
     setIsEditing(false);
+    setRenewalTime(!renewalTime);
+    cancelModalOff();
+    updateFormData();
   };
 
   const handleSaveClick = async () => {
+    confirmModalOff();
     let updatedFormData = { ...formData };
 
     if (formData.image instanceof File) {
@@ -141,7 +148,7 @@ function Wiki({ params }: { params: { code: string } }) {
     setIsEditing(false);
   };
 
-  useEffect(() => {
+  const updateFormData = useCallback(() => {
     if (userProfile) {
       const { nationality, family, bloodType, nickname, birthday, sns, job, mbti, city, image, content } = userProfile;
 
@@ -163,6 +170,10 @@ function Wiki({ params }: { params: { code: string } }) {
       setFormData(newFormData);
     }
   }, [userProfile]);
+
+  useEffect(() => {
+    updateFormData();
+  }, [updateFormData]);
 
   useEffect(() => {
     if (code) {
@@ -220,7 +231,7 @@ function Wiki({ params }: { params: { code: string } }) {
 
         <div className={contentClassName}>
           {!userProfile.content && !isEditing && (
-            <div className="rounded-10 flex h-[184px] w-full flex-col items-center justify-center bg-gray-100 md:mt-5 md:h-[192px]">
+            <div className="flex h-[184px] w-full flex-col items-center justify-center rounded-[10px] bg-gray-100 md:mt-5 md:h-[192px]">
               <p className={noContentClassName}>아직 작성된 내용이 없네요.</p>
               <p className={noContentClassName}>위키에 참여해보세요!</p>
               <CommonButton variant="primary" className="mt-4" onClick={handleWikiButtonClick}>
@@ -244,10 +255,10 @@ function Wiki({ params }: { params: { code: string } }) {
 
         {isEditing && (
           <div className="ml-auto mt-2 flex gap-3 sm:absolute sm:right-[60px] sm:top-[75px] md:absolute md:right-[90px] md:top-[75px] lg:top-[95px] xl:mt-[640px]">
-            <CommonButton variant="secondary" onClick={handleCancelClick} className="bg-white">
+            <CommonButton variant="secondary" onClick={cancelModalOn} className="bg-white">
               취소
             </CommonButton>
-            <CommonButton variant="primary" onClick={handleSaveClick}>
+            <CommonButton variant="primary" onClick={confirmModalOn}>
               저장
             </CommonButton>
           </div>
@@ -262,6 +273,20 @@ function Wiki({ params }: { params: { code: string } }) {
             setAnswer={setAnswerValue}
           />
         </Modal>
+        <MessageModal
+          title="저장"
+          message="저장하나요?"
+          isOpen={confirmModal}
+          onCancel={confirmModalOff}
+          onConfirm={handleSaveClick}
+        />
+        <MessageModal
+          title="취소"
+          message="취소하나요?"
+          isOpen={cancelModal}
+          onCancel={cancelModalOff}
+          onConfirm={handleCancelClick}
+        />
       </div>
     </div>
   );

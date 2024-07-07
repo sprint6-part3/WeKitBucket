@@ -64,16 +64,14 @@ function QuizModalTemplete({ question, onClose, setEditingMode, code, setAnswer 
         <Input
           type="text"
           id="quizInput"
-          className={`rounded-10 mb-2 h-[45px] w-full bg-gray-100 pl-4 ${
-            errors.securityAnswer ? "bg-secondary-red-100 focus:border-secondary-red-200" : ""
+          className={`rounded-[10px} mb-2 h-[45px] w-full bg-gray-100 pl-4 ${
+            errors.securityAnswer ? "bg-red-50 focus:border-red-400" : ""
           } outline-none focus:border-2 focus:border-primary-green-200`}
           placeholder="답안을 입력해주세요"
           {...register("securityAnswer", { required: "답안을 입력해주세요" })}
         />
 
-        {errors.securityAnswer && (
-          <p className="text-secondary-red-200 text-xs-regular2">{errors.securityAnswer.message}</p>
-        )}
+        {errors.securityAnswer && <p className="text-xs-regular2 text-red-400">{errors.securityAnswer.message}</p>}
 
         <CommonButton variant="primary" className="mt-8 w-full" type="submit">
           확인

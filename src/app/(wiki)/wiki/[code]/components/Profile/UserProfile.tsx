@@ -108,7 +108,7 @@ const UserProfile: React.FC<UserProfileProps> = ({
                   <Image
                     className="rounded-full group-hover:brightness-50"
                     alt="프로필 이미지 미리보기"
-                    src={image || preview}
+                    src={image || preview || "@/assets/icons/defaultProfile.svg"}
                     fill
                     style={{ objectFit: "cover" }}
                   />
