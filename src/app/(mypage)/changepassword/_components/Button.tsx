@@ -4,7 +4,7 @@ function Button({ type, children, disabled }: React.ButtonHTMLAttributes<HTMLBut
   return (
     <button
       type={type}
-      className={`mt-4 w-full max-w-[90px] rounded-[10px] py-[10.5px] text-sm font-semibold leading-[1.7] text-white ${
+      className={`mt-4 w-full rounded-[10px] py-[10.5px] text-sm font-semibold leading-[1.7] text-white ${
         disabled ? "bg-primary-gray-200" : "bg-primary-green-200"
       }`}
       disabled={disabled}

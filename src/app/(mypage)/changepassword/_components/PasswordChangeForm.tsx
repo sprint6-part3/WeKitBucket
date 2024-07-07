@@ -29,9 +29,9 @@ function PasswordChangeForm() {
     <form className="mb-[40px] mt-[50px]" onSubmit={handleSubmit(onSubmit)}>
       <div className="grid gap-2">
         <div className="grid gap-[10px]">
-          <Label htmlFor="password">비밀번호 변경</Label>
+          <Label htmlFor="currentPassword">비밀번호 변경</Label>
           <Input
-            id="password"
+            id="currentPassword"
             type="password"
             placeholder="기존 비밀번호"
             {...register("currentPassword", {
@@ -43,7 +43,7 @@ function PasswordChangeForm() {
             })}
             validationCheck={!!errors.currentPassword}
           />
-          {errors?.password && <ErrorText>{errors.password?.message}</ErrorText>}
+          {errors?.currentPassword && <ErrorText>{errors.currentPassword?.message}</ErrorText>}
         </div>
 
         <div className="grid gap-[10px]">
@@ -68,6 +68,10 @@ function PasswordChangeForm() {
             placeholder="새 비밀번호 확인"
             {...register("passwordConfirmation", {
               required: true,
+              minLength: {
+                value: 8,
+                message: "8자 이상 입력해주세요.",
+              },
               validate: value => (value === watch("password") ? true : "비밀번호가 일치하지 않습니다."),
             })}
             validationCheck={!!errors.passwordConfirmation}
