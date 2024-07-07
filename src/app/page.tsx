@@ -4,13 +4,14 @@ import {
   landingKeyboard,
   topSectionItem1,
   landingWrite,
-  middleSectionItem1,
+  // middleSectionItem1,
   bottomSectionItem1,
   bottomSectionItem2,
   bottomSectionItem3,
   backgroundImage,
 } from "@/assets/index";
 import RedirectButton from "@/components/RedirectButton";
+import SwiperSection from "./_components/Landing/SwiperSection";
 
 function HomePage() {
   return (
@@ -57,7 +58,8 @@ function HomePage() {
             친구에게 공유해요
           </p>
         </div>
-        <Image className="mt-[40px] h-auto w-full md:mt-[80px]" src={middleSectionItem1} alt="test" />
+        {/* <Image className="mt-[40px] h-auto w-full md:mt-[80px]" src={middleSectionItem1} alt="test" /> */}
+        <SwiperSection />
       </section>
       <section className="mx-auto flex h-[512px] w-full flex-col justify-center bg-[#ECF0FA] md:h-[933px] xl:h-[1291px]">
         <div className="mx-auto w-[336px] md:w-[648px] xl:w-[924px]">
