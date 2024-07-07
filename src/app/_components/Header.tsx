@@ -3,8 +3,6 @@ import HeaderRight from "./_Header/HeaderRight";
 import HeaderLeft from "./_Header/HeaderLeft";
 
 function Header() {
-  // const user = null;
-
   return (
     <div
       style={{ zIndex: 1 }}

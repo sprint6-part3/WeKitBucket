@@ -12,11 +12,12 @@ import HamburgerMenu from "@/assets/icons/hamburgerMenu.svg";
 import ModalComponent from "./ModalComponent";
 import MenuModalHeader from "./MenuModalHeader";
 import AlarmModal from "./AlarmModal";
+import UserLocation from "./UserLocation";
 
 export default function UserDropDown() {
   const [isOpen, setIsOpen] = useToggle(false);
   const [alarmToggle, setAlarmToggle] = useToggle(false);
-  const { getUser } = useAuth();
+  const { user, getUser } = useAuth();
   const router = useRouter();
 
   const segment = useSelectedLayoutSegment();
@@ -53,6 +54,11 @@ export default function UserDropDown() {
       {isOpen && (
         <ModalComponent>
           <MenuModalHeader onClose={onClose} />
+          <div className="flex flex-col items-start justify-center py-[5px]">
+            <h3>사용자 정보: {user?.name}</h3>
+            <UserLocation />
+          </div>
+          <hr className="h-[1px] w-[95dvw] px-[3px]" />
           <div className="mt-2.5 flex flex-col items-center gap-y-10 rounded-lg bg-white pb-2.5 pt-2.5">
             {segment === "wikilist" ? (
               <Link onClick={onClose} href="/wikilist" className="flex items-center text-primary-green-200">
@@ -73,12 +79,25 @@ export default function UserDropDown() {
               </Link>
             )}
             <hr className="h-[1px] w-[95dvw] px-[3px]" />
+            <Link onClick={onClose} href="/changepassword" className="flex items-center text-primary-gray-400">
+              비밀번호 변경
+            </Link>
+            {user?.profile ? (
+              <Link
+                onClick={onClose}
+                href={`/wiki/${user?.profile.code}`}
+                className="flex items-center text-primary-gray-400"
+              >
+                내 위키
+              </Link>
+            ) : (
+              <Link onClick={onClose} href="/makewiki" className="flex items-center text-primary-gray-400">
+                위키 생성
+              </Link>
+            )}
             <button onClick={setAlarmToggle} className="flex items-center text-primary-gray-400">
               알람
             </button>
-            <Link onClick={onClose} href="/mypage" className="flex items-center text-primary-gray-400">
-              마이페이지
-            </Link>
             <button onClick={handleLogout} className="flex items-center text-primary-gray-400">
               로그아웃
             </button>

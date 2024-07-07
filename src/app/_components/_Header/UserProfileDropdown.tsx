@@ -75,47 +75,75 @@ export default function UserProfileDropdown({
 
       {toggle && (
         <div className="absolute right-[1%] top-[70%] mt-2.5 flex h-[131px] w-[120px] flex-col items-center gap-y-5 rounded-lg bg-white pb-2.5 pt-2.5 shadow-[0px_4px_20px_0px_#00000014]">
-          {segments.includes("mypage") ? (
+          {segments.includes("changepassword") ? (
             <Link
-              href="/mypage"
+              href="/changepassword"
               onMouseDown={e => {
                 e.preventDefault();
               }}
               className="flex items-center text-primary-green-200"
             >
-              계정 설정
+              비밀번호 변경
             </Link>
           ) : (
             <Link
-              href="/mypage"
+              href="/changepassword"
               onMouseDown={e => {
                 e.preventDefault();
               }}
               className="flex items-center text-primary-gray-400"
             >
-              계정 설정
+              비밀번호 변경
             </Link>
           )}
-          {segments.includes("wiki") ? (
-            <Link
-              href={`/wiki/${code}`}
-              onMouseDown={e => {
-                e.preventDefault();
-              }}
-              className="flex items-center text-primary-green-200"
-            >
-              내 위키
-            </Link>
+          {code ? (
+            <span>
+              {segments.includes("wiki") ? (
+                <Link
+                  href={`/wiki/${code}`}
+                  onMouseDown={e => {
+                    e.preventDefault();
+                  }}
+                  className="flex items-center text-primary-green-200"
+                >
+                  내 위키
+                </Link>
+              ) : (
+                <Link
+                  href={`/wiki/${code}`}
+                  onMouseDown={e => {
+                    e.preventDefault();
+                  }}
+                  className="flex items-center text-primary-gray-400"
+                >
+                  내 위키
+                </Link>
+              )}
+            </span>
           ) : (
-            <Link
-              href={code ? `/wiki/${code}` : "/not-found-code"}
-              onMouseDown={e => {
-                e.preventDefault();
-              }}
-              className="flex items-center text-primary-gray-400"
-            >
-              내 위키
-            </Link>
+            <span>
+              {segments.includes("wiki") ? (
+                <Link
+                  href="/makewiki"
+                  onMouseDown={e => {
+                    e.preventDefault();
+                  }}
+                  className="flex items-center text-primary-green-200"
+                >
+                  위키 생성
+                </Link>
+              ) : (
+                <Link
+                  href="/makewiki"
+                  onMouseDown={e => {
+                    e.preventDefault();
+                  }}
+                  className="flex items-center text-primary-gray-400"
+                >
+                  위키 생성
+                </Link>
+              )}
+            </span>
           )}
           <button
             onClick={handleLogout}

@@ -1,0 +1,18 @@
+"use client";
+
+import getIP from "@/apis/user/getIP";
+import { ipInfo } from "@/types/user";
+import React, { useEffect, useState } from "react";
+
+export default function UserLocation() {
+  const [info, setInfo] = useState<ipInfo | null>(null);
+  const getLocale = async () => {
+    const data = await getIP();
+    setInfo(data);
+  };
+  useEffect(() => {
+    getLocale();
+  }, []);
+
+  return <div>{info && <h3>{`현재 접속 IP : ${info?.query}`}</h3>}</div>;
+}

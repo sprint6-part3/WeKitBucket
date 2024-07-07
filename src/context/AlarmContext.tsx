@@ -12,7 +12,6 @@ interface AlarmContextType {
   removeAlarmMessage: (id: number) => void;
   removeAllMessages: () => void;
   count: number;
-  hasMore: boolean;
 }
 
 const AlarmContext = createContext<AlarmContextType>({
@@ -21,22 +20,18 @@ const AlarmContext = createContext<AlarmContextType>({
   removeAlarmMessage: () => {},
   removeAllMessages: () => {},
   count: 0,
-  hasMore: true,
 });
 
 function AlarmProvider({ children }: { children: ReactNode }) {
   const [alarmMessages, setAlarmMessages] = useState<IAlarmMessage[]>([]);
-  const [page, setPage] = useState<number>(0);
+  const [page, setPage] = useState<number>(1);
   const [count, setCount] = useState<number>(0);
-  const [hasMore, setHasMore] = useState<boolean>(true);
 
   const getAlarmMessages = async () => {
     const { totalCount, list } = await GetNotificationOptions({ page, pageSize: 10 });
     console.log(totalCount);
-    console.log(list);
-    if (list?.length === 0) {
-      setHasMore(false);
-    } else if (list) {
+    // console.log(list?.length);
+    if (list) {
       setAlarmMessages(prev => [...prev, ...list]);
       setPage(prev => prev + 1);
     }
@@ -57,7 +52,7 @@ function AlarmProvider({ children }: { children: ReactNode }) {
   };
 
   const values = useMemo(
-    () => ({ alarmMessages, getAlarmMessages, removeAlarmMessage, removeAllMessages, count, hasMore }),
+    () => ({ alarmMessages, getAlarmMessages, removeAlarmMessage, removeAllMessages, count }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [alarmMessages],
   );

@@ -1,11 +1,13 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
+import { useInView } from "react-intersection-observer";
 
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import "dayjs/locale/ko";
 import { useAlarm } from "@/context/AlarmContext";
+import useToggle from "@/hooks/useToggle";
 import NoAlarmMessage from "@/app/_components/_Header/NoAlarmMessage";
 import AlarmModalHeader from "./AlarmModalHeader";
 import ModalComponent from "./ModalComponent";
@@ -14,41 +16,31 @@ dayjs.locale("ko");
 dayjs.extend(relativeTime);
 
 export default function AlarmModal({ onClose }: { onClose: () => void }) {
-  const { alarmMessages, removeAlarmMessage, removeAllMessages } = useAlarm();
-  const { getAlarmMessages, hasMore } = useAlarm();
-
-  const elementRef = useRef<HTMLDivElement>(null);
-
-  const onIntersection = (entries: IntersectionObserverEntry[]) => {
-    const firstEntry = entries[0];
-
-    if (firstEntry.isIntersecting && hasMore) {
-      getAlarmMessages();
-    }
-  };
+  const { getAlarmMessages, alarmMessages, removeAlarmMessage, removeAllMessages, count } = useAlarm();
+  const [hasMore, setHasMore] = useToggle(true);
+  const { ref, inView } = useInView();
 
   useEffect(() => {
-    const observer = new IntersectionObserver(onIntersection);
-
-    if (elementRef.current) {
-      observer.observe(elementRef.current);
-    }
-
-    return () => {
-      if (elementRef.current) {
-        observer.unobserve(elementRef.current);
-        elementRef.current = null;
-      }
-    };
+    if (alarmMessages.length < 10) getAlarmMessages();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [hasMore]);
+  }, []);
+
+  useEffect(() => {
+    if (inView) {
+      getAlarmMessages();
+    } else if (alarmMessages.length === count) setHasMore();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [inView]);
 
   return (
     <ModalComponent>
-      <AlarmModalHeader onClose={onClose} removeAll={removeAllMessages} count={alarmMessages.length} />
+      <AlarmModalHeader onClose={onClose} count={count} />
       <ul style={{ zIndex: 2 }} className="flex flex-col gap-y-5 px-[1.5em] pt-[1.125em] text-[1.25em]">
+        <div className="flex">
+          <button onClick={removeAllMessages}>전체 삭제</button>
+        </div>
         {alarmMessages.length > 0 ? (
-          <div className="flex max-h-[90dvh] flex-col gap-y-5 overflow-y-scroll scroll-smooth px-[5px] py-[5px]">
+          <div className="flex max-h-[85dvh] flex-col gap-y-5 overflow-y-scroll scroll-smooth px-[5px] py-[5px]">
             {alarmMessages.map(m => (
               <li
                 key={m.id}
@@ -77,11 +69,7 @@ export default function AlarmModal({ onClose }: { onClose: () => void }) {
                 </div>
               </li>
             ))}
-            {hasMore && (
-              <div ref={elementRef} style={{ textAlign: "center" }}>
-                Load More Items
-              </div>
-            )}
+            {hasMore && <div ref={ref}>loading ...</div>}
           </div>
         ) : (
           <NoAlarmMessage />

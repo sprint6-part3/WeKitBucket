@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
+import { useInView } from "react-intersection-observer";
 
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
@@ -27,37 +28,10 @@ export default function MessageAlarm({
 }) {
   // const { alarmMessages, getAlarmMessages, removeAlarmMessage, removeAllMessages } = useAlarm();
 
-  const { alarmMessages, removeAlarmMessage, removeAllMessages } = useAlarm();
+  const { getAlarmMessages, count, alarmMessages, removeAlarmMessage, removeAllMessages } = useAlarm();
   const [isShowCount, setIsShowCount] = useToggle(true);
-  const { getAlarmMessages, hasMore, count } = useAlarm();
-
-  const elementRef = useRef<HTMLDivElement | null>(null);
-
-  const onIntersection = (entries: IntersectionObserverEntry[]) => {
-    const firstEntry = entries[0];
-
-    if (firstEntry.isIntersecting && hasMore) {
-      getAlarmMessages();
-    }
-  };
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(onIntersection);
-
-    if (elementRef.current) {
-      observer.observe(elementRef.current);
-    }
-
-    return () => {
-      if (elementRef.current) {
-        observer.unobserve(elementRef.current);
-        elementRef.current = null;
-      }
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [hasMore]);
-
-  useEffect(() => {}, []);
+  const [hasMore, setHasMore] = useToggle(true);
+  const { ref, inView } = useInView();
 
   const closeToggle = () => {
     if (toggle) {
@@ -70,6 +44,20 @@ export default function MessageAlarm({
     setToggle();
     if (oppositeToggle) setOppositeToggle();
   };
+
+  useEffect(() => {
+    if (alarmMessages.length < 10) getAlarmMessages();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (inView) {
+      getAlarmMessages();
+    } else if (alarmMessages.length === count) setHasMore();
+
+    console.log(alarmMessages.length);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [inView]);
 
   return (
     <div className="relative">
@@ -97,6 +85,7 @@ export default function MessageAlarm({
           }}
         >
           <div className="space-between sticky top-0 flex pb-[10px]">
+            {/* <h3 className="flex flex-1 justify-start text-xl font-bold leading-7 text-primary-black-200">{`알림 ${count}개`}</h3> */}
             <h3 className="flex flex-1 justify-start text-xl font-bold leading-7 text-primary-black-200">{`알림 ${count}개`}</h3>
             <button onClickCapture={closeToggle} className="text-xl font-bold leading-7 text-primary-black-200">
               X
@@ -106,7 +95,7 @@ export default function MessageAlarm({
             <button onClick={removeAllMessages}>전체 삭제</button>
           </div>
           {count > 0 ? (
-            <div className="flex max-h-[400px] w-[3] flex-col gap-y-5 overflow-y-scroll scroll-smooth px-[5px] py-[5px]">
+            <div className="[&::-webkit-scrollbar]:none flex max-h-[400px] w-[3] flex-col gap-y-5 overflow-y-scroll scroll-smooth px-[5px] py-[5px]">
               {alarmMessages.map(m => (
                 <li
                   key={m.id}
@@ -136,11 +125,7 @@ export default function MessageAlarm({
                   </div>
                 </li>
               ))}
-              {hasMore && (
-                <div ref={elementRef} style={{ textAlign: "center" }}>
-                  Load More Items
-                </div>
-              )}
+              {hasMore && <div ref={ref}>loading ...</div>}
             </div>
           ) : (
             <NoAlarmMessage />

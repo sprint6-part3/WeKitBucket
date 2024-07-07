@@ -49,6 +49,7 @@ export default function HeaderLeft() {
               위키목록
             </Link>
           )}
+
           {segment === "(boards)" ? (
             <Link href="/boards" className="w-[70px] text-sm font-normal leading-6 text-primary-green-200">
               자유게시판
