@@ -17,7 +17,7 @@ function CommonButton({ variant = "primary", isActive = true, className = "", ch
   switch (variant) {
     // primary에 해당하는 버튼
     case "primary":
-      variantClassName = `center text-white ${isActive ? "bg-primary-green-200 hover:bg-primary-green-300" : "bg-grayscale-300"}`;
+      variantClassName = `center text-white ${isActive ? "bg-primary-green-200 hover:bg-primary-green-300" : "bg-gray-300"}`;
       break;
     // secondary에 해당하는 버튼
     case "secondary":
