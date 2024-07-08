@@ -1,4 +1,4 @@
-# 🎤✨ FANDOM-K🎶🌟
+# 📙📄 WekitBucket 👨‍💻😎
 
 코드잇 스프린트 6기 Part 3 과정에서 8팀이 진행한 중급 프로젝트 **WekitBucket** 레포지토리
 <br>
