@@ -15,15 +15,15 @@ https://www.canva.com/design/DAGKHfn-U0Y/HhE-GjRBlfJns68CXuD5Xg/edit
 
 ## 🏃프로젝트 소개
 
-** 친구들의 정보를 저장하고 만드는 공간 WekitBucket**
+**친구들의 정보를 저장하고 만드는 공간 WekitBucket**
 
 - 친구들이 보는 나는 어떨까라는 주제로 함께 만들어가는 나의 위키 페이지
 - 자유게시판을 활용하여 친구를 찾고 소통할 수 있는 페이지
 
-[<img src="https://github.com/Melffys/WeKitBucket/assets/50625710/992b42c2-9eba-4925-ac3d-36ca27f3f79f" width=350>](https://fandom-k.vercel.app/)
-[<img src="https://github.com/Melffys/WeKitBucket/assets/50625710/96009d4b-ec69-48b0-81ec-6fef0b07fdd4" width=350>](https://fandom-k.vercel.app/myPage)
-[<img src="https://github.com/Melffys/WeKitBucket/assets/50625710/bf08f4fa-6795-43e6-8d1f-6ea001c73aab" width=350>](https://fandom-k.vercel.app/list)
-[<img src="https://github.com/Melffys/WeKitBucket/assets/50625710/59b883b0-2415-4e06-80a0-8396bd9658c9" width=350>](https://fandom-k.vercel.app/list)
+[<img src="https://github.com/Melffys/WeKitBucket/assets/50625710/992b42c2-9eba-4925-ac3d-36ca27f3f79f" width=350>](https://wekit-bucket.vercel.app/)
+[<img src="https://github.com/Melffys/WeKitBucket/assets/50625710/96009d4b-ec69-48b0-81ec-6fef0b07fdd4" width=350>](https://wekit-bucket.vercel.app/wikilist)
+[<img src="https://github.com/Melffys/WeKitBucket/assets/50625710/bf08f4fa-6795-43e6-8d1f-6ea001c73aab" width=350>](https://wekit-bucket.vercel.app/wiki/080ac549-4709-4a25-b033-53fa80083b4e)
+[<img src="https://github.com/Melffys/WeKitBucket/assets/50625710/59b883b0-2415-4e06-80a0-8396bd9658c9" width=350>](https://wekit-bucket.vercel.app/boards)
 
 <br>
 
