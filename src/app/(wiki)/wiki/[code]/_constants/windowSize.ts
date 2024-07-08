@@ -1,4 +1,0 @@
-const MOBILE_SIZE = 480;
-const TABLET_SIZE = 769;
-
-export { MOBILE_SIZE, TABLET_SIZE };

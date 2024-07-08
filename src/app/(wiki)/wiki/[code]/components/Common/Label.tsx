@@ -1,13 +1,9 @@
-export interface LabelProps {
-  htmlFor?: string;
-  label?: string;
-  className: string;
-}
+import React from "react";
 
-function Label({ htmlFor, label, className }: LabelProps) {
+function Label({ htmlFor, children }: React.LabelHTMLAttributes<HTMLLabelElement>) {
   return (
-    <label htmlFor={htmlFor} className={className}>
-      {label}
+    <label htmlFor={htmlFor} className="text-sm leading-[1.7] text-primary-gray-500">
+      {children}
     </label>
   );
 }

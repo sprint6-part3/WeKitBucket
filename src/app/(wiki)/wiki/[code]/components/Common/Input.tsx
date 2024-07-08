@@ -1,21 +1,22 @@
 import React, { forwardRef } from "react";
 
-export interface LabelProps {
-  htmlFor?: string;
-  label?: string;
-  className: string;
+interface IInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+  validationCheck?: boolean;
 }
 
-export interface InputProps extends LabelProps {
-  id: string;
-  name: string;
-  type?: string;
-  placeholder?: string;
+function Input({ validationCheck, ...rest }: IInputProps, ref: React.LegacyRef<HTMLInputElement>) {
+  return (
+    <input
+      autoComplete="off"
+      className={`box-border w-full rounded-[10px] border border-primary-gray-100 px-5 py-[9.5px] text-sm leading-[1.7] text-primary-gray-500 outline-0 placeholder:text-[#8F95B2] ${
+        validationCheck
+          ? "bg-primary-red-100 focus:border-primary-red-100 focus:bg-primary-red-100"
+          : "bg-primary-gray-100 focus:border-primary-green-200 focus:bg-white"
+      }`}
+      ref={ref}
+      {...rest}
+    />
+  );
 }
-const Input = forwardRef<HTMLInputElement, InputProps>(({ id, name, type, placeholder, className, ...props }, ref) => (
-  <input id={id} name={name} type={type} placeholder={placeholder} ref={ref} className={className} {...props} />
-));
 
-export default Input;
-
-Input.displayName = "Input";
+export default forwardRef(Input);
