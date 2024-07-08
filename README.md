@@ -307,7 +307,7 @@ https://www.canva.com/design/DAGKHfn-U0Y/HhE-GjRBlfJns68CXuD5Xg/edit
    - main 브랜치에 변동 사항이 있으면 작업하고 있는 코드에 반영 후 push 진행
    - Conflict가 발생하면, 충돌이 발생된 부분을 Resolve 한 후에 merge 진행
 3. Pull Request에 대한 merge를 진행하는 경우, 리뷰어로 설정된 팀원 중 <br>
-   2명 이상의 승인이 완료되면 작성자가 직접 merge를 눌러 main 브랜치로 병합.
+   - 2명 이상의 승인이 완료되면 작성자가 직접 merge를 눌러 main 브랜치로 병합.
    - merge 기능을 사용하여, 여러 개의 커밋을 하나의 커밋으로 통합
    - discord Webhooks을 통해 PR이 생성될 때 알림 오도록 설정
 
