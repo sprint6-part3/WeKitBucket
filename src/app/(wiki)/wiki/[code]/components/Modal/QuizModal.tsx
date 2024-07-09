@@ -6,24 +6,30 @@ import Label from "../Common/Label";
 import ErrorText from "../Common/ErrorText";
 import Button from "../Common/Button";
 
-interface SecurityData {
-  code: string;
-  securityQuestion: string;
-}
-
 interface QuizInput {
   securityAnswer: string;
 }
 
-function QuizModal({ code, securityQuestion }: SecurityData) {
+type QuizModalProps = {
+  securityQuestion: string;
+  onClose: (value: void) => void;
+  setEdit: (value: void) => void;
+  code: string;
+  setAnswer: (value: string) => void;
+};
+
+function QuizModal({ code, securityQuestion, onClose, setEdit, setAnswer }: QuizModalProps) {
   const {
     register,
     handleSubmit,
     formState: { isSubmitting, errors, isValid },
-  } = useForm<QuizInput>({ mode: "onChange" });
+  } = useForm<QuizInput>({ mode: "onSubmit" });
 
   const onSubmit: SubmitHandler<QuizInput> = async data => {
     await postProfilesCodePing(code, data);
+    setEdit();
+    setAnswer(data.securityAnswer);
+    onClose();
   };
 
   return (
@@ -55,7 +61,11 @@ function QuizModal({ code, securityQuestion }: SecurityData) {
               />
               {errors?.securityAnswer && <ErrorText>{errors.securityAnswer?.message}</ErrorText>}
             </div>
-            <Button type="submit" disabled={!isValid || isSubmitting}>
+            <Button
+              type="submit"
+              disabled={!isValid || isSubmitting}
+              className="center mt-8 h-11 w-full max-w-[400px] rounded-lg bg-primary-green-200 px-5 py-2.5 text-md-semibold2 text-white"
+            >
               가입하기
             </Button>
           </div>
