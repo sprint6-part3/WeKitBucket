@@ -113,3 +113,11 @@ body {
     height: 27px;
   }
 }
+
+.ck-editor__editable {
+  height: 400px !important;
+  max-height: 400px !important;
+}
+
+.ck-editor__editable:focus {
+}

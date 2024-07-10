@@ -28,7 +28,8 @@ function Wiki({ params }: { params: { code: string } }) {
   const [formData, setFormData] = useState({});
   // const [opened, { open: openModal, close: closeModal }] = useDisclosure(false);
   const [isToggleActive, setIsToggleActive] = useState(false);
-  const [isEdit, setIsEdit] = useState(false);
+  // const [isEdit, setIsEdit] = useState(false);
+  const [isEdit, setIsEdit] = useState(true);
   // const [url, setUrl] = useState<string>("");
 
   useEffect(() => {
@@ -131,11 +132,7 @@ function Wiki({ params }: { params: { code: string } }) {
             <EditInfo userData={userData} image={wikiData.image} handleChange={handleChange} />
           </div>
           <div className="flex flex-col gap-4 md:mt-[30px] xl:ml-[100px] xl:mr-[530px] xl:mt-0 xl:min-w-[700px] xl:max-w-[1120px]">
-            <WikitBucketEditor
-            // initialData={wikiData.content}
-            // handleChangeContent={handleChangeContent}
-            // title={wikiData.name}
-            />
+            <WikitBucketEditor initialData={wikiData.content} handleChangeContent={handleChangeContent} />
           </div>
         </form>
       ) : (
