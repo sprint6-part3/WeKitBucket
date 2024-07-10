@@ -21,7 +21,7 @@ export interface PatchProfileOption {
   content: string;
 }
 
-const patchProfilesCode = async (profileCode: string | undefined, options: PatchProfileOption) => {
+const patchProfilesCode = async (profileCode: string | undefined, options: PatchProfileOption | object) => {
   try {
     const data = await fetchInstance<RequestProfileCode>(`profiles/${profileCode}`, {
       method: "PATCH",

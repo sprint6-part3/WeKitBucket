@@ -28,7 +28,11 @@ function Info({ userData, image, toggleActive, isToggleActive }: ProfileCardProp
     >
       <article className="flex gap-5 md:gap-8 xl:flex-col xl:gap-[30px]">
         <div className="relative h-[62px] w-[62px] overflow-hidden rounded-full md:h-[71px] md:w-[71px] xl:m-[30px] xl:h-[200px] xl:w-[200px]">
-          <Image layout="fill" className="object-contain" src={image || UserDafalutImage} alt="프로필" />
+          {image ? (
+            <Image layout="fill" className="object-contain" src={image} alt="프로필" />
+          ) : (
+            <UserDafalutImage layout="fill" className="object-contain" />
+          )}
         </div>
 
         <div

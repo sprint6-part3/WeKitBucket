@@ -1,6 +1,7 @@
 import Lock from "@/assets/icons/lock.svg";
 import { SubmitHandler, useForm } from "react-hook-form";
 import postProfilesCodePing from "@/apis/profile/postProfilesCodePing";
+import { useToast } from "@/context/ToastContext";
 import Input from "./Input";
 import Label from "./Label";
 import ErrorText from "./ErrorText";
@@ -11,13 +12,16 @@ interface SecurityData {
   securityQuestion: string;
   handleActiveEdit: () => void;
   handleActiveModal: () => void;
+  handleTimeout: () => void;
 }
 
 interface QuizInput {
   securityAnswer: string;
 }
 
-function QuizModal({ code, securityQuestion, handleActiveEdit, handleActiveModal }: SecurityData) {
+function QuizModal({ code, securityQuestion, handleActiveEdit, handleActiveModal, handleTimeout }: SecurityData) {
+  const { popupToast } = useToast();
+
   const {
     register,
     handleSubmit,
@@ -25,9 +29,14 @@ function QuizModal({ code, securityQuestion, handleActiveEdit, handleActiveModal
   } = useForm<QuizInput>({ mode: "onChange" });
 
   const onSubmit: SubmitHandler<QuizInput> = async data => {
-    handleActiveModal();
-    handleActiveEdit();
-    await postProfilesCodePing(code, data);
+    const responseData = await postProfilesCodePing(code, data);
+    if (responseData) {
+      handleActiveModal();
+      handleActiveEdit();
+      handleTimeout();
+    } else {
+      popupToast({ color: "red", pos: "top", message: "Api 처리 에러!!", width: 320 });
+    }
   };
 
   return (

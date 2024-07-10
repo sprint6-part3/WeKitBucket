@@ -1,3 +1,4 @@
+/* eslint-disable func-names */
 /* eslint-disable react-hooks/exhaustive-deps */
 
 "use client";
@@ -5,10 +6,11 @@
 import { useEffect, useState } from "react";
 import LinkImage from "@/assets/icons/link.svg";
 import getProfilesCode from "@/apis/profile/getProfilesCode";
-import getProfilesCodePing from "@/apis/profile/getProfilesCodePing";
+// import getProfilesCodePing from "@/apis/profile/getProfilesCodePing";
 import patchProfilesCode from "@/apis/profile/patchProfilesCode";
 import getUsersMe from "@/apis/user/getUsersMe";
 import CommonModal from "@/components/CommonModal";
+import { useToast } from "@/context/ToastContext";
 import WikitBucketEditor from "./_components/WikitBucketEditor";
 import QuizModal from "./_components/QuizModal";
 import { WIKI_FULL_DATA, INFO_DATA } from "./_components/defalutValue";
@@ -19,12 +21,14 @@ import Info from "./_components/Info";
 
 function Wiki({ params }: { params: { code: string } }) {
   const { code } = params;
+  const { popupToast } = useToast();
 
   const [wikiData, setWikiData] = useState(WIKI_FULL_DATA);
   const [userData, setUserData] = useState<InfoType>(INFO_DATA);
   const [answer, setAnswer] = useState<string>("");
-  const [, setFormData] = useState({});
+  const [formData, setFormData] = useState({});
   const [opened, closeModal] = useState(false);
+  const [myWiki, setMyWiKi] = useState(false);
   const [isToggleActive, setIsToggleActive] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [url, setUrl] = useState<string>("");
@@ -41,8 +45,12 @@ function Wiki({ params }: { params: { code: string } }) {
     const getWikiDataByCode = async () => {
       try {
         const users = await getUsersMe();
-        const loginUserCode = users.profile.code;
-        const returnData = await getProfilesCode(loginUserCode);
+
+        const myWikiPage = code === users.profile.code;
+        setMyWiKi(myWikiPage);
+
+        const selectPageCode = code;
+        const returnData = await getProfilesCode(selectPageCode);
         setWikiData(returnData);
 
         const { city, mbti, job, sns, birthday, nickname, bloodType, nationality } = returnData;
@@ -84,15 +92,6 @@ function Wiki({ params }: { params: { code: string } }) {
     getWikiDataByCode();
   }, [code]);
 
-  const handleClickEdit = async () => {
-    if (typeof code === "string") {
-      const editStatus = await getProfilesCodePing(code);
-      if (editStatus) {
-        // openModal();
-      }
-    }
-  };
-
   const toggleActive = () => {
     setIsToggleActive(!isToggleActive);
   };
@@ -105,19 +104,36 @@ function Wiki({ params }: { params: { code: string } }) {
     }));
   };
 
-  const handleCopyLink = () => {
-    navigator.clipboard.writeText(url);
-  };
-
   // const handleChangeContent = (value: string) => {
   //   setFormData({ ...formData, content: value });
   // };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await patchProfilesCode(code, wikiData);
+    await patchProfilesCode(code, formData);
     setIsEdit(false);
     setAnswer("");
+  };
+
+  const handleUrl = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    navigator.clipboard.writeText(url);
+    popupToast({ color: "green", pos: "top", message: "위키 링크가 복사되었습니다.", width: 320 });
+  };
+
+  // 5분 타임 아웃시 자동 에디터 종료...
+  const handleTimeout = () => {
+    const TIME_OUT_LIMIT = 5 * 60 * 1000;
+
+    setTimeout(function () {
+      popupToast({
+        color: "red",
+        pos: "top",
+        message: "5분 이상 글을 쓰지 않아 수정 권한이 만료되었어요!!",
+        width: 500,
+      });
+      setIsEdit(false);
+    }, TIME_OUT_LIMIT);
   };
 
   return (
@@ -129,15 +145,12 @@ function Wiki({ params }: { params: { code: string } }) {
               <span className="text-[32px] font-semibold leading-none text-gray-800 md:text-[48px]">
                 {wikiData.name}
               </span>
-              {wikiData?.content.length === 0 && <Button onClick={handleClickEdit}>위키 참여하기</Button>}
+              {wikiData?.content.length === 0 && <Button onClick={handleActiveModal}>위키 참여하기</Button>}
             </div>
 
             <button
               className="flex h-[34px] max-w-[240px] items-center gap-1 rounded-[10px] bg-green-100 px-[10px] text-green-500 hover:brightness-95"
-              onClick={e => {
-                e.preventDefault();
-                handleCopyLink();
-              }}
+              onClick={handleUrl}
             >
               <LinkImage width={35} height={35} alt="링크" />
               <div className="truncate text-sm font-normal">{url}</div>
@@ -160,7 +173,16 @@ function Wiki({ params }: { params: { code: string } }) {
                   </div>
                 </div>
 
-                <EditInfo userData={userData} image={wikiData.image} handleChange={handleChange} />
+                {myWiki ? (
+                  <EditInfo userData={userData} image={wikiData.image} handleChange={handleChange} />
+                ) : (
+                  <Info
+                    userData={userData}
+                    image={wikiData.image}
+                    toggleActive={toggleActive}
+                    isToggleActive={isToggleActive}
+                  />
+                )}
               </div>
               <div className="flex flex-col gap-4 md:mt-[30px] xl:ml-[100px] xl:mr-[530px] xl:mt-0 xl:min-w-[700px] xl:max-w-[1120px]">
                 <WikitBucketEditor
@@ -200,6 +222,7 @@ function Wiki({ params }: { params: { code: string } }) {
           securityQuestion={wikiData.securityQuestion}
           handleActiveEdit={handleActiveEdit}
           handleActiveModal={handleActiveModal}
+          handleTimeout={handleTimeout}
         />
       </CommonModal>
     </>
