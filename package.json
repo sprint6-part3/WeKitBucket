@@ -12,6 +12,15 @@
     "postpack": "pinst --enable"
   },
   "dependencies": {
+    "@ckeditor/ckeditor5-basic-styles": "^42.0.0",
+    "@ckeditor/ckeditor5-build-classic": "^42.0.0",
+    "@ckeditor/ckeditor5-core": "^42.0.0",
+    "@ckeditor/ckeditor5-editor-classic": "^42.0.0",
+    "@ckeditor/ckeditor5-essentials": "^42.0.0",
+    "@ckeditor/ckeditor5-paragraph": "^42.0.0",
+    "@ckeditor/ckeditor5-react": "^8.0.0",
+    "@ckeditor/ckeditor5-watchdog": "^42.0.0",
+    "@mantine/hooks": "^7.11.1",
     "@svgr/webpack": "^8.1.0",
     "@types/quill": "^2.0.14",
     "@typescript-eslint/eslint-plugin": "^7.13.1",

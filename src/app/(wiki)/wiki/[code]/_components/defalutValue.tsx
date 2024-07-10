@@ -1,0 +1,30 @@
+export const WIKI_FULL_DATA = {
+  id: 0,
+  code: "",
+  image: null,
+  city: "",
+  mbti: "",
+  job: "",
+  sns: "",
+  birthday: "",
+  nickname: "",
+  bloodType: "",
+  family: "",
+  nationality: "",
+  content: "",
+  teamId: "",
+  securityQuestion: "",
+  updatedAt: "",
+  name: "",
+};
+
+export const INFO_DATA = {
+  city: "",
+  mbti: "",
+  job: "",
+  sns: "",
+  birthday: "",
+  nickname: "",
+  bloodType: "",
+  nationality: "",
+};
