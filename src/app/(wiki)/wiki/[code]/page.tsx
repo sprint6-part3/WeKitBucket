@@ -11,7 +11,7 @@ import patchProfilesCode from "@/apis/profile/patchProfilesCode";
 import getUsersMe from "@/apis/user/getUsersMe";
 import CommonModal from "@/components/CommonModal";
 import { useToast } from "@/context/ToastContext";
-import WikitBucketEditor from "./_components/WikitBucketEditor";
+// import WikitBucketEditor from "./_components/WikitBucketEditor";
 import QuizModal from "./_components/QuizModal";
 import { WIKI_FULL_DATA, INFO_DATA } from "./_components/defalutValue";
 import { InfoType } from "./_components/TypeList";
@@ -32,6 +32,7 @@ function Wiki({ params }: { params: { code: string } }) {
   const [isToggleActive, setIsToggleActive] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [url, setUrl] = useState<string>("");
+  const [clearTime, setClearTime] = useState<ReturnType<typeof setTimeout> | undefined>();
 
   const handleActiveModal = () => {
     closeModal(!opened);
@@ -104,9 +105,9 @@ function Wiki({ params }: { params: { code: string } }) {
     }));
   };
 
-  const handleChangeContent = (value: string) => {
-    setFormData({ ...formData, content: value });
-  };
+  // const handleChangeContent = (value: string) => {
+  //   setFormData({ ...formData, content: value });
+  // };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -122,10 +123,13 @@ function Wiki({ params }: { params: { code: string } }) {
   };
 
   // 5분 타임 아웃시 자동 에디터 종료...
-  const handleTimeout = () => {
+  const handleTimeout = (clearId: ReturnType<typeof setTimeout> | undefined) => {
     const TIME_OUT_LIMIT = 5 * 60 * 1000;
+    if (clearId) {
+      clearTimeout(clearId);
+    }
 
-    setTimeout(function () {
+    const id: ReturnType<typeof setTimeout> | undefined = setTimeout(function () {
       popupToast({
         color: "red",
         pos: "top",
@@ -133,6 +137,7 @@ function Wiki({ params }: { params: { code: string } }) {
         width: 500,
       });
       setIsEdit(false);
+      setClearTime(id);
     }, TIME_OUT_LIMIT);
   };
 
@@ -148,26 +153,25 @@ function Wiki({ params }: { params: { code: string } }) {
               {wikiData?.content.length === 0 && <Button onClick={handleActiveModal}>위키 참여하기</Button>}
             </div>
 
-            <button
-              className="flex h-[34px] max-w-[240px] items-center gap-1 rounded-[10px] bg-green-100 px-[10px] text-green-500 hover:brightness-95"
-              onClick={handleUrl}
-            >
-              <LinkImage width={35} height={35} alt="링크" />
-              <div className="truncate text-sm font-normal">{url}</div>
-            </button>
+            {!isEdit && (
+              <button
+                className="flex h-[34px] max-w-[240px] items-center gap-1 rounded-[10px] bg-green-100 px-[10px] text-green-500 hover:brightness-95"
+                onClick={handleUrl}
+              >
+                <LinkImage width={35} height={35} alt="링크" />
+                <div className="truncate text-sm font-normal">{url}</div>
+              </button>
+            )}
           </div>
 
           {isEdit ? (
             <form
-              className="m-3 flex min-h-[1100px] flex-col gap-[15px] md:mx-[60px] md:mt-[47px] md:gap-[10px] xl:mx-auto xl:max-w-[1700px]"
+              className="flex min-h-[1100px] flex-col gap-[15px] xl:mx-auto xl:max-w-[1700px]"
               onSubmit={handleSubmit}
             >
               <div className="flex flex-col gap-[15px] md:gap-[10px] xl:fixed xl:left-[70%] xl:top-[120px] xl:flex-col-reverse">
-                <div className="flex h-10 items-center justify-between md:mb-[10px]">
-                  <span className="text-32 font-semibold leading-none text-gray-800 md:text-[48px] xl:invisible">
-                    {wikiData.name}
-                  </span>
-                  <div className="flex gap-[10px]">
+                <div className="flex h-10 items-center justify-end md:mb-[10px]">
+                  <div className="flex gap-[10px] xl:mt-3">
                     <Button onClick={handleActiveEdit}>취소</Button>
                     <Button type="submit">저장</Button>
                   </div>
@@ -185,7 +189,7 @@ function Wiki({ params }: { params: { code: string } }) {
                 )}
               </div>
               <div className="flex flex-col gap-4 md:mt-[30px] xl:ml-[100px] xl:mr-[530px] xl:mt-0 xl:min-w-[700px] xl:max-w-[1120px]">
-                <WikitBucketEditor initialData={wikiData.content} handleChangeContent={handleChangeContent} />
+                {/* <WikitBucketEditor initialData={wikiData.content} handleChangeContent={handleChangeContent} /> */}
               </div>
             </form>
           ) : (
@@ -219,6 +223,7 @@ function Wiki({ params }: { params: { code: string } }) {
           handleActiveEdit={handleActiveEdit}
           handleActiveModal={handleActiveModal}
           handleTimeout={handleTimeout}
+          clearTime={clearTime}
         />
       </CommonModal>
     </>

@@ -12,14 +12,22 @@ interface SecurityData {
   securityQuestion: string;
   handleActiveEdit: () => void;
   handleActiveModal: () => void;
-  handleTimeout: () => void;
+  handleTimeout: (value: ReturnType<typeof setTimeout> | undefined) => void;
+  clearTime: ReturnType<typeof setTimeout> | undefined;
 }
 
 interface QuizInput {
   securityAnswer: string;
 }
 
-function QuizModal({ code, securityQuestion, handleActiveEdit, handleActiveModal, handleTimeout }: SecurityData) {
+function QuizModal({
+  code,
+  securityQuestion,
+  handleActiveEdit,
+  handleActiveModal,
+  handleTimeout,
+  clearTime,
+}: SecurityData) {
   const { popupToast } = useToast();
 
   const {
@@ -33,7 +41,7 @@ function QuizModal({ code, securityQuestion, handleActiveEdit, handleActiveModal
     if (responseData) {
       handleActiveModal();
       handleActiveEdit();
-      handleTimeout();
+      handleTimeout(clearTime);
     } else {
       popupToast({ color: "red", pos: "top", message: "Api 처리 에러!!", width: 320 });
     }

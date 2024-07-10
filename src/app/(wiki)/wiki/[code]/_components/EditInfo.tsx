@@ -53,16 +53,13 @@ export default function ProfileCardEditor({ userData, image, handleChange }: Pro
           layout="fill"
         />
         <input id="image" name="image" type="file" accept="image/*" className="hidden" onChange={handleImageChange} />
-        <Camera
-          className="-translate-1/2 absolute left-1/2 top-1/2 size-[17px] -translate-x-1/2 md:size-[20px] xl:size-[36px]"
-          alt="카메라 아이콘"
-        />
+        <Camera className="absolute left-1/3 top-1/3 size-[17px] md:size-[20px] xl:size-[36px]" alt="카메라 아이콘" />
       </label>
 
       <div className="flex flex-col gap-4 md:mt-3 md:grid md:grid-cols-2 md:gap-x-10 xl:flex xl:flex-col">
         {Object.entries(userData).map(([key, value]) => (
           <div key={key} className="flex h-[34px] items-center gap-5 md:h-[45px] xl:h-[34px]">
-            <div className="text-12 md:text-14 w-[60px] text-gray-400">{labels[key as keyof InfoType]}</div>
+            <div className="text-12 md:text-14 w-[110px] text-gray-400">{labels[key as keyof InfoType]}</div>
             <Input />
           </div>
         ))}
