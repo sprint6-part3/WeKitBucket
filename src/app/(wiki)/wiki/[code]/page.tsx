@@ -35,6 +35,10 @@ function Wiki({ params }: { params: { code: string } }) {
   const [clearTime, setClearTime] = useState<ReturnType<typeof setTimeout> | undefined>();
 
   const handleActiveModal = () => {
+    if (clearTime) {
+      clearTimeout(clearTime);
+      setClearTime(undefined);
+    }
     closeModal(!opened);
   };
 
@@ -137,6 +141,7 @@ function Wiki({ params }: { params: { code: string } }) {
     const TIME_OUT_LIMIT = 5 * 60 * 1000;
     if (clearId) {
       clearTimeout(clearId);
+      setClearTime(undefined);
     }
 
     const id: ReturnType<typeof setTimeout> | undefined = setTimeout(function () {
@@ -178,6 +183,7 @@ function Wiki({ params }: { params: { code: string } }) {
     setEditing(false);
     if (clearTime) {
       clearTimeout(clearTime);
+      setClearTime(undefined);
     }
   };
 
