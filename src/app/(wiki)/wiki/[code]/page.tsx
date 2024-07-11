@@ -25,7 +25,6 @@ function Wiki({ params }: { params: { code: string } }) {
 
   const [wikiData, setWikiData] = useState(WIKI_FULL_DATA);
   const [userData, setUserData] = useState<InfoType>(INFO_DATA);
-  const [answer, setAnswer] = useState<string>("");
   const [formData, setFormData] = useState({});
   const [opened, closeModal] = useState(false);
   const [myWiki, setMyWiKi] = useState(false);
@@ -72,7 +71,7 @@ function Wiki({ params }: { params: { code: string } }) {
         setUrl(pageUrl);
 
         const FormData = {
-          securityAnswer: answer,
+          securityAnswer: "",
           securityQuestion: returnData.securityQuestion,
           nationality: returnData.nationality,
           family: returnData.family,
@@ -106,16 +105,26 @@ function Wiki({ params }: { params: { code: string } }) {
     }));
   };
 
+  const handleChangeData = (name: string, value: string) => {
+    setFormData(prev => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async () => {
+    console.log(formData);
+
+    const responseData = await patchProfilesCode(code, formData);
+    if (responseData) {
+      popupToast({ color: "red", pos: "top", message: "데이터 반영이 실패하였습니다.", width: 320 });
+      setEdit(false);
+    }
+  };
+
   // const handleChangeContent = (value: string) => {
   //   setFormData({ ...formData, content: value });
   // };
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    await patchProfilesCode(code, formData);
-    setEdit(false);
-    setAnswer("");
-  };
 
   const handleUrl = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -165,8 +174,8 @@ function Wiki({ params }: { params: { code: string } }) {
   };
 
   const handleEditEnd = () => {
+    console.log(formData);
     setEditing(false);
-    setEdit(false);
     if (clearTime) {
       clearTimeout(clearTime);
     }
@@ -181,8 +190,8 @@ function Wiki({ params }: { params: { code: string } }) {
               <span className="text-[32px] font-semibold leading-none text-gray-800 md:text-[48px]">
                 {wikiData.name}
               </span>
-              {wikiData?.content.length === 0 && (
-                <Button onClick={handleActive}>{`${editing ? "편집중.." : "위키 참여하기"}`}`</Button>
+              {wikiData?.content.length > 0 && (
+                <Button onClick={handleActive}>{`${editing ? "편집중.." : "위키 참여하기"}`}</Button>
               )}
             </div>
 
@@ -213,7 +222,7 @@ function Wiki({ params }: { params: { code: string } }) {
                 </div>
 
                 {myWiki ? (
-                  <EditInfo userData={userData} image={wikiData.image} handleChange={handleChange} />
+                  <EditInfo handleChangeData={handleChangeData} image={wikiData.image} handleChange={handleChange} />
                 ) : (
                   <Info
                     userData={userData}
@@ -237,13 +246,11 @@ function Wiki({ params }: { params: { code: string } }) {
                   isToggleActive={isToggleActive}
                 />
               </div>
-              {wikiData?.content.length > 0 && (
+              {wikiData?.content.length === 0 && (
                 <div className="mt-8 flex h-auto flex-col items-center justify-center rounded-[10px] bg-gray-100 p-12 xl:mr-[400px] xl:max-w-[860px]">
                   <span className="text-16 text-gray-400">작성된 내용이 없어요!!</span>
-                  <span className="text-16 text-gray-400">위키 한번 해보실까요?</span>
-                  <Button className="mt-5" onClick={handleActive}>
-                    시작하기
-                  </Button>
+                  <span className="text-16 mb-5 text-gray-400">위키 한번 해보실까요?</span>
+                  <Button onClick={handleActive}>시작하기</Button>
                 </div>
               )}
             </>
@@ -259,6 +266,7 @@ function Wiki({ params }: { params: { code: string } }) {
           handleActiveModal={handleActiveModal}
           handleTimeout={handleTimeout}
           clearTime={clearTime}
+          handleChangeData={handleChangeData}
         />
       </CommonModal>
     </>

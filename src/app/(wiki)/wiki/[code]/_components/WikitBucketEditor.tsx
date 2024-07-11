@@ -55,62 +55,62 @@
 
 // function WikitBucketEditor({ initialData, handleChangeContent }: IWikitBucketEditor) {
 //   return (
-//   <CKEditor
-//     editor={ClassicEditor}
-//     config={{
-//       language: "ko",
-//       plugins: [
-//         Essentials,
-//         Bold,
-//         Italic,
-//         Underline,
-//         Paragraph,
-//         Heading,
-//         Link,
-//         List,
-//         Alignment,
-//         Image,
-//         ImageUpload,
-//         MediaEmbed,
-//       ],
-//       toolbar: {
-//         items: [
-//           "bold",
-//           "italic",
-//           "underline",
-//           "|",
-//           "heading",
-//           "|",
-//           "bulletedList",
-//           "numberedList",
-//           "|",
-//           "alignment",
-//           "|",
-//           "imageUpload",
-//           "mediaEmbed",
-//           "link",
+//     <CKEditor
+//       editor={ClassicEditor}
+//       config={{
+//         language: "ko",
+//         plugins: [
+//           Essentials,
+//           Bold,
+//           Italic,
+//           Underline,
+//           Paragraph,
+//           Heading,
+//           Link,
+//           List,
+//           Alignment,
+//           Image,
+//           ImageUpload,
+//           MediaEmbed,
 //         ],
-//       },
-//       // extraPlugins: [uploadPlugin],
-//     }}
-//     data={initialData}
-//     onReady={editor => {
-//       // You can store the "editor" and use when it is needed.
-//       console.log("Editor 1 is ready to use!", editor);
-//     }}
-//     onChange={(event, editor) => {
-//       const data = editor.getData();
-//       handleChangeContent(data);
-//     }}
-//   />
+//         toolbar: {
+//           items: [
+//             "bold",
+//             "italic",
+//             "underline",
+//             "|",
+//             "heading",
+//             "|",
+//             "bulletedList",
+//             "numberedList",
+//             "|",
+//             "alignment",
+//             "|",
+//             "imageUpload",
+//             "mediaEmbed",
+//             "link",
+//           ],
+//         },
+//         // extraPlugins: [uploadPlugin],
+//       }}
+//       data={initialData}
+//       onReady={editor => {
+//         // You can store the "editor" and use when it is needed.
+//         console.log("Editor 1 is ready to use!", editor);
+//       }}
+//       onChange={(event, editor) => {
+//         const data = editor.getData();
+//         handleChangeContent(data);
+//       }}
+//     />
 //   );
 // }
 
 // export default WikitBucketEditor;
 
-// dummy
-import React from "react";
+// // dummy
+// // import React from "react";
 
-export default function WikitBucketEditor() {
-  return <div>WikitBucketEditor</div>;
-}
+// // export default function WikitBucketEditor() {
+// //   return <div>WikitBucketEditor</div>;
+// // }
