@@ -1,293 +1,288 @@
-/* eslint-disable no-use-before-define */
+/* eslint-disable react/no-children-prop */
+/* eslint-disable react/jsx-no-undef */
+/* eslint-disable func-names */
 /* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable no-debugger */
 
 "use client";
 
-/* eslint-disable no-shadow */
-/* eslint-disable consistent-return */
-import React, { useCallback, useEffect, useState, useRef } from "react";
-import { DetailProfileResponse, ChangeProfilesFormData, PingFormData } from "@/types/apiType";
-import throttle from "@/utils/throttle";
-import postImage from "@/apis/image/postImage";
-import patchProfilesCode from "@/apis/profile/patchProfilesCode";
-import postProfilesCodePing from "@/apis/profile/postProfilesCodePing";
+import { useEffect, useState } from "react";
+import ReactMarkdown from "react-markdown";
+import rehypeRaw from "rehype-raw";
+import LinkImage from "@/assets/icons/link.svg";
 import getProfilesCode from "@/apis/profile/getProfilesCode";
+import getProfilesCodePing from "@/apis/profile/getProfilesCodePing";
+import patchProfilesCode from "@/apis/profile/patchProfilesCode";
 import getUsersMe from "@/apis/user/getUsersMe";
-import UserProfile from "./components/Profile/UserProfile";
-import CommonButton from "./components/Common/CommonButton";
-import QuizModalTemplete from "./components/Profile/QuizModalTemplete";
-import useBoolean from "./_hook/useBoolean";
-import Modal from "./components/Common/Modal";
-import { WIKI_BASE_URL } from "./_constants/url";
-import { StyledToastContainer } from "./_style/ToastStyle";
-import "react-toastify/dist/ReactToastify.css";
-import { Editor, EditorMarkdown } from "./components/Profile/Editor";
-import { EDITOR_TEXT } from "./_constants/editorBasicText";
-import BasicWikiSection from "./components/Profile/BasicWikiSection";
-import { FORM_DATA_INIT } from "./_constants/formDataInitialValue";
-import ToastSelect from "./components/Common/ToastSelect";
-import useIsMobile from "./_hook/useIsMobile";
-import MessageModal from "./components/Common/MessageModal";
-
-const noContentClassName = `text-lg-regular2 text-grayscale-400`;
+import CommonModal from "@/components/CommonModal";
+import { useToast } from "@/context/ToastContext";
+import WikitBucketEditor from "./_components/WikitBucketEditor";
+import QuizModal from "./_components/QuizModal";
+import { WIKI_FULL_DATA, INFO_DATA } from "./_components/defalutValue";
+import { InfoType } from "./_components/TypeList";
+import Button from "./_components/Button";
+import EditInfo from "./_components/EditInfo";
+import Info from "./_components/Info";
 
 function Wiki({ params }: { params: { code: string } }) {
   const { code } = params;
-  const URL = `${WIKI_BASE_URL}${code}`;
-  const [isEditing, setIsEditing] = useState(false);
+  const { popupToast } = useToast();
 
-  const { value, handleOff, handleOn } = useBoolean();
-  const { value: confirmModal, handleOff: confirmModalOff, handleOn: confirmModalOn } = useBoolean();
-  const { value: cancelModal, handleOff: cancelModalOff, handleOn: cancelModalOn } = useBoolean();
-  const [userProfile, setUserProfile] = useState<DetailProfileResponse | undefined>();
-  const [userData, setUserData] = useState<string | undefined>();
+  const [wikiData, setWikiData] = useState(WIKI_FULL_DATA);
+  const [userData, setUserData] = useState<InfoType>(INFO_DATA);
+  const [formData, setFormData] = useState({});
+  const [opened, closeModal] = useState(false);
+  const [myWiki, setMyWiKi] = useState(false);
+  const [isToggleActive, setIsToggleActive] = useState(false);
+  const [edit, setEdit] = useState(false);
+  const [editing, setEditing] = useState(false);
+  const [url, setUrl] = useState<string>("");
+  const [clearTime, setClearTime] = useState<ReturnType<typeof setTimeout> | undefined>();
 
-  const getUserData = async () => {
-    const userDatas = await getUsersMe();
-    const loginUserCode: string | undefined = userDatas?.profile?.code;
-    setUserData(loginUserCode);
-  };
-
-  getUserData();
-
-  const isMyPage = code === userData;
-  const editMyPage = isEditing && isMyPage;
-
-  const [formData, setFormData] = useState<ChangeProfilesFormData>(FORM_DATA_INIT);
-
-  const [md, setMD] = useState<string | undefined>(undefined);
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const [answer, setAnswer] = useState<string | null>(null);
-  const [renewalTime, setRenewalTime] = useState<boolean>(false);
-
-  const contentClassName = `
-  w-full xl:absolute
-  md:mt-5 xl:right-[440px] xl:w-[856px]
-  ${userProfile && userProfile.content ? "xl:top-[150px]" : "xl:top-[150px]"}
-  ${isEditing ? "xl:top-[1px]" : ""}
-  ${userProfile && userProfile.content && isEditing ? "xl:top-[40px]" : ""}
-`.trim();
-
-  const isMobile = useIsMobile();
-
-  const handleChange = useCallback((id: string, value?: string | File | null) => {
-    setFormData(prev => ({
-      ...prev,
-      [id]: value,
-    }));
-  }, []);
-
-  const getUserProfile = async (code: string) => {
-    const res = await getProfilesCode(code);
-    setUserProfile(res);
-    setEditorInitialValue(res.content);
-  };
-
-  const updateEditTime = async () => {
-    setRenewalTime(prev => !prev);
-    if (answer) {
-      const pingFormData = new FormData();
-      pingFormData.append("securityAnswer", answer);
-      await postProfilesCodePing(code, pingFormData as unknown as PingFormData);
+  const handleActiveModal = () => {
+    if (clearTime) {
+      clearTimeout(clearTime);
+      setClearTime(undefined);
     }
+    closeModal(!opened);
   };
 
-  const setAnswerValue = (value: string) => {
-    setAnswer(value);
+  const handleActiveEdit = () => {
+    setEdit(!edit);
   };
 
-  const setEditorInitialValue = useCallback((value: string | null) => {
-    setMD(value || EDITOR_TEXT);
-  }, []);
+  useEffect(() => {
+    const getWikiDataByCode = async () => {
+      try {
+        const users = await getUsersMe();
 
-  const handleWikiButtonClick = () => {
-    handleOn();
-  };
+        const myWikiPage = code === users.profile.code;
+        setMyWiKi(myWikiPage);
 
-  const throttlePing = throttle(updateEditTime, 6 * 10000);
+        const selectPageCode = code;
+        const returnData = await getProfilesCode(selectPageCode);
+        setWikiData(returnData);
 
-  const handleEditorChange = useCallback((value: string | undefined) => {
-    setMD(value);
-    throttlePing();
-    handleChange("content", value);
-    if (!value) {
-      handleChange("content", null);
-    }
-  }, []);
-
-  const setEditingMode = () => {
-    setIsEditing(true);
-  };
-
-  const handleCancelClick = () => {
-    setIsEditing(false);
-    setRenewalTime(!renewalTime);
-    cancelModalOff();
-    updateFormData();
-  };
-
-  const handleSaveClick = async () => {
-    confirmModalOff();
-    let updatedFormData = { ...formData };
-
-    if (formData.image instanceof File) {
-      const res = await postImage(formData.image);
-      if (res?.url) {
-        updatedFormData = {
-          ...formData,
-          image: res.url,
+        const { city, mbti, job, sns, birthday, nickname, bloodType, nationality } = returnData;
+        const infoTemplateData: InfoType = {
+          city,
+          mbti,
+          job,
+          sns,
+          birthday,
+          nickname,
+          bloodType,
+          nationality,
         };
-        setFormData(updatedFormData);
+        setUserData(infoTemplateData);
+
+        const pageUrl: string = window.location.href;
+        setUrl(pageUrl);
+
+        const FormData = {
+          securityAnswer: "",
+          securityQuestion: returnData.securityQuestion,
+          nationality: returnData.nationality,
+          family: returnData.family,
+          bloodType: returnData.bloodType,
+          nickname: returnData.nickname,
+          birthday: returnData.birthday,
+          sns: returnData.sns,
+          job: returnData.job,
+          mbti: returnData.mbti,
+          city: returnData.city,
+          image: returnData.image,
+          content: returnData.content,
+        };
+        setFormData(FormData);
+      } catch (e) {
+        console.error("failed to fetch", e);
       }
-    }
-
-    const profileUpdateResponse = await patchProfilesCode(userProfile?.code, updatedFormData as ChangeProfilesFormData);
-
-    setUserProfile(profileUpdateResponse);
-    setIsEditing(false);
-  };
-
-  const updateFormData = useCallback(() => {
-    if (userProfile) {
-      const { nationality, family, bloodType, nickname, birthday, sns, job, mbti, city, image, content } = userProfile;
-
-      // Create the new object with only the necessary keys
-      const newFormData: ChangeProfilesFormData = {
-        nationality,
-        family,
-        bloodType,
-        nickname,
-        birthday,
-        sns,
-        job,
-        mbti,
-        city,
-        image,
-        content,
-      };
-
-      setFormData(newFormData);
-    }
-  }, [userProfile]);
-
-  useEffect(() => {
-    updateFormData();
-  }, [updateFormData]);
-
-  useEffect(() => {
-    if (code) {
-      getUserProfile(code);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    };
+    getWikiDataByCode();
   }, [code]);
 
-  useEffect(() => {
-    if (isEditing || renewalTime) {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
+  const toggleActive = () => {
+    setIsToggleActive(!isToggleActive);
+  };
 
-      timeoutRef.current = setTimeout(
-        () => {
-          setIsEditing(false);
-          ToastSelect({
-            type: "notification",
-            message: "수정 가능 시간 5분을 초과하였습니다.",
-          });
-        },
-        5 * 6 * 10000,
-      );
-      return () => {
-        if (timeoutRef.current) {
-          clearTimeout(timeoutRef.current);
-        }
-      };
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleChangeData = (name: string, value: string) => {
+    setFormData(prev => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async () => {
+    console.log(formData);
+
+    const responseData = await patchProfilesCode(code, formData);
+    if (responseData) {
+      popupToast({ color: "red", pos: "top", message: "데이터 반영이 실패하였습니다.", width: 320 });
+      setEdit(false);
     }
-  }, [renewalTime]);
+  };
 
-  if (!userProfile) {
-    return;
-  }
+  const handleUrl = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    navigator.clipboard.writeText(url);
+    popupToast({ color: "green", pos: "top", message: "위키 링크가 복사되었습니다.", width: 320 });
+  };
+
+  // 5분 타임 아웃시 자동 에디터 종료...
+  const handleTimeout = (clearId: ReturnType<typeof setTimeout> | undefined) => {
+    const TIME_OUT_LIMIT = 5 * 60 * 1000;
+    if (clearId) {
+      clearTimeout(clearId);
+      setClearTime(undefined);
+    }
+
+    const id: ReturnType<typeof setTimeout> | undefined = setTimeout(function () {
+      popupToast({
+        color: "red",
+        pos: "top",
+        message: "5분 이상 글을 쓰지 않아 수정 권한이 만료되었어요!!",
+        width: 500,
+      });
+      setEdit(false);
+      setClearTime(id);
+      setEditing(false);
+    }, TIME_OUT_LIMIT);
+  };
+
+  // 다른 유저가 수정중인지 확인..
+  const handleEditingCheck = async (editWikiCode: string) => {
+    const editingCheck = await getProfilesCodePing(editWikiCode);
+    if (editingCheck) {
+      popupToast({
+        color: "red",
+        pos: "top",
+        message: "누군가가 글을 수정하고 있네요? 잠시 기다려 주실래요..",
+        width: 500,
+      });
+      setEditing(true);
+    }
+  };
+
+  const handleActive = () => {
+    handleEditingCheck(code);
+    if (!editing) {
+      closeModal(!opened);
+    }
+  };
+
+  const handleEditEnd = () => {
+    console.log(formData);
+    setEditing(false);
+    if (clearTime) {
+      clearTimeout(clearTime);
+      setClearTime(undefined);
+    }
+  };
 
   return (
-    <div className="px-5 py-5">
-      <title>{`WeKitBucket | ${userProfile?.name}`}</title>
-      <div className="center m-auto grid max-h-[75dvh] w-full max-w-[1350px] flex-col overflow-auto px-5 pt-5 sm:flex-col sm:pt-10 md:max-h-[1130px] md:px-14 xl:relative xl:max-h-[1080px] xl:py-5">
-        <StyledToastContainer limit={1} />
-        {isEditing || (
-          <BasicWikiSection name={userProfile.name} content={userProfile.content} onClick={handleOn} url={URL} />
-        )}
-
-        <UserProfile
-          {...userProfile}
-          isEditing={isEditing}
-          isMyPage={isMyPage}
-          editMyPage={editMyPage}
-          onChange={handleChange}
-          value={formData.image}
-        />
-
-        <div className={contentClassName}>
-          {!userProfile.content && !isEditing && (
-            <div className="flex h-[184px] w-full flex-col items-center justify-center rounded-[10px] bg-gray-100 md:mt-5 md:h-[192px]">
-              <p className={noContentClassName}>아직 작성된 내용이 없네요.</p>
-              <p className={noContentClassName}>위키에 참여해보세요!</p>
-              <CommonButton variant="primary" className="mt-4" onClick={handleWikiButtonClick}>
-                시작하기
-              </CommonButton>
+    <>
+      <main className="mx-auto h-full max-w-[744px] md:max-w-[1200px] xl:max-w-[1520px]">
+        <section className="mx-5 mt-8 flex flex-col justify-between gap-3 md:mx-20 md:gap-6">
+          <div className="flex flex-col justify-between gap-6 md:gap-8 xl:mr-[450px] xl:max-w-[860px]">
+            <div className="px-auto flex h-[43px] justify-between">
+              <span className="text-[32px] font-semibold leading-none text-gray-800 md:text-[48px]">
+                {wikiData.name}
+              </span>
+              {wikiData?.content.length > 0 && (
+                <Button onClick={handleActive}>{`${editing ? "편집중.." : "위키 참여하기"}`}</Button>
+              )}
             </div>
-          )}
-          {isEditing ? (
-            <Editor
-              preview="live"
-              value={md}
-              onChange={handleEditorChange}
-              height={650}
-              hideToolbar={isMobile && true}
-              autoFocus
-            />
-          ) : (
-            <EditorMarkdown source={userProfile.content} />
-          )}
-        </div>
 
-        {isEditing && (
-          <div className="ml-auto mt-2 flex gap-3 sm:absolute sm:right-[60px] sm:top-[75px] md:absolute md:right-[90px] md:top-[75px] lg:top-[95px] xl:mt-[640px]">
-            <CommonButton variant="secondary" onClick={cancelModalOn} className="bg-white">
-              취소
-            </CommonButton>
-            <CommonButton variant="primary" onClick={confirmModalOn}>
-              저장
-            </CommonButton>
+            {!edit && (
+              <button
+                className="flex h-[34px] max-w-[240px] items-center gap-1 rounded-[10px] bg-green-100 px-[10px] text-green-500 hover:brightness-95"
+                onClick={handleUrl}
+              >
+                <LinkImage width={35} height={35} alt="링크" />
+                <div className="truncate text-sm font-normal">{url}</div>
+              </button>
+            )}
           </div>
-        )}
 
-        <Modal isOpen={value} onClose={handleOff}>
-          <QuizModalTemplete
-            question={userProfile.securityQuestion}
-            onClose={handleOff}
-            setEditingMode={setEditingMode}
-            code={userProfile.code}
-            setAnswer={setAnswerValue}
-          />
-        </Modal>
-        <MessageModal
-          title="저장"
-          message="저장시겠습니까?"
-          isOpen={confirmModal}
-          onCancel={confirmModalOff}
-          onConfirm={handleSaveClick}
+          {edit ? (
+            <form
+              className="flex min-h-[1100px] flex-col gap-[15px] xl:mx-auto xl:max-w-[1700px]"
+              onSubmit={handleSubmit}
+            >
+              <div className="flex flex-col gap-[15px] md:gap-[10px] xl:fixed xl:left-[70%] xl:top-[120px] xl:flex-col-reverse">
+                <div className="flex h-10 items-center justify-end md:mb-[10px]">
+                  <div className="flex gap-[10px] xl:mt-3">
+                    <Button onClick={handleEditEnd}>취소</Button>
+                    <Button type="submit" onClick={handleEditEnd}>
+                      저장
+                    </Button>
+                  </div>
+                </div>
+
+                {myWiki ? (
+                  <EditInfo handleChangeData={handleChangeData} image={wikiData.image} handleChange={handleChange} />
+                ) : (
+                  <Info
+                    userData={userData}
+                    image={wikiData.image}
+                    toggleActive={toggleActive}
+                    isToggleActive={isToggleActive}
+                  />
+                )}
+              </div>
+              <div className="flex flex-col gap-4 md:mt-[30px] xl:mr-[650px] xl:mt-0 xl:min-w-[700px] xl:max-w-[1120px]">
+                <WikitBucketEditor initialData={wikiData.content} handleChangeData={handleChangeData} />
+              </div>
+            </form>
+          ) : (
+            <>
+              <div className="xl:fixed xl:left-[70%] xl:top-[120px]">
+                <Info
+                  userData={userData}
+                  image={wikiData.image}
+                  toggleActive={toggleActive}
+                  isToggleActive={isToggleActive}
+                />
+              </div>
+
+              {wikiData?.content.length > 0 && (
+                <div className="yu" style={{ maxWidth: "70%" }}>
+                  <ReactMarkdown children={wikiData.content} rehypePlugins={[rehypeRaw]} />
+                </div>
+              )}
+
+              {wikiData?.content.length === 0 && (
+                <div className="mt-8 flex h-auto flex-col items-center justify-center rounded-[10px] bg-gray-100 p-12 xl:mr-[400px] xl:max-w-[860px]">
+                  <span className="text-16 text-gray-400">작성된 내용이 없어요!!</span>
+                  <span className="text-16 mb-5 text-gray-400">위키 한번 해보실까요?</span>
+                  <Button onClick={handleActive}>시작하기</Button>
+                </div>
+              )}
+            </>
+          )}
+        </section>
+      </main>
+
+      <CommonModal active={opened} close={handleActiveModal}>
+        <QuizModal
+          code={code}
+          securityQuestion={wikiData.securityQuestion}
+          handleActiveEdit={handleActiveEdit}
+          handleActiveModal={handleActiveModal}
+          handleTimeout={handleTimeout}
+          clearTime={clearTime}
+          handleChangeData={handleChangeData}
         />
-        <MessageModal
-          title="취소"
-          message="취소하시겠습니까?"
-          isOpen={cancelModal}
-          onCancel={cancelModalOff}
-          onConfirm={handleCancelClick}
-        />
-      </div>
-    </div>
+      </CommonModal>
+    </>
   );
 }
 
