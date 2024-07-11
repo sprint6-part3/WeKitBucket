@@ -1,7 +1,12 @@
+import { Metadata } from "next";
 import getArticles from "@/apis/article/getArticles";
 import BestPostList from "./components/bestArticles/BestPostList";
 import AllArticleSection, { ArticleOption } from "./components/allArticles/AllArticleSection";
 import BestHeader from "./components/bestArticles/BestHeader";
+
+export const metadata: Metadata = {
+  title: "WeKitBucket | 자유게시판",
+};
 
 async function Board() {
   const allArticlesOption: ArticleOption = {
@@ -27,8 +32,6 @@ async function Board() {
 
   return (
     <div className="mx-auto mb-[57px] mt-10 grid gap-5">
-      <title>WeKitBucket | 자유게시판</title>
-      {/* 베스트 게시글 */}
       <section className="grid gap-5">
         <BestHeader />
         {bestArticles && <BestPostList article={bestArticles} />}
