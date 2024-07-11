@@ -1,16 +1,17 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import Image from "next/image";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import defalutUserImage from "@/assets/icons/defaultProfile.svg";
 import Camera from "@/assets/icons/camera.svg";
 import postImage from "@/apis/image/postImage";
 import { InfoType } from "./TypeList";
 import Input from "./Input";
+import Label from "./Label";
 
 type ProfileProps = {
-  userData: InfoType;
   image: string | null;
   handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  handleChangeData: (name: string, value: string) => void;
 };
 
 const labels: Record<keyof InfoType, string> = {
@@ -24,7 +25,7 @@ const labels: Record<keyof InfoType, string> = {
   nationality: "국적",
 };
 
-export default function ProfileCardEditor({ userData, image, handleChange }: ProfileProps) {
+function EditInfo({ handleChangeData, image, handleChange }: ProfileProps) {
   const [preview, setPreview] = useState<string | null>(image);
 
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -38,6 +39,13 @@ export default function ProfileCardEditor({ userData, image, handleChange }: Pro
         } as React.ChangeEvent<HTMLInputElement>);
       }
     }
+  };
+
+  const handleChangeEvent = (e: ChangeEvent<HTMLInputElement>) => {
+    const { id, value } = e.target;
+    console.log(id);
+    console.log(value);
+    handleChangeData(id, value);
   };
 
   return (
@@ -60,13 +68,17 @@ export default function ProfileCardEditor({ userData, image, handleChange }: Pro
       </label>
 
       <div className="flex flex-col gap-4 md:mt-3 md:grid md:grid-cols-2 md:gap-x-10 xl:flex xl:flex-col">
-        {Object.entries(userData).map(([key, value]) => (
+        {Object.entries(labels).map(([key, value]) => (
           <div key={key} className="flex h-[34px] items-center gap-5 md:h-[45px] xl:h-[34px]">
-            <div className="text-12 md:text-14 w-[110px] text-gray-400">{labels[key as keyof InfoType]}</div>
-            <Input />
+            <Label htmlFor={key} className="text-12 md:text-14 w-[110px] text-gray-400">
+              {value}
+            </Label>
+            <Input id={key} onChange={handleChangeEvent} />
           </div>
         ))}
       </div>
     </section>
   );
 }
+
+export default EditInfo;

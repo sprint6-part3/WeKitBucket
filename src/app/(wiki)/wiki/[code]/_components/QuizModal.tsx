@@ -14,6 +14,7 @@ interface SecurityData {
   handleActiveModal: () => void;
   handleTimeout: (value: ReturnType<typeof setTimeout> | undefined) => void;
   clearTime: ReturnType<typeof setTimeout> | undefined;
+  handleChangeData: (key: string, value: string) => void;
 }
 
 interface QuizInput {
@@ -27,6 +28,7 @@ function QuizModal({
   handleActiveModal,
   handleTimeout,
   clearTime,
+  handleChangeData,
 }: SecurityData) {
   const { popupToast } = useToast();
 
@@ -42,6 +44,7 @@ function QuizModal({
       handleActiveModal();
       handleActiveEdit();
       handleTimeout(clearTime);
+      handleChangeData("securityAnswer", data.securityAnswer);
     } else {
       popupToast({ color: "red", pos: "top", message: "Api 처리 에러!!", width: 320 });
     }
