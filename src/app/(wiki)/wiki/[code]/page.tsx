@@ -1,3 +1,4 @@
+/* eslint-disable react/no-children-prop */
 /* eslint-disable react/jsx-no-undef */
 /* eslint-disable func-names */
 /* eslint-disable react-hooks/exhaustive-deps */
@@ -5,6 +6,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import ReactMarkdown from "react-markdown";
+import rehypeRaw from "rehype-raw";
 import LinkImage from "@/assets/icons/link.svg";
 import getProfilesCode from "@/apis/profile/getProfilesCode";
 import getProfilesCodePing from "@/apis/profile/getProfilesCodePing";
@@ -249,6 +252,13 @@ function Wiki({ params }: { params: { code: string } }) {
                   isToggleActive={isToggleActive}
                 />
               </div>
+
+              {wikiData?.content.length > 0 && (
+                <div className="yu" style={{ maxWidth: "70%" }}>
+                  <ReactMarkdown children={wikiData.content} rehypePlugins={[rehypeRaw]} />
+                </div>
+              )}
+
               {wikiData?.content.length === 0 && (
                 <div className="mt-8 flex h-auto flex-col items-center justify-center rounded-[10px] bg-gray-100 p-12 xl:mr-[400px] xl:max-w-[860px]">
                   <span className="text-16 text-gray-400">작성된 내용이 없어요!!</span>
