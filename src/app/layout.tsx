@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-// import { motion } from "framer-motion";
 import "@/styles/globals.css";
 import Toast from "@/components/Toast";
 import { ToastProvider } from "@/context/ToastContext";

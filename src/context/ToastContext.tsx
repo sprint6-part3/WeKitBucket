@@ -38,7 +38,7 @@ interface ToastContextType {
 }
 
 const ToastContext = createContext<ToastContextType>({
-  toast: { active: false, mid_act: false, color: "red", pos: "top", message: "", width: 0 },
+  toast: { active: false, mid_act: false, color: "green", pos: "top", message: "", width: 0 },
   popupToast: () => {},
   popupMidToast: () => {},
 });
@@ -47,7 +47,7 @@ function ToastProvider({ children }: { children: ReactNode }) {
   const [toast, setToast] = useState<ToastProps>({
     active: false,
     mid_act: false,
-    color: "red",
+    color: "green",
     pos: "top",
     message: "",
     width: 0,

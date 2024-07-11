@@ -24,7 +24,7 @@ export default function ToastPopup({
         className="absolute top-10 flex h-[99dvh] w-[99dvw] justify-center py-[30px] xl:py-[50px]"
       >
         <div
-          className={`absolute flex h-[42px] w-[${width}px] max-w-[860px] items-center justify-start gap-x-[15px] rounded-[1rem] px-[15px] py-[12px] md:h-[50px] md:px-[20px] md:py-[13px] ${`bg-primary-${color}-200`} shadow-[0px_2px_8px_rgba(0,0,0,0.25)] backdrop-opacity-5 ${
+          className={`absolute flex h-[42px] w-[${width}px] max-w-[860px] items-center justify-start gap-x-[15px] rounded-[1rem] px-[15px] py-[12px] md:h-[50px] md:px-[20px] md:py-[13px] ${`bg-primary-${color}-100`} shadow-[0px_2px_8px_rgba(0,0,0,0.25)] backdrop-opacity-5 ${
             position === "top" ? "animate-toast-top" : "animate-toast-bottom"
           }`}
         >
