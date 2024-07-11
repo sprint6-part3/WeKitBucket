@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-undef */
 /* eslint-disable func-names */
 /* eslint-disable react-hooks/exhaustive-deps */
 
@@ -11,7 +12,7 @@ import patchProfilesCode from "@/apis/profile/patchProfilesCode";
 import getUsersMe from "@/apis/user/getUsersMe";
 import CommonModal from "@/components/CommonModal";
 import { useToast } from "@/context/ToastContext";
-// import WikitBucketEditor from "./_components/WikitBucketEditor";
+import WikitBucketEditor from "./_components/WikitBucketEditor";
 import QuizModal from "./_components/QuizModal";
 import { WIKI_FULL_DATA, INFO_DATA } from "./_components/defalutValue";
 import { InfoType } from "./_components/TypeList";
@@ -126,10 +127,6 @@ function Wiki({ params }: { params: { code: string } }) {
     }
   };
 
-  // const handleChangeContent = (value: string) => {
-  //   setFormData({ ...formData, content: value });
-  // };
-
   const handleUrl = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     navigator.clipboard.writeText(url);
@@ -238,8 +235,8 @@ function Wiki({ params }: { params: { code: string } }) {
                   />
                 )}
               </div>
-              <div className="flex flex-col gap-4 md:mt-[30px] xl:ml-[100px] xl:mr-[530px] xl:mt-0 xl:min-w-[700px] xl:max-w-[1120px]">
-                {/* <WikitBucketEditor initialData={wikiData.content} handleChangeContent={handleChangeContent} /> */}
+              <div className="flex flex-col gap-4 md:mt-[30px] xl:mr-[650px] xl:mt-0 xl:min-w-[700px] xl:max-w-[1120px]">
+                <WikitBucketEditor initialData={wikiData.content} handleChangeData={handleChangeData} />
               </div>
             </form>
           ) : (
