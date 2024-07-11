@@ -53,7 +53,10 @@ export default function ProfileCardEditor({ userData, image, handleChange }: Pro
           layout="fill"
         />
         <input id="image" name="image" type="file" accept="image/*" className="hidden" onChange={handleImageChange} />
-        <Camera className="absolute left-1/3 top-1/3 size-[17px] md:size-[20px] xl:size-[36px]" alt="카메라 아이콘" />
+        <Camera
+          className="absolute left-1/3 top-1/3 size-[17px] translate-x-0.5 translate-y-0.5 md:size-[20px] xl:size-[36px] xl:translate-x-4 xl:translate-y-6"
+          alt="카메라 아이콘"
+        />
       </label>
 
       <div className="flex flex-col gap-4 md:mt-3 md:grid md:grid-cols-2 md:gap-x-10 xl:flex xl:flex-col">

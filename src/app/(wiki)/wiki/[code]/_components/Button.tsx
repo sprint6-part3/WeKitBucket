@@ -5,7 +5,7 @@ function Button({ type, children, onClick }: React.ButtonHTMLAttributes<HTMLButt
     <button
       type={type}
       onClick={onClick}
-      className="mt-3 max-w-[400px] rounded-[10px] bg-primary-green-200 px-5 py-[11px] text-sm font-semibold leading-[1.7] text-white"
+      className="max-w-[400px] rounded-[10px] bg-primary-green-200 px-5 py-[11px] text-sm font-semibold leading-[1.7] text-white"
     >
       {children}
     </button>

@@ -6,7 +6,7 @@
 import { useEffect, useState } from "react";
 import LinkImage from "@/assets/icons/link.svg";
 import getProfilesCode from "@/apis/profile/getProfilesCode";
-// import getProfilesCodePing from "@/apis/profile/getProfilesCodePing";
+import getProfilesCodePing from "@/apis/profile/getProfilesCodePing";
 import patchProfilesCode from "@/apis/profile/patchProfilesCode";
 import getUsersMe from "@/apis/user/getUsersMe";
 import CommonModal from "@/components/CommonModal";
@@ -30,7 +30,8 @@ function Wiki({ params }: { params: { code: string } }) {
   const [opened, closeModal] = useState(false);
   const [myWiki, setMyWiKi] = useState(false);
   const [isToggleActive, setIsToggleActive] = useState(false);
-  const [isEdit, setIsEdit] = useState(false);
+  const [edit, setEdit] = useState(false);
+  const [editing, setEditing] = useState(false);
   const [url, setUrl] = useState<string>("");
   const [clearTime, setClearTime] = useState<ReturnType<typeof setTimeout> | undefined>();
 
@@ -39,7 +40,7 @@ function Wiki({ params }: { params: { code: string } }) {
   };
 
   const handleActiveEdit = () => {
-    setIsEdit(!isEdit);
+    setEdit(!edit);
   };
 
   useEffect(() => {
@@ -112,7 +113,7 @@ function Wiki({ params }: { params: { code: string } }) {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     await patchProfilesCode(code, formData);
-    setIsEdit(false);
+    setEdit(false);
     setAnswer("");
   };
 
@@ -136,9 +137,39 @@ function Wiki({ params }: { params: { code: string } }) {
         message: "5분 이상 글을 쓰지 않아 수정 권한이 만료되었어요!!",
         width: 500,
       });
-      setIsEdit(false);
+      setEdit(false);
       setClearTime(id);
+      setEditing(false);
     }, TIME_OUT_LIMIT);
+  };
+
+  // 다른 유저가 수정중인지 확인..
+  const handleEditingCheck = async (editWikiCode: string) => {
+    const editingCheck = await getProfilesCodePing(editWikiCode);
+    if (editingCheck) {
+      popupToast({
+        color: "red",
+        pos: "top",
+        message: "누군가가 글을 수정하고 있네요? 잠시 기다려 주실래요..",
+        width: 500,
+      });
+      setEditing(true);
+    }
+  };
+
+  const handleActive = () => {
+    handleEditingCheck(code);
+    if (!editing) {
+      closeModal(!opened);
+    }
+  };
+
+  const handleEditEnd = () => {
+    setEditing(false);
+    setEdit(false);
+    if (clearTime) {
+      clearTimeout(clearTime);
+    }
   };
 
   return (
@@ -150,10 +181,12 @@ function Wiki({ params }: { params: { code: string } }) {
               <span className="text-[32px] font-semibold leading-none text-gray-800 md:text-[48px]">
                 {wikiData.name}
               </span>
-              {wikiData?.content.length === 0 && <Button onClick={handleActiveModal}>위키 참여하기</Button>}
+              {wikiData?.content.length === 0 && (
+                <Button onClick={handleActive}>{`${editing ? "편집중.." : "위키 참여하기"}`}`</Button>
+              )}
             </div>
 
-            {!isEdit && (
+            {!edit && (
               <button
                 className="flex h-[34px] max-w-[240px] items-center gap-1 rounded-[10px] bg-green-100 px-[10px] text-green-500 hover:brightness-95"
                 onClick={handleUrl}
@@ -164,7 +197,7 @@ function Wiki({ params }: { params: { code: string } }) {
             )}
           </div>
 
-          {isEdit ? (
+          {edit ? (
             <form
               className="flex min-h-[1100px] flex-col gap-[15px] xl:mx-auto xl:max-w-[1700px]"
               onSubmit={handleSubmit}
@@ -172,8 +205,10 @@ function Wiki({ params }: { params: { code: string } }) {
               <div className="flex flex-col gap-[15px] md:gap-[10px] xl:fixed xl:left-[70%] xl:top-[120px] xl:flex-col-reverse">
                 <div className="flex h-10 items-center justify-end md:mb-[10px]">
                   <div className="flex gap-[10px] xl:mt-3">
-                    <Button onClick={handleActiveEdit}>취소</Button>
-                    <Button type="submit">저장</Button>
+                    <Button onClick={handleEditEnd}>취소</Button>
+                    <Button type="submit" onClick={handleEditEnd}>
+                      저장
+                    </Button>
                   </div>
                 </div>
 
@@ -206,7 +241,7 @@ function Wiki({ params }: { params: { code: string } }) {
                 <div className="mt-8 flex h-auto flex-col items-center justify-center rounded-[10px] bg-gray-100 p-12 xl:mr-[400px] xl:max-w-[860px]">
                   <span className="text-16 text-gray-400">작성된 내용이 없어요!!</span>
                   <span className="text-16 text-gray-400">위키 한번 해보실까요?</span>
-                  <Button className="mt-5" onClick={handleActiveModal}>
+                  <Button className="mt-5" onClick={handleActive}>
                     시작하기
                   </Button>
                 </div>
