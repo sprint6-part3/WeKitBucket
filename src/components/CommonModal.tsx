@@ -18,7 +18,7 @@ function CommonModal({ children, close, spacing = "40px", ...rest }: ICommonModa
   return (
     <Modal close={close} {...rest}>
       <div
-        className="mx-auto my-0 grid max-w-[395px] items-center gap-[10px] rounded-[10px] bg-white p-5"
+        className="mx-auto my-0 grid max-w-[395px] items-center justify-center gap-[10px] rounded-[10px] bg-white p-5"
         style={{ width: `calc(100% - ${spacing})` }}
       >
         <div onClick={close} className="ml-auto flex h-5 w-5 cursor-pointer items-center justify-center p-[4.71px]">
