@@ -1,10 +1,13 @@
-@tailwind base;
+@layer tailwind {
+  @tailwind base;
+}
 @tailwind components;
 @tailwind utilities;
 @import "./reset.css";
 input:focus {
   outline: none;
 }
+
 @layer base {
   .board-tr {
     @apply gap-[3px] sm:grid sm:grid-cols-[30px,1fr,280px] sm:gap-[50px] sm:px-5 lg:grid-cols-[30px,1fr,340px] lg:gap-20 lg:px-[50px];
@@ -78,7 +81,63 @@ input:focus {
   font-style: normal;
 }
 
-/* custom web scrollbar css settings */
+.rich-text-editor-content strong {
+  font-weight: bold;
+}
+
+.rich-text-editor-content em {
+  font-style: italic;
+}
+
+.rich-text-editor-content ol,
+.rich-text-editor-content ul {
+  padding-left: 1.5em;
+  list-style-position: inside;
+}
+
+.rich-text-editor-content ol {
+  list-style-type: decimal;
+}
+
+.rich-text-editor-content ul {
+  list-style-type: disc;
+}
+
+.rich-text-editor-content li::marker {
+  unicode-bidi: unset;
+  font-variant-numeric: unset;
+  text-transform: unset;
+  text-indent: 0px !important;
+  text-align: unset !important;
+  text-align-last: unset !important;
+}
+
+.custom-bullet-list,
+.custom-ordered-list {
+  padding-left: 1.5em;
+  list-style-position: inside;
+}
+
+.custom-bullet-list li,
+.custom-ordered-list li {
+  text-align: left; /* 기본 정렬 유지 */
+}
+
+.custom-bullet-list[style*="text-align: center"] > li,
+.custom-ordered-list[style*="text-align: center"] > li {
+  text-align: center;
+}
+
+.custom-bullet-list[style*="text-align: right"] > li,
+.custom-ordered-list[style*="text-align: right"] > li {
+  text-align: right;
+}
+
+.ProseMirror {
+  background-color: transparent !important;
+  padding: 0 !important;
+}
+
 ::-webkit-scrollbar {
   width: 10px;
 }

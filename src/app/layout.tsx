@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
+import { MantineProvider, ColorSchemeScript } from "@mantine/core";
 import "@/styles/globals.css";
 import Toast from "@/components/Toast";
 import { ToastProvider } from "@/context/ToastContext";
-import { AuthProvider } from "../context/AuthContext";
+import { AuthProvider } from "@/context/AuthContext";
 import Header from "./_components/Header";
+import "@mantine/tiptap/styles.css";
+import "@mantine/core/styles.css";
 
 export const metadata: Metadata = {
   title: "WeKitBucket",
@@ -13,21 +16,22 @@ export const metadata: Metadata = {
   },
 };
 
-function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ko">
+      <head>
+        <ColorSchemeScript />
+      </head>
       <body>
-        <AuthProvider>
-          <ToastProvider>
-            <Header />
-            <Toast />
-            {children}
-          </ToastProvider>
-        </AuthProvider>
+        <MantineProvider>
+          <AuthProvider>
+            <ToastProvider>
+              <Header />
+              <Toast />
+              {children}
+            </ToastProvider>
+          </AuthProvider>
+        </MantineProvider>
       </body>
     </html>
   );

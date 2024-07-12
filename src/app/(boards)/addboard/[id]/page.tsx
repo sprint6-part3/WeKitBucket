@@ -1,16 +1,19 @@
 import React from "react";
 import { Metadata } from "next";
 import Link from "next/link";
+import AddBoardComponent from "../AddBoardComponent";
 
 export const metadata: Metadata = {
   title: "WeKitBucket | 게시물 수정하기",
 };
 
-function AddBoardEditPage() {
+function AddBoardEditPage({ params }: { params: { id: string } }) {
+  const articleId = parseInt(params.id, 10);
+
   return (
     <div className="mx-[20px] mt-[32px] flex flex-col justify-center">
       <main className="md-shadow-custom-all mx-auto w-full gap-3 md:w-[624px] md:gap-5 md:rounded-[10px] md:border-gray-300 md:px-[30px] md:pb-[30px] md:pt-[40px] md:shadow-custom-all xl:w-[1060px]">
-        {/* <AddBoardComponent articleId={articleId} /> */}
+        <AddBoardComponent articleId={articleId} />
       </main>
       <div className="center flex justify-center">
         <Link

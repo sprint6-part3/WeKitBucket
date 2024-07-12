@@ -1,0 +1,84 @@
+.mantine-RichTextEditor-root {
+  min-height: 400px;
+  flex-direction: column-reverse;
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-bottom: 30px;
+  margin-top: 10px;
+  background-color: transparent;
+  border: none;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.custom-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.toolbar-group {
+  display: flex;
+  gap: 10px;
+}
+
+.rich-text-editor-content {
+  width: 100%;
+  background-color: transparent !important;
+}
+
+.rich-text-editor-content b {
+  font-weight: bold;
+}
+
+.rich-text-editor-content.tiptap .ProseMirror {
+  background-color: transparent !important;
+  padding: 0;
+}
+
+.mantine-RichTextEditor-toolbar {
+  max-width: 968px;
+  height: 44px;
+  border: 1px solid #e2e8f0;
+  border-radius: 21px;
+}
+
+.image-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  max-height: 400px;
+  overflow: hidden;
+}
+
+.image-container img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.image-placeholder {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f0f0f0;
+  border-radius: 10px;
+  width: 240px;
+  height: 160px;
+}
+
+.file-input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+@media not all and (min-width: 768px) {
+}
+
+@media not all and (min-width: 1280px) {
+}
