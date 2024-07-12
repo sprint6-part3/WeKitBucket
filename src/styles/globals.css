@@ -189,8 +189,18 @@ body {
 
 .ck.ck-content ul,
 .ck.ck-content ol {
-  /* Default user agent stylesheet, you can change it to your needs. */
+  display: flex;
   padding-left: 40px;
+}
+
+.ck.ck-content ul:has(*[style*="text-align:right"]),
+.ck.ck-content ol:has(*[style*="text-align:right"]) {
+  justify-content: flex-end;
+}
+
+.ck.ck-content ul:has(*[style*="text-align:center"]),
+.ck.ck-content ol:has(*[style*="text-align:right"]) {
+  justify-content: center;
 }
 
 .ck.ck-content > :first-child {
