@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { MantineProvider, ColorSchemeScript } from "@mantine/core";
+import { MantineProvider, ColorSchemeScript, createTheme } from "@mantine/core";
 import "@/styles/globals.css";
 import Toast from "@/components/Toast";
 import { ToastProvider } from "@/context/ToastContext";
@@ -16,6 +16,12 @@ export const metadata: Metadata = {
   },
 };
 
+const theme = createTheme({
+  fontFamily: "Pretendard, ui-sans-serif, system-ui",
+  fontFamilyMonospace: "Pretendard, ui-sans-serif, system-ui",
+  headings: { fontFamily: "Pretendard, ui-sans-serif, system-ui" },
+});
+
 function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ko">
@@ -23,7 +29,7 @@ function RootLayout({ children }: { children: React.ReactNode }) {
         <ColorSchemeScript />
       </head>
       <body>
-        <MantineProvider>
+        <MantineProvider theme={theme}>
           <AuthProvider>
             <ToastProvider>
               <Header />
