@@ -81,6 +81,11 @@ input:focus {
   font-style: normal;
 }
 
+html,
+body {
+  font-family: "Pretendard", "ui-sans-serif", "system-ui";
+}
+
 .rich-text-editor-content strong {
   font-weight: bold;
 }
